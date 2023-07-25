@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_bzero.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/25 13:15:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 13:48:17 by tde-brui      ########   odam.nl         */
+/*   Created: 2022/10/06 11:00:43 by tde-brui      #+#    #+#                 */
+/*   Updated: 2022/10/21 15:13:25 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+void	ft_bzero(void *str, size_t size)
 {
-	return (0);
+	unsigned long				i;
+	unsigned char				*ptr;
+
+	ptr = (unsigned char *)str;
+	i = 0;
+	while (i < size)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
 }

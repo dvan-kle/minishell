@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   list_len.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/25 13:15:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 13:48:17 by tde-brui      ########   odam.nl         */
+/*   Created: 2023/03/15 15:50:55 by tde-brui      #+#    #+#                 */
+/*   Updated: 2023/03/15 15:52:59 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+int	list_len(t_list **stack)
 {
-	return (0);
+	t_list	*head;
+	int		i;
+
+	head = (*stack);
+	i = 0;
+	while (head->next != NULL)
+	{
+		head = head->next;
+		i++;
+	}
+	return (i);
 }

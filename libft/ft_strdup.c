@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/25 13:15:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 13:48:17 by tde-brui      ########   odam.nl         */
+/*   Created: 2022/10/11 13:29:43 by tde-brui      #+#    #+#                 */
+/*   Updated: 2022/10/21 15:16:42 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+char	*ft_strdup(const char *str)
 {
-	return (0);
+	char	*ptr;
+	int		i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	ptr = malloc(i + 1);
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		ptr[i] = str[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }

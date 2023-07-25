@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strlen.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/25 13:15:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 13:48:17 by tde-brui      ########   odam.nl         */
+/*   Created: 2022/10/06 11:01:39 by tde-brui      #+#    #+#                 */
+/*   Updated: 2023/02/21 13:52:30 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+size_t	ft_strlen(const char *str)
 {
-	return (0);
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
 }

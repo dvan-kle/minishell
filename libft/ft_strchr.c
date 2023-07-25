@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strchr.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/25 13:15:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 13:48:17 by tde-brui      ########   odam.nl         */
+/*   Created: 2022/10/06 11:01:28 by tde-brui      #+#    #+#                 */
+/*   Updated: 2023/02/21 13:37:50 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+char	*ft_strchr(const char *str, int character)
 {
-	return (0);
+	int			i;
+
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == (char)character)
+			return ((char *)&str[i]);
+		i++;
+	}
+	if ((char)character == '\0')
+		return ((char *)&str[i]);
+	return (NULL);
 }

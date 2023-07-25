@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_isalnum.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/25 13:15:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 13:48:17 by tde-brui      ########   odam.nl         */
+/*   Created: 2022/10/06 11:00:48 by tde-brui      #+#    #+#                 */
+/*   Updated: 2022/10/21 15:13:33 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	main(int argc, char **argv)
+#include "libft.h"
+
+int	ft_isalnum(int a)
 {
-	return (0);
+	if ((ft_isalpha(a) != 0) || (ft_isdigit(a) != 0))
+	{
+		return (1);
+	}
+	else
+	{
+		return (0);
+	}
 }
