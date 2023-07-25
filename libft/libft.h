@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:43:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/03/15 15:55:33 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/07/25 14:45:45 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 char		**ft_split(char const *str1, char c);
 char		*get_next_line(int fd);
 int			ft_stringsnum(char const *str1, char c);
+int			ft_printf(const char *str, ...);
 int			printf_putstr(char *str);
 int			printf_putchar(int c);
 int			ft_hexa_len(unsigned int n);

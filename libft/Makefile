@@ -42,11 +42,13 @@ SOURCE	= \
 	printf_utils.c \
 	ft_upper_hexa.c \
 	ft_printf.c \
+	ft_utils.c \
 	ft_put_addr.c \
 	ft_lower_hexa.c \
 	ft_get_int.c \
-	list_len.c \
-	list_new.c
+	# list_len.c \
+	# list_new.c	\
+	# list_add_back
 
 OBJECT = $(SOURCE:.c=.o)
 
