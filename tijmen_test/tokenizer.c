@@ -6,34 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/29 14:47:34 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/07/29 15:45:27 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "tokenizer.h"
-
-#include <stdbool.h>
-#include <stdio.h>
-
-#define MAX_LEN 100
-
-typedef enum token_type{
-	CMD_TOKEN,
-	ARGUMENT_TOKEN,
-	INPUT_REDIRECT_TOKEN,
-	OUTPUT_REDIRECT_TOKEN,
-	PIPE_TOKEN,
-	END_OF_CMD_TOKEN,
-	READ_INPUT_TOKEN,
-	OUTPUT_REDIRECT_APPEND_TOKEN
-}t_tokentype;
-
-typedef struct token{
-	t_tokentype	type;
-	char		value[MAX_LEN];
-	bool		brackets;
-	bool		new_cmd;
-}t_token;
+#include "tokenizer.h"
 
 int	ft_isspace(char c)
 {
@@ -170,6 +147,9 @@ void	lexer(void)
 		ft_printf("Type: %d, Value: %s\n", token.type, token.value);
 		input += ft_strlen(token.value) + 1;
 		if (token.brackets == true)
+		{
 			input += 2;
+			token.brackets = false;
+		}
 	}
 }
