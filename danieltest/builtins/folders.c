@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/07/29 16:25:01 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/02 17:52:22 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,32 @@
 #include <unistd.h>
 #include "libft.h"
 
-char **get_folders(void)
+char	**get_folders(void)
 {
 	char	*path;
-	char 	**folders;
-	int 	i = 0;
+	char	**folders;
+	int		i;
 
+	i = 0;
 	path = getenv("PATH");
 	folders = ft_split(path, ':');
-
 	return (folders);
 }
 
-int execute(char **folders, char *command_fold, char **command)
+int	execute(char **folders, char *command_fold, char **av)
 {
 	char	*check_access;
 	int		i = 0;
+	char	**argv;
 
+	argv = av + 1;
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
 		if (access(check_access, X_OK) == 0)
 		{
 			printf("found\n");
-			execve(check_access, command, NULL);
+			execve(check_access, argv, NULL);
 			return (0);
 		}
 		i++;
@@ -47,14 +49,23 @@ int execute(char **folders, char *command_fold, char **command)
 	return (-1);
 }
 
-int main(void)
+int	main(int ac, char **av)
 {
 	char	**folders;
 	char	*command_fold;
-	char 	*command[] = { "mkdir", "testmap2", NULL };
-
+	// char 	**argv = { "rm", "test.txt", NULL };
+	if (ft_strncmp(av[1], "pwd", ft_strlen(av[1])) == 0)
+	{
+		printf("%s\n", getcwd(NULL, 0));
+		exit (0);
+	}
+	if (ft_strncmp(av[1], "clear", ft_strlen(av[1])) == 0)
+	{
+		printf("\033[2J\033[H");
+		exit (0);
+	}
 	folders = get_folders();
-	command_fold = "/mkdir";
-	execute(folders, command_fold, command);
+	command_fold = ft_strjoin("/", av[1]);
+	execute(folders, command_fold, av);
 	return (0);
 }
