@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/02 15:35:04 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/02 18:30:16 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,10 @@ t_token	tokenize(t_token token, char *input)
 
 void	lexer(void)
 {
-	char	*input;
-	t_token	token;
+	char			*input;
+	t_token_list	*token_list;
+	t_token			token;
+	int				i;
 
 	ft_strlcpy(token.value, "", 1);
 	token.type = ARGUMENT_TOKEN;
@@ -156,4 +158,9 @@ void	lexer(void)
 			token.brackets = false;
 		}
 	}
+}
+
+int main()
+{
+	lexer();
 }
