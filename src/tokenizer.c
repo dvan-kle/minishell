@@ -6,28 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/29 15:45:27 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/02 15:35:04 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
-
-int	ft_isspace(char c)
-{
-	if (c == ' ')
-		return (1);
-	if (c == 9)
-		return (1);
-	if (c == 10)
-		return (1);
-	if (c == 11)
-		return (1);
-	if (c == 12)
-		return (1);
-	if (c == 13)
-		return (1);
-	return (0);
-}
+#include "../incl/tokenizer.h"
 
 t_token	handle_brackets(int i, char *input, t_token token)
 {
@@ -70,7 +53,8 @@ t_token	handle_rest(int i, char *input, t_token token)
 
 	i_len = ft_strlen(input);
 	j = 0;
-	while (i < i_len && !ft_isspace(input[i]) && input[i] != '>' && input[i] != '<' && input[i] != '|')
+	while (i < i_len && !ft_isspace(input[i])
+		&& input[i] != '>' && input[i] != '<' && input[i] != '|')
 	{
 		token.value[j] = input[i];
 		i++;
@@ -81,14 +65,33 @@ t_token	handle_rest(int i, char *input, t_token token)
 	{
 		token.value[0] = input[i];
 		token.value[1] = '\0';
-		if (input[i] == '>')
-			token.type = OUTPUT_REDIRECT_TOKEN;
-		else if (input[i] == '<')
-			token.type = INPUT_REDIRECT_TOKEN;
+		if (input[i] == '<')
+		{
+			if (input[i] + 1 == '<')
+			{
+				token.value[1] = input[i + 1];
+				token.value[2] = '\0';
+				token.type = READ_INPUT_TOKEN;
+			}
+			else
+				token.type = INPUT_REDIRECT_TOKEN;
+		}
 		else if (input[i] == '|')
 		{
 			token.type = PIPE_TOKEN;
 			token.new_cmd = true;
+		}
+		else if (input[i] == '>')
+		{
+			if (input[i + 1] == '>')
+			{
+				token.value[1] = input[i + 1];
+				token.value[2] = '\0';
+				token.type = OUTPUT_REDIRECT_APPEND_TOKEN;
+				i++;
+			}
+			else
+				token.type = OUTPUT_REDIRECT_TOKEN;
 		}
 		i++;
 	}
@@ -138,6 +141,7 @@ void	lexer(void)
 	token.type = ARGUMENT_TOKEN;
 	token.brackets = false;
 	token.new_cmd = true;
+	input = "cat Makefile | grep '.c' | wc -l >> hellocatlswc";
 	token = tokenize(token, input);
 	ft_printf("Type: %d, Value: %s\n", token.type, token.value);
 	input += ft_strlen(token.value);
