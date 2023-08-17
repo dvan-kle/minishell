@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/02 18:30:16 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/17 17:43:35 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ t_token	tokenize(t_token token, char *input)
 	i = 0;
 	j = 0;
 	input_len = ft_strlen(input);
+	token.next = NULL;
 	while (i < input_len && ft_isspace(input[i]))
 		i++;
 	if (i == input_len)
@@ -132,25 +133,20 @@ t_token	tokenize(t_token token, char *input)
 	return (token);
 }
 
-void	lexer(void)
+t_token	*lexer(char *input)
 {
-	char			*input;
-	t_token_list	*token_list;
+	t_token			*token_list;
 	t_token			token;
-	int				i;
 
-	ft_strlcpy(token.value, "", 1);
-	token.type = ARGUMENT_TOKEN;
-	token.brackets = false;
-	token.new_cmd = true;
-	input = "cat Makefile | grep '.c' | wc -l >> hellocatlswc";
+	token_list = NULL;
+	init_token(&token);
 	token = tokenize(token, input);
-	ft_printf("Type: %d, Value: %s\n", token.type, token.value);
+	token_list = list_add_back(token_list, token);
 	input += ft_strlen(token.value);
 	while (token.type != END_OF_CMD_TOKEN)
 	{
 		token = tokenize(token, input);
-		ft_printf("Type: %d, Value: %s\n", token.type, token.value);
+		token_list = list_add_back(token_list, token);
 		input += ft_strlen(token.value) + 1;
 		if (token.brackets == true)
 		{
@@ -158,9 +154,14 @@ void	lexer(void)
 			token.brackets = false;
 		}
 	}
+	return (token_list);
 }
 
-int main()
+int	main(void)
 {
-	lexer();
+	t_token	*token_list;
+
+	token_list = lexer("ls -l -a -R");
+	print_list(token_list);
+	free_list(token_list);
 }
