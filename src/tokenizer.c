@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/17 17:43:35 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/18 15:06:14 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,4 @@ t_token	*lexer(char *input)
 		}
 	}
 	return (token_list);
-}
-
-int	main(void)
-{
-	t_token	*token_list;
-
-	token_list = lexer("ls -l -a -R");
-	print_list(token_list);
-	free_list(token_list);
 }

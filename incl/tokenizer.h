@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/17 17:44:31 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/18 15:09:56 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct token{
 	t_token		*next;
 }t_token;
 
+t_token	*lexer(char *input);
 t_token	*list_add_back(t_token *curr_list, t_token token_to_be_added);
 t_token	*new_token(t_token token_to_be_added);
 void	print_list(t_token *token_list);
