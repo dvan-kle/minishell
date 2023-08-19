@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   list_fncs.c                                        :+:    :+:            */
+/*   token_list_fncs.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/17 17:55:41 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/19 15:08:29 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/tokenizer.h"
+#include "../../incl/tokenizer.h"
 
 t_token	*new_token(t_token token_to_be_added)
 {
