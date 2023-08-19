@@ -6,28 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/29 15:45:27 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/18 15:06:14 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
-
-int	ft_isspace(char c)
-{
-	if (c == ' ')
-		return (1);
-	if (c == 9)
-		return (1);
-	if (c == 10)
-		return (1);
-	if (c == 11)
-		return (1);
-	if (c == 12)
-		return (1);
-	if (c == 13)
-		return (1);
-	return (0);
-}
+#include "../incl/tokenizer.h"
 
 t_token	handle_brackets(int i, char *input, t_token token)
 {
@@ -70,7 +53,8 @@ t_token	handle_rest(int i, char *input, t_token token)
 
 	i_len = ft_strlen(input);
 	j = 0;
-	while (i < i_len && !ft_isspace(input[i]) && input[i] != '>' && input[i] != '<' && input[i] != '|')
+	while (i < i_len && !ft_isspace(input[i])
+		&& input[i] != '>' && input[i] != '<' && input[i] != '|')
 	{
 		token.value[j] = input[i];
 		i++;
@@ -81,14 +65,33 @@ t_token	handle_rest(int i, char *input, t_token token)
 	{
 		token.value[0] = input[i];
 		token.value[1] = '\0';
-		if (input[i] == '>')
-			token.type = OUTPUT_REDIRECT_TOKEN;
-		else if (input[i] == '<')
-			token.type = INPUT_REDIRECT_TOKEN;
+		if (input[i] == '<')
+		{
+			if (input[i] + 1 == '<')
+			{
+				token.value[1] = input[i + 1];
+				token.value[2] = '\0';
+				token.type = READ_INPUT_TOKEN;
+			}
+			else
+				token.type = INPUT_REDIRECT_TOKEN;
+		}
 		else if (input[i] == '|')
 		{
 			token.type = PIPE_TOKEN;
 			token.new_cmd = true;
+		}
+		else if (input[i] == '>')
+		{
+			if (input[i + 1] == '>')
+			{
+				token.value[1] = input[i + 1];
+				token.value[2] = '\0';
+				token.type = OUTPUT_REDIRECT_APPEND_TOKEN;
+				i++;
+			}
+			else
+				token.type = OUTPUT_REDIRECT_TOKEN;
 		}
 		i++;
 	}
@@ -114,6 +117,7 @@ t_token	tokenize(t_token token, char *input)
 	i = 0;
 	j = 0;
 	input_len = ft_strlen(input);
+	token.next = NULL;
 	while (i < input_len && ft_isspace(input[i]))
 		i++;
 	if (i == input_len)
@@ -129,22 +133,20 @@ t_token	tokenize(t_token token, char *input)
 	return (token);
 }
 
-void	lexer(void)
+t_token	*lexer(char *input)
 {
-	char	*input;
-	t_token	token;
+	t_token			*token_list;
+	t_token			token;
 
-	ft_strlcpy(token.value, "", 1);
-	token.type = ARGUMENT_TOKEN;
-	token.brackets = false;
-	token.new_cmd = true;
+	token_list = NULL;
+	init_token(&token);
 	token = tokenize(token, input);
-	ft_printf("Type: %d, Value: %s\n", token.type, token.value);
+	token_list = list_add_back(token_list, token);
 	input += ft_strlen(token.value);
 	while (token.type != END_OF_CMD_TOKEN)
 	{
 		token = tokenize(token, input);
-		ft_printf("Type: %d, Value: %s\n", token.type, token.value);
+		token_list = list_add_back(token_list, token);
 		input += ft_strlen(token.value) + 1;
 		if (token.brackets == true)
 		{
@@ -152,4 +154,5 @@ void	lexer(void)
 			token.brackets = false;
 		}
 	}
+	return (token_list);
 }

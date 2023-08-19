@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/29 13:49:36 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/18 15:09:56 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,26 @@ typedef enum token_type{
 	INPUT_REDIRECT_TOKEN,
 	OUTPUT_REDIRECT_TOKEN,
 	PIPE_TOKEN,
-	END_OF_CMD_TOKEN,
 	READ_INPUT_TOKEN,
-	OUTPUT_REDIRECT_APPEND_TOKEN
+	OUTPUT_REDIRECT_APPEND_TOKEN,
+	END_OF_CMD_TOKEN
 }t_tokentype;
+
+typedef struct token	t_token;
 
 typedef struct token{
 	t_tokentype	type;
 	char		value[MAX_LEN];
 	bool		brackets;
 	bool		new_cmd;
+	t_token		*next;
 }t_token;
+
+t_token	*lexer(char *input);
+t_token	*list_add_back(t_token *curr_list, t_token token_to_be_added);
+t_token	*new_token(t_token token_to_be_added);
+void	print_list(t_token *token_list);
+void	free_list(t_token *token_list);
+void	init_token(t_token *token);
 
 #endif

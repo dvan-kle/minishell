@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:43:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/07/25 14:45:45 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/02 13:03:39 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			ft_isalpha(int a);
 int			ft_isascii(int a);
 int			ft_isdigit(int a);
 int			ft_isprint(int a);
+int			ft_isspace(int c);
 void		*ft_memcpy(void *dest, const void *src, size_t size);
 void		*ft_memmove(void *dest, const void *src, size_t num);
 void		*ft_memset(void *str, int val, size_t size);
