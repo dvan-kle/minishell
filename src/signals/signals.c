@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_isprint.c                                       :+:    :+:            */
+/*   signals.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
+/*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/06 11:01:14 by tde-brui      #+#    #+#                 */
-/*   Updated: 2022/10/06 15:46:09 by tde-brui      ########   odam.nl         */
+/*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
+/*   Updated: 2023/08/02 18:16:07 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isprint(int a)
+#include <sys/signal.h>
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+void	sig_handler(int signum)
 {
-	if (a < 127 && a > 31)
+	printf("\nminishell >");
+}
+
+int	main(void)
+{
+	while (1)
 	{
-		return (1);
+		signal(SIGINT, sig_handler);
+		sleep(1);
 	}
-	else
-	{
-		return (0);
-	}
+	return (0);
 }

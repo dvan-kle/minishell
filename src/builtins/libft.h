@@ -6,7 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:43:31 by tde-brui      #+#    #+#                 */
+<<<<<<< HEAD:src/builtins/libft.h
+/*   Updated: 2023/07/25 16:01:19 by dvan-kle      ########   odam.nl         */
+=======
 /*   Updated: 2023/08/02 13:03:39 by tde-brui      ########   odam.nl         */
+>>>>>>> master:libft/libft.h
 /*                                                                            */
 /* ************************************************************************** */
 
