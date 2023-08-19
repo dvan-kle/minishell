@@ -6,11 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/18 15:06:14 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/19 15:08:33 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/tokenizer.h"
+#include "../../incl/tokenizer.h"
 
 t_token	handle_brackets(int i, char *input, t_token token)
 {

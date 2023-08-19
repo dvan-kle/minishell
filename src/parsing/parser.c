@@ -6,12 +6,12 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/19 14:50:06 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/19 15:08:16 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/parser.h"
-#include "../incl/tokenizer.h"
+#include "../../incl/parser.h"
+#include "../../incl/tokenizer.h"
 
 int	arg_token_count(t_token *to_be_added)
 {
