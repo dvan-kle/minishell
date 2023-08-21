@@ -6,82 +6,63 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/19 17:51:10 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/21 17:15:19 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "../../incl/env.h"
 #include "../../libft/libft.h"
 
-void	env(char **envp)
+void	env(t_env_list *env_list)
 {
-	int	i;
+	t_env_list	*lst_head;
 
-	i = 0;
-	while (envp[i])
+	lst_head = env_list;
+	while (lst_head)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		printf("%s=%s\n", lst_head->key, lst_head->value);
+		lst_head = lst_head->next;
 	}
 }
 
-char	**export(char **envp, char *input)
+void	export(t_env_list *env_list, char *input)
 {
-	int		i;
-	int		env_count;
-	char	**new_env;
-
-	env_count = 0;
-	while (envp[env_count])
-		env_count++;
-	new_env = malloc(sizeof(char *) * (env_count + 2));
-	if (!new_env)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		if (i == (env_count - 2))
-			new_env[i] = ft_strdup(input);
-		else
-			new_env[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	new_env[i] = NULL;
-	return (new_env);
+	env_add_back(input, &env_list);
 }
 
-char	**unset(char **envp, char *argv)
+void	unset(t_env_list *env_list, char *input)
 {
-	int		i;
-	int		j;
-	int		env_count;
-	char	**new_env;
+	t_env_list	*lst_head;
+	t_env_list	*lst_prev;
 
-	i = 0;
-	env_count = 0;
-	while (envp[env_count])
-		env_count++;
-	new_env = malloc(sizeof(char *) * env_count);
-	if (!new_env)
-		return (NULL);
-	while (envp[i])
+	lst_head = env_list;
+	lst_prev = NULL;
+	while (lst_head)
 	{
-		j = 0;
-		while (envp[i][j] == argv[j] && envp[i][j] != '=')
-			j++;
-		if (envp[i][j] != '=')
-			new_env[i] = ft_strdup(envp[i]);
-		i++;
+		if (!ft_strncmp(lst_head->key, input, ft_strlen(input)))
+		{
+			if (lst_prev)
+				lst_prev->next = lst_head->next;
+			else
+				lst_head = lst_head->next;
+			free(lst_head->key);
+			free(lst_head->value);
+			free(lst_head);
+			return ;
+		}
+		lst_prev = lst_head;
+		lst_head = lst_head->next;
 	}
-	new_env[i] = NULL;
-	return (new_env);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	argc = 1;
-	envp = export(envp, argv[1]);
-	env(envp);
-	envp = unset(envp, "lol");
-	env(envp);
+	t_env_list	*env_list;
+
+	env_list = make_env_list(envp);
+	export(env_list, "TEST=TEST");
+	export(env_list, "TEST2=TEST2");
+	unset(env_list, "TEST");
+	env(env_list);
 }
