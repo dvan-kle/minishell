@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 13:31:44 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/21 17:21:19 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/22 18:33:06 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,22 @@ int	cd(const char *path)
 	return (0);
 }
 
-int main(void)
+void	pwd(void)
 {
-	char *pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
-	cd("..");
-	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
-	cd("../tijmen_test");
+	char	*pwd;
+
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 }
+
+// int main(void)
+// {
+// 	char *pwd = getcwd(NULL, 0);
+// 	printf("%s\n", pwd);
+// 	cd("..");
+// 	pwd = getcwd(NULL, 0);
+// 	printf("%s\n", pwd);
+// 	cd("../tijmen_test");
+// 	pwd = getcwd(NULL, 0);
+// 	printf("%s\n", pwd);
+// }

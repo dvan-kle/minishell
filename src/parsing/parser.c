@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/19 15:08:16 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/22 17:56:11 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,24 @@ t_cmd_table	*cmd_add_back(t_cmd_table *cmd_table, t_token *to_be_added)
 	return (lst);
 }
 
+void	print_cmd_table(t_cmd_table *cmd_table)
+{
+	int	i;
+
+	while (cmd_table != NULL)
+	{
+		i = 0;
+		printf("COMMAND : %s\n", cmd_table->cmd);
+		printf("ARGS : \n");
+		while (cmd_table->args[i] != NULL)
+		{
+			printf("%s\n", cmd_table->args[i]);
+			i++;
+		}
+		cmd_table = cmd_table->next;
+	}
+}
+
 t_cmd_table	*make_cmd_table(t_token	*token_list)
 {
 	t_cmd_table	*cmd_table;
@@ -94,38 +112,6 @@ t_cmd_table	*make_cmd_table(t_token	*token_list)
 			break ;
 		curr_token = curr_token->next;
 	}
+	print_cmd_table(cmd_table);
 	return (cmd_table);
-}
-
-int	main(int argc, char **argv)
-{
-	t_token		*token_list;
-	t_cmd_table	*cmd_table;
-	int			i;
-	int			y;
-	char		*input;
-
-	y = 1;
-	input = ft_strdup("");
-	while (argv[y])
-	{
-		input = ft_strjoin(input, argv[y]);
-		if (y != argc)
-			input = ft_strjoin(input, " ");
-		y++;
-	}
-	token_list = lexer(input);
-	cmd_table = make_cmd_table(token_list);
-	while (cmd_table != NULL)
-	{
-		i = 0;
-		printf("COMMAND : %s\n", cmd_table->cmd);
-		printf("ARGS : \n");
-		while (cmd_table->args[i] != NULL)
-		{
-			printf("%s\n", cmd_table->args[i]);
-			i++;
-		}
-		cmd_table = cmd_table->next;
-	}
 }

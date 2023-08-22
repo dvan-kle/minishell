@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/21 17:15:19 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/22 15:35:45 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	unset(t_env_list *env_list, char *input)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_env_list	*env_list;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_env_list	*env_list;
 
-	env_list = make_env_list(envp);
-	export(env_list, "TEST=TEST");
-	export(env_list, "TEST2=TEST2");
-	unset(env_list, "TEST");
-	env(env_list);
-}
+// 	env_list = make_env_list(envp);
+// 	export(env_list, "TEST=TEST");
+// 	export(env_list, "TEST2=TEST2");
+// 	unset(env_list, "TEST");
+// 	env(env_list);
+// }
