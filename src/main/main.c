@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/22 18:33:35 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/23 11:20:08 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ char	*get_line(void)
 	if (line)
 		free(line);
 	line = readline("minishell$ ");
+	if (line[0] == '\0')
+		return (NULL);
+	add_history(line);
 	return (line);
 }
 
@@ -44,8 +47,8 @@ int	check_builtin(char *input, t_cmd_table *cmd_table)
 		unset(cmd_table->env_list, input_split[1]);
 	if (!ft_strncmp(input, "cd", 2))
 		cd(input_split[1]);
-	if (ft_strncmp(input, "pwd", 3))
-		pwd();
+	// if (ft_strncmp(input, "pwd", 3))
+	// 	printf("%s", getcwd(NULL, 0));
 	free(input_split);
 	return (0);
 }
@@ -61,10 +64,10 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = get_line();
-		if (check_builtin(input, cmd_table))
-			break ;
+		if (!input)
+			continue ;
+		check_builtin(input, cmd_table);
 		token_list = lexer(input);
-		cmd_table = make_cmd_table(token_list);
-		free_list(token_list);
+		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
 	}
 }
