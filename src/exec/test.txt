@@ -1,5 +1,0 @@
-hallo deze test moet gecat worden
-maar hij mag maar tot de delim KEES
-als die 
-KEES
-alleen op een line staat
