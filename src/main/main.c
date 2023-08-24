@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/23 11:20:08 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/24 18:17:13 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ int	check_builtin(char *input, t_cmd_table *cmd_table)
 		unset(cmd_table->env_list, input_split[1]);
 	if (!ft_strncmp(input, "cd", 2))
 		cd(input_split[1]);
-	// if (ft_strncmp(input, "pwd", 3))
-	// 	printf("%s", getcwd(NULL, 0));
+	if (!ft_strncmp(input, "pwd", 3))
+		printf("%s\n", getcwd(NULL, 0));
+	if (!ft_strncmp(input, "clear", 5))
+		printf("\033[2J\033[1;1H");
 	free(input_split);
 	return (0);
 }
