@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/23 11:25:47 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/24 18:56:29 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,10 @@ t_token	handle_brackets(int i, char *input, t_token token)
 	input_len = ft_strlen(input);
 	j = 0;
 	if (input[i] == '-')
-	{
-		while (i < input_len && !ft_isspace(input[i]) && j < MAX_LEN)
-		{
-			token.value[j] = input[i];
-			i++;
-			j++;
-		}
-	}
+		j = assign_minus(&token, input, i);
 	else
 	{
-		i++;
-		while (i < input_len && input[i] != bracket && j < MAX_LEN)
-		{
-			token.value[j] = input[i];
-			i++;
-			j++;
-		}
+		j = assign_bracket(&token, input, i, bracket);
 		token.brackets = true;
 	}
 	token.value[j] = '\0';
@@ -62,49 +49,9 @@ t_token	handle_rest(int i, char *input, t_token token)
 	}
 	token.value[j] = '\0';
 	if (input[i] == '>' || input[i] == '<' || input[i] == '|')
-	{
-		token.value[0] = input[i];
-		token.value[1] = '\0';
-		if (input[i] == '<')
-		{
-			if (input[i] + 1 == '<')
-			{
-				token.value[1] = input[i + 1];
-				token.value[2] = '\0';
-				token.type = READ_INPUT_TOKEN;
-			}
-			else
-				token.type = INPUT_REDIRECT_TOKEN;
-		}
-		else if (input[i] == '|')
-		{
-			token.type = PIPE_TOKEN;
-			token.new_cmd = true;
-		}
-		else if (input[i] == '>')
-		{
-			if (input[i + 1] == '>')
-			{
-				token.value[1] = input[i + 1];
-				token.value[2] = '\0';
-				token.type = OUTPUT_REDIRECT_APPEND_TOKEN;
-				i++;
-			}
-			else
-				token.type = OUTPUT_REDIRECT_TOKEN;
-		}
-		i++;
-	}
+		i += assign_token(&token, input, i) + 1;
 	else
-	{
-		if (token.new_cmd == true)
-		{
-			token.type = CMD_TOKEN;
-			token.new_cmd = false;
-		}
-		else
-			token.type = ARGUMENT_TOKEN;
-	}
+		check_new_cmd(&token);
 	return (token);
 }
 

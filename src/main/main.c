@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/23 11:20:08 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/24 18:09:43 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ void	ft_leaks(void)
 	system("leaks a.out");
 }
 
-int	check_builtin(char *input, t_cmd_table *cmd_table)
+bool	check_builtin(char *input, t_cmd_table *cmd_table)
 {
 	char	**input_split;
 
 	input_split = ft_split(input, ' ');
 	if (!ft_strncmp(input, "exit", 4))
-		exit(0);
+		exit(1);
 	if (!ft_strncmp(input, "env", 3))
 		env(cmd_table->env_list);
 	if (!ft_strncmp(input, "export", 6))
@@ -47,8 +47,8 @@ int	check_builtin(char *input, t_cmd_table *cmd_table)
 		unset(cmd_table->env_list, input_split[1]);
 	if (!ft_strncmp(input, "cd", 2))
 		cd(input_split[1]);
-	// if (ft_strncmp(input, "pwd", 3))
-	// 	printf("%s", getcwd(NULL, 0));
+	if (!ft_strncmp(input, "pwd", 3))
+		printf("%s", getcwd(NULL, 0));
 	free(input_split);
 	return (0);
 }
@@ -66,8 +66,12 @@ int	main(int argc, char **argv, char **envp)
 		input = get_line();
 		if (!input)
 			continue ;
-		check_builtin(input, cmd_table);
+		if (check_builtin(input, cmd_table))
+			break ;
 		token_list = lexer(input);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
+		free_token_list(token_list);
+		free_cmd_table(cmd_table);
 	}
+	free_env_list(cmd_table->env_list);
 }
