@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 18:17:13 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/25 15:49:17 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ int	main(int argc, char **argv, char **envp)
 		check_builtin(input, cmd_table);
 		token_list = lexer(input);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
+		test_execute_single_pipe(cmd_table);
 	}
 }
