@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:22:36 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/25 15:48:38 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,10 @@ void	print_cmd_table(t_cmd_table *cmd_table)
 void	free_cmd_table(t_cmd_table *cmd_table)
 {
 	int			i;
-	t_cmd_table	*curr;
 
 	while (cmd_table != NULL)
 	{
 		i = 0;
-		curr = cmd_table;
 		while (cmd_table->args[i])
 		{
 			free(cmd_table->args[i]);
@@ -112,7 +110,7 @@ void	free_cmd_table(t_cmd_table *cmd_table)
 	}
 }
 
-t_cmd_table	*make_cmd_table(t_token	*token_list, t_env_list *env_list, char **envp)
+t_cmd_table	*make_cmd_table(t_token	*token_list, t_env_list *env_list)
 {
 	t_cmd_table	*cmd_table;
 	t_token		*curr_token;

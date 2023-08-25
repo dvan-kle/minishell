@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 18:09:43 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/25 15:45:10 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_list;
 	char		*input;
 
+	argc = 0;
+	argv = NULL;
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->env_list = make_env_list(envp);
 	while (1)
