@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/23 13:58:57 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/27 22:27:03 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ int	execute(char **args)
 
 	folders = get_folders();
 	command_fold = ft_strjoin("/", args[0]);
+	printf("%s\n", command_fold);
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
+		printf("%s\n", check_access);
 		if (access(check_access, X_OK) == 0)
 		{
 			printf("found\n");

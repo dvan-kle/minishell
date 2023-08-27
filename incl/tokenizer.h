@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/25 17:34:43 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/27 20:42:00 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "../libft/libft.h"
 # include <stdbool.h>
 # include <stdio.h>
-
-# define MAX_LEN 100
 
 typedef enum token_type{
 	CMD_TOKEN,
@@ -34,7 +32,7 @@ typedef struct token	t_token;
 
 typedef struct token{
 	t_tokentype	type;
-	char		value[MAX_LEN];
+	char		*value;
 	bool		brackets;
 	bool		new_cmd;
 	int			whitespaces;
@@ -47,6 +45,7 @@ t_token	*new_token(t_token token_to_be_added);
 void	print_list(t_token *token_list);
 void	free_list(t_token *token_list);
 void	init_token(t_token *token);
+int		malloc_count(char *str, int i, char c);
 void	assign_token(t_token *token, char *type, int i);
 int		assign_minus(t_token *token, char *type, int i);
 int		assign_bracket(t_token *token, char *type, int i, char bracket);

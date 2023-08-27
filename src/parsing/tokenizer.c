@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/27 17:26:56 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/27 22:36:27 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ t_token	handle_rest(int i, char *input, t_token token)
 		assign_token(&token, input, i);
 		return (token);
 	}
+	token.value = malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
+	if (!token.value)
+		exit(1);
 	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|')
 	{
 		token.value[j] = input[i];
@@ -56,22 +59,23 @@ t_token	handle_rest(int i, char *input, t_token token)
 
 t_token	tokenize(t_token token, char *input)
 {
-	int		i;
+	size_t	i;
 	int		whitespaces;
-	int		input_len;
 
 	i = 0;
 	whitespaces = 0;
-	input_len = ft_strlen(input);
 	token.next = NULL;
-	while (i < input_len && ft_isspace(input[i]))
+	while (i < ft_strlen(input) && ft_isspace(input[i]))
 	{
 		i++;
 		whitespaces++;
 	}
-	if (i == input_len)
+	if (i == ft_strlen(input))
 	{
 		token.type = END_OF_CMD_TOKEN;
+		token.value = malloc(sizeof(char) * 1);
+		if (!token.value)
+			exit(1);
 		ft_strlcpy(token.value, "", 1);
 		return (token);
 	}
@@ -90,9 +94,6 @@ t_token	*lexer(char *input)
 
 	token_list = NULL;
 	init_token(&token);
-	token = tokenize(token, input);
-	token_list = list_add_back(token_list, token);
-	input += ft_strlen(token.value) + token.whitespaces;
 	while (token.type != END_OF_CMD_TOKEN)
 	{
 		token = tokenize(token, input);
@@ -104,6 +105,6 @@ t_token	*lexer(char *input)
 			token.brackets = false;
 		}
 	}
-	print_list(token_list);
+	//print_list(token_list);
 	return (token_list);
 }

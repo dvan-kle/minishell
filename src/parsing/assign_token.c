@@ -6,27 +6,37 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/27 17:21:58 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/27 20:43:52 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 
+void	assign_redirect(t_token *token, char *type, int i, 
+t_tokentype first, t_tokentype second)
+{
+	if (type[i + 1] == type[i])
+	{
+		token->value[1] = type[i + 1];
+		token->value[2] = '\0';
+		token->type = first;
+	}
+	else
+		token->type = second;
+}
+
 void	assign_token(t_token *token, char *type, int i)
 {
+	if (ft_isspace(type[i + 1]) || !type[i])
+		token->value = malloc(sizeof(char) * 1);
+	else
+		token->value = malloc(sizeof(char) * 2);
+	if (!token->value)
+		exit(1);
 	token->value[0] = type[i];
 	token->value[1] = '\0';
 	if (type[i] == '<')
-	{
-		if (type[i + 1] == '<')
-		{
-			token->value[1] = type[i + 1];
-			token->value[2] = '\0';
-			token->type = READ_INPUT_TOKEN;
-		}
-		else
-			token->type = INPUT_REDIRECT_TOKEN;
-	}
+		assign_redirect(token, type, i, READ_INPUT_TOKEN, INPUT_REDIRECT_TOKEN);
 	else if (type[i] == '|')
 	{
 		token->value[0] = '|';
@@ -35,16 +45,7 @@ void	assign_token(t_token *token, char *type, int i)
 		token->new_cmd = true;
 	}
 	else if (type[i] == '>')
-	{
-		if (type[i + 1] == '>')
-		{
-			token->value[1] = type[i + 1];
-			token->value[2] = '\0';
-			token->type = OUTPUT_REDIRECT_APPEND_TOKEN;
-		}
-		else
-			token->type = OUTPUT_REDIRECT_TOKEN;
-	}
+		assign_redirect(token, type, i, OUTPUT_REDIRECT_APPEND_TOKEN, OUTPUT_REDIRECT_TOKEN);
 }
 
 int	assign_minus(t_token *token, char *type, int i)
@@ -52,9 +53,12 @@ int	assign_minus(t_token *token, char *type, int i)
 	int		input_len;
 	int		j;
 
+	token->value = malloc(sizeof(char) * malloc_count(type, i, '|') + 1);
+	if (!token->value)
+		exit(1);
 	input_len = ft_strlen(type);
 	j = 0;
-	while (i < input_len && !ft_isspace(type[i]) && j < MAX_LEN && type[i] != '|')
+	while (i < input_len && !ft_isspace(type[i]) && type[i] != '|')
 	{
 		token->value[j] = type[i];
 		i++;
@@ -70,7 +74,10 @@ int	assign_bracket(t_token *token, char *type, int i, char bracket)
 
 	input_len = ft_strlen(type);
 	j = 0;
-	while (i < input_len && type[i] != bracket && j < MAX_LEN)
+	token->value = malloc(sizeof(char) * malloc_count(type, i, bracket) + 1);
+	if (!token->value)
+		exit(1);
+	while (i < input_len && type[i] != bracket)
 	{
 		token->value[j] = type[i];
 		i++;

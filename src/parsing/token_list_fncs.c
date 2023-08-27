@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/25 17:04:05 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/27 20:38:04 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ t_token	*new_token(t_token token_to_be_added)
 	i = 0;
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (NULL);
+		exit(1);
+	new_token->value = malloc(sizeof(char) * ft_strlen(token_to_be_added.value) + 1);
+	if (!new_token->value)
+		exit(1);
 	while (token_to_be_added.value[i])
 	{
 		new_token->value[i] = token_to_be_added.value[i];
@@ -74,6 +77,7 @@ void	free_token_list(t_token *token_list)
 	{
 		tmp = lst->next;
 		free(lst);
+		free(lst->value);
 		lst = tmp;
 	}
 }

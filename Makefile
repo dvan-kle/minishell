@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/08/25 15:58:40 by tijmendebru   ########   odam.nl          #
+#    Updated: 2023/08/27 18:47:58 by tijmendebru   ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = libft/libft.a
 LIBS = -lreadline
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra
+CC_FLAGS = -Wall -Wextra 
 SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c \
         src/exec/folders.c src/exec/exec.c src/exec/pipe.c \
         src/main/main.c \
