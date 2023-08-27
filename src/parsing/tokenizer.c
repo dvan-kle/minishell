@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 18:56:29 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/27 17:26:56 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,16 @@
 t_token	handle_brackets(int i, char *input, t_token token)
 {
 	char	bracket;
-	int		input_len;
 	int		j;
 
-	bracket = input[i];
-	input_len = ft_strlen(input);
 	j = 0;
 	if (input[i] == '-')
 		j = assign_minus(&token, input, i);
 	else
 	{
+		bracket = input[i];
+		i++;
 		j = assign_bracket(&token, input, i, bracket);
-		token.brackets = true;
 	}
 	token.value[j] = '\0';
 	token.type = ARGUMENT_TOKEN;
@@ -40,33 +38,37 @@ t_token	handle_rest(int i, char *input, t_token token)
 
 	i_len = ft_strlen(input);
 	j = 0;
-	while (i < i_len && !ft_isspace(input[i])
-		&& input[i] != '>' && input[i] != '<' && input[i] != '|')
+	if (input[i] == '<' || input[i] == '>' || input[i] == '|')
+	{
+		assign_token(&token, input, i);
+		return (token);
+	}
+	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|')
 	{
 		token.value[j] = input[i];
 		i++;
 		j++;
 	}
 	token.value[j] = '\0';
-	if (input[i] == '>' || input[i] == '<' || input[i] == '|')
-		i += assign_token(&token, input, i) + 1;
-	else
-		check_new_cmd(&token);
+	check_new_cmd(&token);
 	return (token);
 }
 
 t_token	tokenize(t_token token, char *input)
 {
 	int		i;
-	int		j;
+	int		whitespaces;
 	int		input_len;
 
 	i = 0;
-	j = 0;
+	whitespaces = 0;
 	input_len = ft_strlen(input);
 	token.next = NULL;
 	while (i < input_len && ft_isspace(input[i]))
+	{
 		i++;
+		whitespaces++;
+	}
 	if (i == input_len)
 	{
 		token.type = END_OF_CMD_TOKEN;
@@ -77,6 +79,7 @@ t_token	tokenize(t_token token, char *input)
 		token = handle_brackets(i, input, token);
 	else
 		token = handle_rest(i, input, token);
+	token.whitespaces = whitespaces;
 	return (token);
 }
 
@@ -89,12 +92,12 @@ t_token	*lexer(char *input)
 	init_token(&token);
 	token = tokenize(token, input);
 	token_list = list_add_back(token_list, token);
-	input += ft_strlen(token.value);
+	input += ft_strlen(token.value) + token.whitespaces;
 	while (token.type != END_OF_CMD_TOKEN)
 	{
 		token = tokenize(token, input);
 		token_list = list_add_back(token_list, token);
-		input += ft_strlen(token.value) + 1;
+		input += ft_strlen(token.value) + token.whitespaces;
 		if (token.brackets == true)
 		{
 			input += 2;

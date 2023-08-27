@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 15:18:04 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/25 17:04:05 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	print_list(t_token *token_list)
 	t_token	*lst;
 
 	lst = token_list;
-	while (lst->next != NULL)
+	while (lst)
 	{
 		printf("Type: %d, Value: %s\n", lst->type, lst->value);
 		lst = lst->next;

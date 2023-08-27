@@ -6,13 +6,13 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 18:56:57 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/27 17:21:58 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 
-int	assign_token(t_token *token, char *type, int i)
+void	assign_token(t_token *token, char *type, int i)
 {
 	token->value[0] = type[i];
 	token->value[1] = '\0';
@@ -23,13 +23,14 @@ int	assign_token(t_token *token, char *type, int i)
 			token->value[1] = type[i + 1];
 			token->value[2] = '\0';
 			token->type = READ_INPUT_TOKEN;
-			return (1);
 		}
 		else
 			token->type = INPUT_REDIRECT_TOKEN;
 	}
 	else if (type[i] == '|')
 	{
+		token->value[0] = '|';
+		token->value[1] = '\0';
 		token->type = PIPE_TOKEN;
 		token->new_cmd = true;
 	}
@@ -40,12 +41,10 @@ int	assign_token(t_token *token, char *type, int i)
 			token->value[1] = type[i + 1];
 			token->value[2] = '\0';
 			token->type = OUTPUT_REDIRECT_APPEND_TOKEN;
-			return (1);
 		}
 		else
 			token->type = OUTPUT_REDIRECT_TOKEN;
 	}
-	return (0);
 }
 
 int	assign_minus(t_token *token, char *type, int i)
@@ -55,7 +54,7 @@ int	assign_minus(t_token *token, char *type, int i)
 
 	input_len = ft_strlen(type);
 	j = 0;
-	while (i < input_len && !ft_isspace(type[i]) && j < MAX_LEN)
+	while (i < input_len && !ft_isspace(type[i]) && j < MAX_LEN && type[i] != '|')
 	{
 		token->value[j] = type[i];
 		i++;
@@ -77,6 +76,7 @@ int	assign_bracket(t_token *token, char *type, int i, char bracket)
 		i++;
 		j++;
 	}
+	token->brackets = true;
 	return (j);
 }
 
