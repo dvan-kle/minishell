@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/27 19:07:38 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/28 14:35:14 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,41 @@ char	*get_line(void)
 	return (line);
 }
 
+bool	check_builtin(t_cmd_table *cmd_table)
+{
+	if (!ft_strncmp(cmd_table->args[0], "exit", 4))
+		exit(1);
+	if (!ft_strncmp(cmd_table->args[0], "env", 3))
+	{
+		env(cmd_table->env_list);
+		return (true);
+	}
+	if (!ft_strncmp(cmd_table->args[0], "export", 6))
+	{
+		export(cmd_table->env_list, cmd_table->args[1]);
+		return (true);
+	}
+	if (!ft_strncmp(cmd_table->args[0], "unset", 5))
+	{
+		unset(cmd_table->env_list, cmd_table->args[1]);
+		return (true);
+	}
+	if (!ft_strncmp(cmd_table->args[0], "cd", 2))
+	{
+		cd(cmd_table->args[1]);
+		return (true);
+	}
+	if (!ft_strncmp(cmd_table->args[0], "pwd", 3))
+	{
+		printf("%s", getcwd(NULL, 0));
+		return (true);
+	}
+	return (false);
+}
+
 void	ft_leaks(void)
 {
 	system("leaks a.out");
-}
-
-bool	check_builtin(char *input, t_cmd_table *cmd_table)
-{
-	char	**input_split;
-
-	input_split = ft_split(input, ' ');
-	if (!ft_strncmp(input, "exit", 4))
-		exit(1);
-	if (!ft_strncmp(input, "env", 3))
-		env(cmd_table->env_list);
-	if (!ft_strncmp(input, "export", 6))
-		export(cmd_table->env_list, input_split[1]);
-	if (!ft_strncmp(input, "unset", 5))
-		unset(cmd_table->env_list, input_split[1]);
-	if (!ft_strncmp(input, "cd", 2))
-		cd(input_split[1]);
-	if (!ft_strncmp(input, "pwd", 3))
-		printf("%s", getcwd(NULL, 0));
-	free(input_split);
-	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -68,12 +79,12 @@ int	main(int argc, char **argv, char **envp)
 		input = get_line();
 		if (!input)
 			continue ;
-		if (check_builtin(input, cmd_table))
-			break ;
 		token_list = lexer(input);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
+		if (check_builtin(cmd_table))
+			continue ;
 		free_token_list(token_list);
-		free_cmd_table(cmd_table);
+		//free_cmd_table(cmd_table);
 	}
 	free_env_list(cmd_table->env_list);
 }

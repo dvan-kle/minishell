@@ -6,35 +6,25 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/27 20:38:04 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/28 13:12:58 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 
-t_token	*new_token(t_token token_to_be_added)
+t_token	*new_token(t_token old_token)
 {
-	t_token	*new_token;
-	int		i;
+	t_token	*n_token;
 
-	i = 0;
-	new_token = malloc(sizeof(t_token));
-	if (!new_token)
+	n_token = malloc(sizeof(t_token));
+	if (!n_token)
 		exit(1);
-	new_token->value = malloc(sizeof(char) * ft_strlen(token_to_be_added.value) + 1);
-	if (!new_token->value)
-		exit(1);
-	while (token_to_be_added.value[i])
-	{
-		new_token->value[i] = token_to_be_added.value[i];
-		i++;
-	}
-	new_token->value[i] = '\0';
-	new_token->type = token_to_be_added.type;
-	new_token->brackets = NULL;
-	new_token->new_cmd = NULL;
-	new_token->next = NULL;
-	return (new_token);
+	n_token->value = old_token.value;
+	n_token->type = old_token.type;
+	n_token->brackets = NULL;
+	n_token->new_cmd = NULL;
+	n_token->next = NULL;
+	return (n_token);
 }
 
 t_token	*list_add_back(t_token *curr_list, t_token token_to_be_added)
@@ -71,13 +61,14 @@ void	free_token_list(t_token *token_list)
 {
 	t_token	*lst;
 	t_token	*tmp;
+	int		i;
 
 	lst = token_list;
-	while (lst != NULL)
+	while (lst)
 	{
 		tmp = lst->next;
-		free(lst);
 		free(lst->value);
+		free(lst);
 		lst = tmp;
 	}
 }
