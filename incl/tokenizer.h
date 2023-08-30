@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/28 12:42:07 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/30 14:38:24 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TOKENIZER_H
 
 # include "../libft/libft.h"
+# include <stdlib.h>
 # include <stdbool.h>
 # include <stdio.h>
 

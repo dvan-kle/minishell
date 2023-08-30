@@ -6,14 +6,14 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/27 20:43:52 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/08/30 18:51:24 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 
 void	assign_redirect(t_token *token, char *type, int i, 
-t_tokentype first, t_tokentype second)
+t_tokentype first)
 {
 	if (type[i + 1] == type[i])
 	{
@@ -22,21 +22,21 @@ t_tokentype first, t_tokentype second)
 		token->type = first;
 	}
 	else
-		token->type = second;
+		token->type = first - 3;
 }
 
 void	assign_token(t_token *token, char *type, int i)
 {
 	if (ft_isspace(type[i + 1]) || !type[i])
-		token->value = malloc(sizeof(char) * 1);
-	else
 		token->value = malloc(sizeof(char) * 2);
+	else
+		token->value = malloc(sizeof(char) * 3);
 	if (!token->value)
 		exit(1);
 	token->value[0] = type[i];
 	token->value[1] = '\0';
 	if (type[i] == '<')
-		assign_redirect(token, type, i, READ_INPUT_TOKEN, INPUT_REDIRECT_TOKEN);
+		assign_redirect(token, type, i, READ_INPUT_TOKEN);
 	else if (type[i] == '|')
 	{
 		token->value[0] = '|';
@@ -45,7 +45,7 @@ void	assign_token(t_token *token, char *type, int i)
 		token->new_cmd = true;
 	}
 	else if (type[i] == '>')
-		assign_redirect(token, type, i, OUTPUT_REDIRECT_APPEND_TOKEN, OUTPUT_REDIRECT_TOKEN);
+		assign_redirect(token, type, i, OUTPUT_REDIRECT_APPEND_TOKEN);
 }
 
 int	assign_minus(t_token *token, char *type, int i)

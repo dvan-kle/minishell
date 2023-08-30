@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/28 13:12:58 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/30 10:51:16 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	free_token_list(t_token *token_list)
 {
 	t_token	*lst;
 	t_token	*tmp;
-	int		i;
 
 	lst = token_list;
 	while (lst)
