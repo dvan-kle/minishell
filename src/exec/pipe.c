@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:27:09 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/25 17:44:36 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,40 @@ void	execute_child(int pipe_fd[2], t_cmd_table *cmd_table)
 	execute(cmd_table->args);
 }
 
-void	test_execute(t_cmd_table *cmd_table)
+void	test_execute(t_cmd_table *cmd_table, int pipe_count)
 {
-	int		pipe_fd[2];
+	int		fd[2];
 	int		read;
-	int 	status;
+	int		status;
 	pid_t	child_pid;
 	int		i;
 
 	i = 0;
-	read = STDOUT_FILENO;
-	while (i < 2)
+	read = STDIN_FILENO;
+	while (i < pipe_count)
 	{
-		if (pipe(pipe_fd) == -1)
-		{
-			perror("Pipe failed");
+		if (pipe(fd) == -1)
 			exit(1);
-		}
 		child_pid = fork();
 		if (child_pid == -1)
-		{
-			perror("Fork failed");
 			exit(1);
-		}
 		if (child_pid == 0)
-			execute_child(pipe_fd, cmd_table);
+		{
+			if (i == 0)
+				red_input_and_execute(cmd_table);
+			else if (i == pipe_count - 1)
+				red_output_and_execute(cmd_table);
+			else
+			{
+				dup2(read, STDIN_FILENO);
+				dup2(fd[1], STDOUT_FILENO);
+				close_pipe(fd);
+				execute(cmd_table->args);
+			}
+		}
+		read = dup(fd[0]);
 		waitpid(child_pid, &status, 0);
+		close_pipe(fd);
 		i++;
 	}
 }
@@ -105,4 +113,14 @@ void	test_execute_single_pipe(t_cmd_table *cmd_table)
 	close_pipe(fd);
 	waitpid(child_pid, &status, 0);
 	waitpid(child_pid2, &status, 0);
+}
+
+void	test_num_exec(int num, t_cmd_table *cmd_table)
+{
+	if (num == 1)
+		test_execute_single_cmd(cmd_table);
+	if (num == 2)
+		test_execute_single_pipe(cmd_table);
+	if (num > 2)
+		test_execute(cmd_table, num);
 }

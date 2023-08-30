@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/25 15:49:17 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/08/25 17:03:17 by danielvankl   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_line(void)
 
 void	ft_leaks(void)
 {
-	system("leaks a.out");
+	system("leaks minishell");
 }
 
 int	check_builtin(char *input, t_cmd_table *cmd_table)
@@ -60,7 +60,9 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd_table	*cmd_table;
 	t_token		*token_list;
 	char		*input;
+	int			num;
 
+	num = ft_atoi(argv[1]);
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->env_list = make_env_list(envp);
 	while (1)
@@ -71,6 +73,6 @@ int	main(int argc, char **argv, char **envp)
 		check_builtin(input, cmd_table);
 		token_list = lexer(input);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
-		test_execute_single_pipe(cmd_table);
+		test_num_exec(num, cmd_table);
 	}
 }
