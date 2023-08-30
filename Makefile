@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/08/30 19:19:01 by tde-brui      ########   odam.nl          #
+#    Updated: 2023/08/30 19:41:19 by dvan-kle      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,6 @@ clean:
 	@echo "\033[32mClean\033[0m"
 	rm -rf $(OBJ_DIR)
 	$(MAKE) clean -C libft
-
 
 fclean: clean
 	@echo "\033[32mRun fclean\033[0m"

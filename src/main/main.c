@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:03:27 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/30 19:42:11 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd_table	*cmd_table;
 	t_token		*token_list;
 	char		*input;
+	int			num;
 
 	argc = 0;
 	argv = NULL;
