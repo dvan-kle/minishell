@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:18:59 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/30 19:40:01 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,3 @@ void	execute_pipeline(t_cmd_table *cmd_table, int pipe_count)
 		i++;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/21 16:46:47 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/25 15:54:15 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 
 t_env_list	*new_env(char *env)
 {
-	t_env_list	*new_env;
+	t_env_list	*nenv;
 
-	new_env = malloc(sizeof(t_env_list));
-	if (!new_env)
+	nenv = malloc(sizeof(t_env_list));
+	if (!nenv)
 		return (NULL);
-	new_env->key = ft_substr(env, 0, ft_strchr(env, '=') - env);
-	new_env->value = ft_substr(env, ft_strchr(env, '=') - env + 1, ft_strlen(env));
-	new_env->next = NULL;
-	return (new_env);
+	nenv->key = ft_substr(env, 0, ft_strchr(env, '=') - env);
+	nenv->value = ft_substr(env, ft_strchr(env, '=') - env + 1, ft_strlen(env));
+	nenv->next = NULL;
+	return (nenv);
 }
 
 void	env_add_back(char *env, t_env_list **env_list)
@@ -35,6 +35,20 @@ void	env_add_back(char *env, t_env_list **env_list)
 	while (lst_head->next)
 		lst_head = lst_head->next;
 	lst_head->next = new_env(env);
+}
+
+void	free_env_list(t_env_list *env_list)
+{
+	t_env_list	*curr;
+
+	curr = env_list;
+	while (curr)
+	{
+		free(curr->key);
+		free(curr->value);
+		free(curr);
+		curr = curr->next;
+	}
 }
 
 int	env_count(char	**envp)

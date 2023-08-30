@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/24 17:16:05 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/30 19:40:32 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,16 @@
 t_token	handle_brackets(int i, char *input, t_token token)
 {
 	char	bracket;
-	int		input_len;
 	int		j;
 
-	bracket = input[i];
-	input_len = ft_strlen(input);
 	j = 0;
 	if (input[i] == '-')
-	{
-		while (i < input_len && !ft_isspace(input[i]) && j < MAX_LEN)
-		{
-			token.value[j] = input[i];
-			i++;
-			j++;
-		}
-	}
+		j = assign_minus(&token, input, i);
 	else
 	{
+		bracket = input[i];
 		i++;
-		while (i < input_len && input[i] != bracket && j < MAX_LEN)
-		{
-			token.value[j] = input[i];
-			i++;
-			j++;
-		}
-		token.brackets = true;
+		j = assign_bracket(&token, input, i, bracket);
 	}
 	token.value[j] = '\0';
 	token.type = ARGUMENT_TOKEN;
@@ -53,76 +38,44 @@ t_token	handle_rest(int i, char *input, t_token token)
 
 	i_len = ft_strlen(input);
 	j = 0;
-	while (i < i_len && !ft_isspace(input[i])
-		&& input[i] != '>' && input[i] != '<' && input[i] != '|')
+	if (input[i] == '<' || input[i] == '>' || input[i] == '|')
+	{
+		assign_token(&token, input, i);
+		return (token);
+	}
+	token.value = malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
+	if (!token.value)
+		exit(1);
+	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|')
 	{
 		token.value[j] = input[i];
 		i++;
 		j++;
 	}
 	token.value[j] = '\0';
-	if (input[i] == '>' || input[i] == '<' || input[i] == '|')
-	{
-		token.value[0] = input[i];
-		token.value[1] = '\0';
-		if (input[i] == '<')
-		{
-			if (input[i] + 1 == '<')
-			{
-				token.value[1] = input[i + 1];
-				token.value[2] = '\0';
-				token.type = READ_INPUT_TOKEN;
-			}
-			else
-				token.type = INPUT_REDIRECT_TOKEN;
-		}
-		else if (input[i] == '|')
-		{
-			token.type = PIPE_TOKEN;
-			token.new_cmd = true;
-		}
-		else if (input[i] == '>')
-		{
-			if (input[i + 1] == '>')
-			{
-				token.value[1] = input[i + 1];
-				token.value[2] = '\0';
-				token.type = OUTPUT_REDIRECT_APPEND_TOKEN;
-				i++;
-			}
-			else
-				token.type = OUTPUT_REDIRECT_TOKEN;
-		}
-		i++;
-	}
-	else
-	{
-		if (token.new_cmd == true)
-		{
-			token.type = CMD_TOKEN;
-			token.new_cmd = false;
-		}
-		else
-			token.type = ARGUMENT_TOKEN;
-	}
+	check_new_cmd(&token);
 	return (token);
 }
 
 t_token	tokenize(t_token token, char *input)
 {
-	int		i;
-	int		j;
-	int		input_len;
+	size_t	i;
+	int		whitespaces;
 
 	i = 0;
-	j = 0;
-	input_len = ft_strlen(input);
+	whitespaces = 0;
 	token.next = NULL;
-	while (i < input_len && ft_isspace(input[i]))
+	while (i < ft_strlen(input) && ft_isspace(input[i]))
+	{
 		i++;
-	if (i == input_len)
+		whitespaces++;
+	}
+	if (i == ft_strlen(input))
 	{
 		token.type = END_OF_CMD_TOKEN;
+		token.value = malloc(sizeof(char) * 1);
+		if (!token.value)
+			exit(1);
 		ft_strlcpy(token.value, "", 1);
 		return (token);
 	}
@@ -130,6 +83,7 @@ t_token	tokenize(t_token token, char *input)
 		token = handle_brackets(i, input, token);
 	else
 		token = handle_rest(i, input, token);
+	token.whitespaces = whitespaces;
 	return (token);
 }
 
@@ -140,14 +94,11 @@ t_token	*lexer(char *input)
 
 	token_list = NULL;
 	init_token(&token);
-	token = tokenize(token, input);
-	token_list = list_add_back(token_list, token);
-	input += ft_strlen(token.value);
 	while (token.type != END_OF_CMD_TOKEN)
 	{
 		token = tokenize(token, input);
 		token_list = list_add_back(token_list, token);
-		input += ft_strlen(token.value) + 1;
+		input += ft_strlen(token.value) + token.whitespaces;
 		if (token.brackets == true)
 		{
 			input += 2;
