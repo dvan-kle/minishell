@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:32:12 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/23 11:00:05 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/23 14:06:09 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "../libft/libft.h"
 # include "parser.h"
 # include "tokenizer.h"
+# include "exec.h"
 
 void		env(t_env_list *env_list);
 void		export(t_env_list *env_list, char *input);

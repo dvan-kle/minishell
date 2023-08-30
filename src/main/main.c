@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/23 11:20:08 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/30 19:21:07 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_line(void)
 
 void	ft_leaks(void)
 {
-	system("leaks a.out");
+	system("leaks minishell");
 }
 
 int	check_builtin(char *input, t_cmd_table *cmd_table)
@@ -47,8 +47,10 @@ int	check_builtin(char *input, t_cmd_table *cmd_table)
 		unset(cmd_table->env_list, input_split[1]);
 	if (!ft_strncmp(input, "cd", 2))
 		cd(input_split[1]);
-	// if (ft_strncmp(input, "pwd", 3))
-	// 	printf("%s", getcwd(NULL, 0));
+	if (!ft_strncmp(input, "pwd", 3))
+		printf("%s\n", getcwd(NULL, 0));
+	if (!ft_strncmp(input, "clear", 5))
+		printf("\033[2J\033[1;1H");
 	free(input_split);
 	return (0);
 }
@@ -58,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd_table	*cmd_table;
 	t_token		*token_list;
 	char		*input;
+	int			num;
 
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->env_list = make_env_list(envp);
