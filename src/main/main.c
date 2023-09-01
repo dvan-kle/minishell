@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/01 12:00:13 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/01 18:32:00 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		init_signals();
 		if (!input)
 			continue ;
-		token_list = lexer(input);
+		token_list = lexer(input, cmd_table->env_list);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
 		check_builtin(cmd_table);
 		//free_token_list(token_list);
