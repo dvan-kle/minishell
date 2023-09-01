@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 18:51:24 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/31 17:24:58 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	assign_token(t_token *token, char *type, int i)
 		token->new_cmd = true;
 	}
 	else if (type[i] == '>')
-		assign_redirect(token, type, i, OUTPUT_REDIRECT_APPEND_TOKEN);
+		assign_redirect(token, type, i, APPEND_TOKEN);
 }
 
 int	assign_minus(t_token *token, char *type, int i)

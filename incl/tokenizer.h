@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 14:38:24 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/31 17:24:19 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef enum token_type{
 	OUTPUT_REDIRECT_TOKEN,
 	PIPE_TOKEN,
 	READ_INPUT_TOKEN,
-	OUTPUT_REDIRECT_APPEND_TOKEN,
+	APPEND_TOKEN,
 	END_OF_CMD_TOKEN
 }t_tokentype;
 
@@ -52,5 +52,7 @@ int		assign_minus(t_token *token, char *type, int i);
 int		assign_bracket(t_token *token, char *type, int i, char bracket);
 void	assign_pipe(t_token *token);
 t_token	check_new_cmd(t_token *token);
+t_token	handle_brackets(int i, char *input, t_token token);
+t_token	handle_rest(int i, char *input, t_token token);
 
 #endif

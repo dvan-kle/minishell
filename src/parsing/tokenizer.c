@@ -6,69 +6,23 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:40:32 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/31 14:07:56 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 
-t_token	handle_brackets(int i, char *input, t_token token)
-{
-	char	bracket;
-	int		j;
-
-	j = 0;
-	if (input[i] == '-')
-		j = assign_minus(&token, input, i);
-	else
-	{
-		bracket = input[i];
-		i++;
-		j = assign_bracket(&token, input, i, bracket);
-	}
-	token.value[j] = '\0';
-	token.type = ARGUMENT_TOKEN;
-	return (token);
-}
-
-t_token	handle_rest(int i, char *input, t_token token)
-{
-	int		i_len;
-	int		j;
-
-	i_len = ft_strlen(input);
-	j = 0;
-	if (input[i] == '<' || input[i] == '>' || input[i] == '|')
-	{
-		assign_token(&token, input, i);
-		return (token);
-	}
-	token.value = malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
-	if (!token.value)
-		exit(1);
-	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|')
-	{
-		token.value[j] = input[i];
-		i++;
-		j++;
-	}
-	token.value[j] = '\0';
-	check_new_cmd(&token);
-	return (token);
-}
-
 t_token	tokenize(t_token token, char *input)
 {
 	size_t	i;
-	int		whitespaces;
 
 	i = 0;
-	whitespaces = 0;
+	token.whitespaces = 0;
 	token.next = NULL;
 	while (i < ft_strlen(input) && ft_isspace(input[i]))
 	{
 		i++;
-		whitespaces++;
+		token.whitespaces++;
 	}
 	if (i == ft_strlen(input))
 	{
@@ -83,7 +37,6 @@ t_token	tokenize(t_token token, char *input)
 		token = handle_brackets(i, input, token);
 	else
 		token = handle_rest(i, input, token);
-	token.whitespaces = whitespaces;
 	return (token);
 }
 
@@ -105,6 +58,5 @@ t_token	*lexer(char *input)
 			token.brackets = false;
 		}
 	}
-	//print_list(token_list);
 	return (token_list);
 }

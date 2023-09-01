@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 19:17:55 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:18:24 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/08/31 14:00:09 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,20 @@ int	allocate_cmd_table(t_cmd_table *cmd_table, t_token *lst)
 		return (1);
 	cmd_table = cmd_table->next;
 	return (0);
+}
+
+int	arg_token_count(t_token *to_be_added)
+{
+	int		count;
+	t_token	*curr;
+
+	count = 0;
+	curr = to_be_added;
+	while (curr)
+	{
+		if (curr->type == ARGUMENT_TOKEN || curr->type == CMD_TOKEN)
+			count++;
+		curr = curr->next;
+	}
+	return (count);
 }

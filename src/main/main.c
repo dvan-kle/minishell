@@ -6,13 +6,14 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:56:36 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/01 12:00:13 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <signal.h>
 
 char	*get_line(void)
 {
@@ -30,7 +31,7 @@ char	*get_line(void)
 bool	check_builtin(t_cmd_table *cmd_table)
 {
 	if (!ft_strncmp(cmd_table->args[0], "exit", 4))
-		exit(1);
+		ft_exit(cmd_table);
 	if (!ft_strncmp(cmd_table->args[0], "env", 3))
 	{
 		env(cmd_table->env_list);
@@ -77,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = get_line();
+		init_signals();
 		if (!input)
 			continue ;
 		token_list = lexer(input);

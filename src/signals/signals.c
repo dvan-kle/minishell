@@ -6,27 +6,32 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/02 18:16:07 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/08/31 17:54:43 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/signal.h>
 #include <stdio.h>
-#include <termios.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
-void	sig_handler(int signum)
+void	sigquit_handler(int sigquit)
 {
-	printf("\nminishell >");
+	(void)sigquit;
+	printf("Quit (core dumped)\n");
 }
 
-int	main(void)
+void	sigint_handler(int sigint)
 {
-	while (1)
-	{
-		signal(SIGINT, sig_handler);
-		sleep(1);
-	}
-	return (0);
+	(void)sigint;
+	//rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	init_signals(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 }
