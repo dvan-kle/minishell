@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:45:31 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/01 18:21:04 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,32 @@ char	*get_line(void)
 
 bool	check_builtin(t_cmd_table *cmd_table)
 {
-	if (!ft_strncmp(cmd_table->args[0], "exit", 4))
+	int	cmd_len;
+
+	cmd_len = ft_strlen(cmd_table->args[0]);
+	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
 		exit(1);
-	if (!ft_strncmp(cmd_table->args[0], "env", 3))
+	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 	{
 		env(cmd_table->env_list);
 		return (true);
 	}
-	if (!ft_strncmp(cmd_table->args[0], "export", 6))
+	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
 	{
 		export(cmd_table->env_list, cmd_table->args[1]);
 		return (true);
 	}
-	if (!ft_strncmp(cmd_table->args[0], "unset", 5))
+	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
 	{
 		unset(cmd_table->env_list, cmd_table->args[1]);
 		return (true);
 	}
-	if (!ft_strncmp(cmd_table->args[0], "cd", 2))
+	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
 	{
 		cd(cmd_table->args[1]);
 		return (true);
 	}
-	if (!ft_strncmp(cmd_table->args[0], "pwd", 3))
+	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 	{
 		printf("%s", getcwd(NULL, 0));
 		return (true);
@@ -84,8 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		check_builtin(cmd_table);
 		//free_token_list(token_list);
 		//free_cmd_table(cmd_table);
-		if (cmd_table->cmd_count > 0)
-			execute_pipeline(cmd_table, cmd_table->cmd_count);
+		execute_main(cmd_table);
 	}
 	free_env_list(cmd_table->env_list);
 }

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:46:22 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/01 18:27:27 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 #include "../../libft/libft.h"
 #include "../../incl/exec.h"
 
-static char	**get_folders(void)
+static char	**get_path(c)
 {
 	char	*path;
 	char	**folders;
 	int		i;
 
 	i = 0;
+	while ()
 	path = getenv("PATH");
 	folders = ft_split(path, ':');
 	return (folders);
