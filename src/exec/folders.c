@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/01 18:27:27 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/06 14:14:20 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,60 @@
 #include "../../libft/libft.h"
 #include "../../incl/exec.h"
 
-static char	**get_path(c)
-{
-	char	*path;
-	char	**folders;
-	int		i;
-
-	i = 0;
-	while ()
-	path = getenv("PATH");
-	folders = ft_split(path, ':');
-	return (folders);
-}
-
-int	execute(char **args)
+static char	*check_access(char **folders, char *cmd)
 {
 	char	*check_access;
 	char	*command_fold;
 	int		i;
-	char	**folders;
 
 	i = 0;
-	folders = get_folders();
-	command_fold = ft_strjoin("/", args[0]);
-	// printf("%s\n", command_fold);
+	command_fold = ft_strjoin("/", cmd);
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
-		// printf("%s\n", check_access);
+		// dprintf(2, "check_access: %s\n", check_access);
 		if (access(check_access, X_OK) == 0)
 		{
-			// printf("found\n");
-			execve(check_access, args, NULL);
-			return (0);
+			// dprintf(2, "check_access: ok!\n");
+			return (check_access);
 		}
 		i++;
 	}
-	// printf("not found\n");
-	return (-1);
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
+	return (cmd);
+}
+
+static char	*get_path(t_env_list *env_list, char *cmd)
+{
+	char	*path;
+	char	**folders;
+
+	while (env_list != NULL)
+	{
+		if (ft_strncmp(env_list->key, "PATH", 5) == 0)
+		{
+			// dprintf(2, "key: %s\n", env_list->key);
+			path = env_list->value;
+		}
+		env_list = env_list->next;
+	}
+	// dprintf(2, "path: %s\n", path);
+	folders = ft_split(path, ':');
+	path = check_access(folders, cmd);
+	return (path);
+}
+
+int	execute(char **args, t_env_list *env_list)
+{
+	char	*path;
+
+	path = get_path(env_list, args[0]);
+	if (access(path, X_OK) != 0)
+	{
+		printf("minishell: command not found: %s\n", args[0]);
+		return (0);
+	}
+	execve(path, args, NULL);
+	return (0);
 }

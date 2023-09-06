@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/01 18:21:04 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/06 14:09:02 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ bool	check_builtin(t_cmd_table *cmd_table)
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 	{
 		printf("%s", getcwd(NULL, 0));
+		return (true);
+	}
+	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
+	{
+		printf("\033[2J\033[1;1H");
 		return (true);
 	}
 	return (false);

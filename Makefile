@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/09/01 17:01:37 by dvan-kle      ########   odam.nl          #
+#    Updated: 2023/09/06 13:52:22 by dvan-kle      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = libft/libft.a
 LIBS = -lreadline
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -g -fsanitize=address
+CC_FLAGS = -Wall -Wextra
 SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c \
         src/exec/folders.c src/exec/exec.c src/exec/pipe.c src/exec/redirect.c \
         src/main/main.c \
@@ -43,6 +43,8 @@ $(OBJ_DIR)%.o: %.c
 $(LIBFT):
 	@echo "\033[32mBuilding Libft\033[0m"
 	$(MAKE) all -C libft
+
+all: $(NAME)
 
 clean:
 	@echo "\033[32mClean\033[0m"
