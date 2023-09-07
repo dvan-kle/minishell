@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/01 17:00:38 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/07 14:44:43 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index, int pipe_c
 	bool	last_cmd;
 
 	close(fd[READ_END]);
-	// dprintf(2, "index: %d\n", index);
-	// dprintf(2, "pipe_count: %d\n", pipe_count);
 	if (index == pipe_count - 1)
 		last_cmd = true;
 	else
@@ -45,7 +43,6 @@ void	redirect_in(t_redirect *redirects, int read)
 	{
 		infile = open(redirects->file, O_RDONLY);
 	}
-	// dprintf(2, "infile: %d\n", infile);
 	if (infile > 0)
 		dup2(infile, STDIN_FILENO);
 	else
@@ -58,7 +55,6 @@ int	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 
 	outfile = 0;
 	close(fd[READ_END]);
-	// dprintf(2, "last_cmd: %d\n", last_cmd);
 	if (redirects->type == OUTPUT_REDIRECT_TOKEN)
 		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (redirects->type == OUTPUT_REDIRECT_APPEND_TOKEN)

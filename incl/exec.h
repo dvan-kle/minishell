@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/23 13:42:56 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/06 14:02:30 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/07 14:55:53 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "parser.h"
 
-int			execute(char **args, t_env_list *env_list);
+int         execute(t_cmd_table *cmd_table, t_env_list *env_list);
 int			cd(const char *path);
 
 #endif

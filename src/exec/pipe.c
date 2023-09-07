@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/06 14:03:07 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/07 14:51:03 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *env_lis
 		if (pid == 0)
 		{
 			redirect(cmd_table, fd, read, i, cmd_count);
-			execute(cmd_table->args, env_list);
+			execute(cmd_table, env_list);
 		}
 		waitpid(pid, &status, 0);
 		read = dup(fd[READ_END]);
