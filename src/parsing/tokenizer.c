@@ -60,5 +60,6 @@ t_token	*lexer(char *input, t_env_list *env_list)
 			token.brackets = false;
 		}
 	}
+	//print_list(token_list);
 	return (token_list);
 }

@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = get_line();
-		init_signals();
+		//init_signals();
 		if (!input)
 			continue ;
 		token_list = lexer(input, cmd_table->env_list);

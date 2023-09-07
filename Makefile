@@ -16,7 +16,7 @@ LIBFT = libft/libft.a
 LIBS = -lreadline
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -g -fsanitize=address
+CC_FLAGS = -Wall -Wextra 
 SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c src/builtins/exit.c \
         src/exec/folders.c src/exec/exec.c src/exec/pipe.c \
         src/main/main.c \

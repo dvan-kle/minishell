@@ -17,21 +17,24 @@
 int	assign_var(t_token *token, char *input, int i, t_env_list *env_lst)
 {
 	t_env_list	*curr;
+	char		*key;
 
 	curr = env_lst;
-	while (env_lst->next != NULL)
+	key = ft_substr(input, i + 1, ft_strlen(input));
+	while (curr->next != NULL)
 	{
-		//printf("%s\n", env_lst->key);
-		printf("%zu\n", ft_strlen(input));
-		if (env_lst->key == ft_substr(input, i + 1, ft_strlen(input)))
+		if (!ft_strncmp(curr->key, key, ft_strlen(key)))
 		{
-			token->value = ft_substr(env_lst->value, 0, ft_strlen(env_lst->value));
+			token->value = ft_strdup(curr->value);
 			token->type = ARGUMENT_TOKEN;
-			return (ft_strlen(env_lst->key) + 1);
+			free(key);
+			return (ft_strlen(token->value));
 		}
-		env_lst = env_lst->next;
+		curr = curr->next;
 	}
-	printf("%s\n", token->value);
+	free(key);
+	token->value = ft_strdup("");
+	token->type = ARGUMENT_TOKEN;
 	return (1);
 }
 
