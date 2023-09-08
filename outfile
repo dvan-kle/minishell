@@ -1,0 +1,5 @@
+	@$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)

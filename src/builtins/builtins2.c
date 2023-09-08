@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/22 15:35:45 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/08 14:04:44 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	unset(t_env_list *env_list, char *input)
 	lst_prev = NULL;
 	while (lst_head)
 	{
-		if (!ft_strncmp(lst_head->key, input, ft_strlen(input)))
+		if (!ft_strncmp(lst_head->key, input, ft_strlen(lst_head->key)))
 		{
 			if (lst_prev)
 				lst_prev->next = lst_head->next;

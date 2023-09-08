@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/14 11:46:05 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/02/21 12:40:45 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/08 15:34:15 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	**ft_split(char const *str1, char c)
 
 	i = 0;
 	j = 0;
+	if (!str1)
+		return (NULL);
 	ptr = (char **)malloc((ft_stringsnum(str1, c) + 1) * sizeof(char *));
 	if (!ptr)
 		return (NULL);
@@ -55,10 +57,7 @@ char	**ft_split(char const *str1, char c)
 			i++;
 		ptr[j] = ft_substr(str1, i, split_len(str1, c, i));
 		if (!ptr[j])
-		{
-			ft_free(ptr);
-			return (NULL);
-		}
+			return (ft_free(ptr), NULL);
 		while (str1[i] != c && str1[i] != '\0')
 			i++;
 		j++;

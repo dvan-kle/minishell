@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/07 14:56:37 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/08 15:42:53 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 	int	cmd_len;
 
 	cmd_len = ft_strlen(cmd_table->args[0]);
-	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
-		exit(1);
+	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len + 1))
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		return (env(cmd_table->env_list), true);
 	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
@@ -50,12 +53,8 @@ static char	*check_access(char **folders, char *cmd)
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
-		// dprintf(2, "check_access: %s\n", check_access);
-		if (access(check_access, X_OK) == 0)
-		{
-			// dprintf(2, "check_access: ok!\n");
+		if (access(check_access, X_OK | F_OK) == 0)
 			return (check_access);
-		}
 		i++;
 	}
 	return (cmd);
@@ -66,18 +65,16 @@ static char	*get_path(t_env_list *env_list, char *cmd)
 	char	*path;
 	char	**folders;
 
+	path = NULL;
 	while (env_list != NULL)
 	{
 		if (ft_strncmp(env_list->key, "PATH", 5) == 0)
-		{
-			// dprintf(2, "key: %s\n", env_list->key);
 			path = env_list->value;
-		}
 		env_list = env_list->next;
 	}
-	// dprintf(2, "path: %s\n", path);
 	folders = ft_split(path, ':');
 	path = check_access(folders, cmd);
+	free(folders);
 	return (path);
 }
 
@@ -85,15 +82,10 @@ int	execute(t_cmd_table *cmd_table, t_env_list *env_list)
 {
 	char	*path;
 
-	if (check_builtin(cmd_table, env_list))
-		return (0);
 	path = get_path(env_list, cmd_table->args[0]);
-	if (access(path, X_OK) != 0)
-	{
+	if (access(path, X_OK | F_OK) != 0)
 		perror("minishell");
-		// printf("minishell: command not found: %s\n", args[0]);
-		//return (0);
-	}
 	execve(path, cmd_table->args, NULL);
+	free(path);
 	return (0);
 }
