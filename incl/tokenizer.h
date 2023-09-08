@@ -38,6 +38,7 @@ typedef struct token{
 	bool		brackets;
 	bool		new_cmd;
 	int			whitespaces;
+	bool		expand;
 	t_token		*next;
 }t_token;
 
@@ -55,5 +56,8 @@ void	assign_pipe(t_token *token);
 t_token	check_new_cmd(t_token *token);
 t_token	handle_brackets(int i, char *input, t_token token, t_env_list *env_lst);
 t_token	handle_rest(int i, char *input, t_token token);
+bool	ft_isredir(char c);
+int		next_whitespace(char *input, int i);
+int		update_input(t_token token, char *input);
 
 #endif

@@ -13,29 +13,53 @@
 #include "../../incl/tokenizer.h"
 #include "../../incl/env.h"
 
-// this function is not good yet :).
-int	assign_var(t_token *token, char *input, int i, t_env_list *env_lst)
+int	next_whitespace(char *input, int i)
+{
+	int	count;
+
+	count = 0;
+	while (input[i] && !ft_isspace(input[i]))
+	{
+		i++;
+		count++;
+	}
+	return (count);
+}
+
+int	get_env_len(t_env_list *env_lst)
+{
+	int	count;
+
+	count = 0;
+	while (env_lst->next != NULL)
+	{
+		count++;
+		env_lst = env_lst->next;
+	}
+	return (count);
+}
+
+void	assign_var(t_token *token, char *input, int i, t_env_list *env_lst)
 {
 	t_env_list	*curr;
 	char		*key;
 
 	curr = env_lst;
-	key = ft_substr(input, i + 1, ft_strlen(input));
-	while (curr->next != NULL)
+	key = ft_substr(input, i, next_whitespace(input, i) + i);
+	while (curr)
 	{
-		if (!ft_strncmp(curr->key, key, ft_strlen(key)))
+		if (!ft_strncmp(curr->key, key, next_whitespace(input, i)))
 		{
-			token->value = ft_strdup(curr->value);
-			token->type = ARGUMENT_TOKEN;
 			free(key);
-			return (ft_strlen(token->value));
+			token->value = ft_strdup(curr->value);
+			//token->expand = true;
+			return ;
 		}
 		curr = curr->next;
 	}
 	free(key);
 	token->value = ft_strdup("");
-	token->type = ARGUMENT_TOKEN;
-	return (1);
+	token->expand = true;
 }
 
 t_token	handle_brackets(int i, char *input, t_token token, t_env_list *env_lst)
@@ -47,7 +71,10 @@ t_token	handle_brackets(int i, char *input, t_token token, t_env_list *env_lst)
 	if (input[i] == '-')
 		j = assign_minus(&token, input, i);
 	else if (input[i] == '$')
-		j = assign_var(&token, input, i, env_lst);
+	{
+		assign_var(&token, input, i + 1, env_lst);
+		return (token);
+	}
 	else
 	{
 		bracket = input[i];
@@ -74,7 +101,7 @@ t_token	handle_rest(int i, char *input, t_token token)
 	token.value = malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
 	if (!token.value)
 		exit(1);
-	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|')
+	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|' && !ft_isredir(input[i]))
 	{
 		token.value[j] = input[i];
 		i++;

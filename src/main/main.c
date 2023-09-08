@@ -84,8 +84,6 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lexer(input, cmd_table->env_list);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
 		check_builtin(cmd_table);
-		//free_token_list(token_list);
-		//free_cmd_table(cmd_table);
 		if (cmd_table->cmd_count > 0)
 			execute_pipeline(cmd_table, cmd_table->cmd_count);
 	}

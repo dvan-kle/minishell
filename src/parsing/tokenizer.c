@@ -53,13 +53,8 @@ t_token	*lexer(char *input, t_env_list *env_list)
 	{
 		token = tokenize(token, input, env_list);
 		token_list = list_add_back(token_list, token);
-		input += ft_strlen(token.value) + token.whitespaces;
-		if (token.brackets == true)
-		{
-			input += 2;
-			token.brackets = false;
-		}
+		input += update_input(token, input);
 	}
-	//print_list(token_list);
+	print_list(token_list);
 	return (token_list);
 }

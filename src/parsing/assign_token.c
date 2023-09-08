@@ -58,7 +58,8 @@ int	assign_minus(t_token *token, char *type, int i)
 		exit(1);
 	input_len = ft_strlen(type);
 	j = 0;
-	while (i < input_len && !ft_isspace(type[i]) && type[i] != '|')
+	while (i < input_len && !ft_isspace(type[i]) && type[i] != '|'
+		&& !ft_isredir(type[i]))
 	{
 		token->value[j] = type[i];
 		i++;
