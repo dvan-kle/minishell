@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/07 14:44:43 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/12 16:20:59 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	redirect_in(t_redirect *redirects, int read)
 		dup2(read, STDIN_FILENO);
 }
 
-int	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
+void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 {
 	int		outfile;
 
@@ -62,10 +62,48 @@ int	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 	if (outfile == 0 && !last_cmd)
 	{
 		dup2(fd[WRITE_END], STDOUT_FILENO);
-		return (0);
+		return ;
 	}
 	if (outfile > 0)
 		dup2(outfile, STDOUT_FILENO);
 	close(fd[WRITE_END]);
-	return (0);
+	return ;
+}
+
+void	redirect_single(t_cmd_table *cmdtable)
+{
+	redirect_single_in(cmdtable->redirects);
+	redirect_single_out(cmdtable->redirects);
+}
+
+void	redirect_single_in(t_redirect *redirects)
+{
+	int		infile;
+
+	infile = 0;
+	if (redirects->type == INPUT_REDIRECT_TOKEN)
+	{
+		infile = open(redirects->file, O_RDONLY);
+	}
+	if (infile > 0)
+		dup2(infile, STDIN_FILENO);
+}
+
+void	redirect_single_out(t_redirect *redirects)
+{
+	int	outfile;
+	int	i;
+
+	outfile = 0;
+	i = 0;
+	while (redirects[i].type != END_OF_CMD_TOKEN)
+	{
+		if (redirects[i].type == OUTPUT_REDIRECT_TOKEN)
+			outfile = open(redirects[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (redirects[i].type == OUTPUT_REDIRECT_APPEND_TOKEN)
+			outfile = open(redirects[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (outfile > 0)
+			dup2(outfile, STDOUT_FILENO);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/08 15:31:48 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/12 15:44:39 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 			exit(1);
 		}
 		if (pid == 0)
+		{
+			redirect_single(cmd_table);
 			execute(cmd_table, cmd_table->env_list);
+		}
 		waitpid(pid, &status, 0);
 	}
 }
@@ -53,7 +56,6 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *env_lis
 	int			i;
 	int			status;
 
-	env_list = cmd_table->env_list;
 	read = STDIN_FILENO;
 	i = 0;
 	while (i < cmd_count)
@@ -88,33 +90,3 @@ void	execute_main(t_cmd_table *cmd_table)
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 }
-
-// void	execute_pipeline(t_cmd_table *cmd_table, int pipe_count)
-// {
-// 	int			fd[2];
-// 	pid_t		pid;
-// 	int			read;
-// 	int			i;
-// 	int			status;
-
-// 	read = STDIN_FILENO;
-// 	i = 0;
-// 	while (i < pipe_count)
-// 	{
-// 		pipe(fd);
-// 		pid = fork();
-// 		if (pid == 0)
-// 		{
-// 			dup2(read, STDIN_FILENO);
-// 			if (i + 1 != pipe_count)
-// 				dup2(fd[WRITE_END], STDOUT_FILENO);
-// 			close(fd[READ_END]);
-// 			execute(cmd_table->args);
-// 		}
-// 		waitpid(pid, &status, 0);
-// 		close(fd[WRITE_END]);
-// 		read = dup(fd[READ_END]);
-// 		cmd_table = cmd_table->next;
-// 		i++;
-// 	}
-// }

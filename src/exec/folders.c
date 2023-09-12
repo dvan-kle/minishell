@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/08 15:42:53 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:32:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static char	*check_access(char **folders, char *cmd)
 
 	i = 0;
 	command_fold = ft_strjoin("/", cmd);
+	if (!folders)
+		return (cmd);
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
