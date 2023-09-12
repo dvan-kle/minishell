@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 14:39:44 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:53:23 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ t_token	tokenize(t_token token, char *input, t_env_list *env_list)
 	if (i == ft_strlen(input))
 	{
 		token.type = END_OF_CMD_TOKEN;
-		token.value = malloc(sizeof(char) * 1);
-		if (!token.value)
-			exit(1);
+		token.value = ft_malloc(sizeof(char) * 1);
 		ft_strlcpy(token.value, "", 1);
 		return (token);
 	}
@@ -55,6 +53,5 @@ t_token	*lexer(char *input, t_env_list *env_list)
 		token_list = list_add_back(token_list, token);
 		input += update_input(token, input);
 	}
-	//print_list(token_list);
 	return (token_list);
 }

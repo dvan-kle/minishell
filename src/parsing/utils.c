@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/31 17:24:29 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:54:25 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ int	redir_count(t_token *lst);
 
 int	allocate_cmd_table(t_cmd_table *cmd_table, t_token *lst)
 {
-	cmd_table->args = malloc(sizeof(char *) * (arg_token_count(lst) + 1));
-	if (!cmd_table->args)
-		return (1);
-	cmd_table->redirects = malloc(sizeof(t_redirect) * (redir_count(lst) + 1));
-	if (!cmd_table->redirects)
-		return (1);
+	cmd_table->args = ft_malloc(sizeof(char *) * (arg_token_count(lst) + 1));
+	cmd_table->redirects = ft_malloc(sizeof(t_redirect)
+			*(redir_count(lst) + 1));
 	cmd_table = cmd_table->next;
 	return (0);
 }

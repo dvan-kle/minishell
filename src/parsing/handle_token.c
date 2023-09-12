@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 14:39:34 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:56:40 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ t_token	handle_brackets(int i, char *input, t_token token, t_env_list *env_lst)
 	int		j;
 
 	j = 0;
-	printf("token->value: %s\n", token.value);
 	if (input[i] == '-')
 		j = assign_minus(&token, input, i);
 	else if (input[i] == '$')
@@ -99,10 +98,9 @@ t_token	handle_rest(int i, char *input, t_token token)
 		assign_token(&token, input, i);
 		return (token);
 	}
-	token.value = malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
-	if (!token.value)
-		exit(1);
-	while (i < i_len && !ft_isspace(input[i]) && input[i] != '|' && !ft_isredir(input[i]))
+	token.value = ft_malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
+	while (i < i_len && !ft_isspace(input[i])
+		&& input[i] != '|' && !ft_isredir(input[i]))
 	{
 		token.value[j] = input[i];
 		i++;

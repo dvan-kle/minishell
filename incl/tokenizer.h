@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/01 18:22:59 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:56:12 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ t_token	handle_rest(int i, char *input, t_token token);
 bool	ft_isredir(char c);
 int		next_whitespace(char *input, int i);
 int		update_input(t_token token, char *input);
+void	*ft_malloc(size_t size);
 
 #endif
