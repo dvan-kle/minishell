@@ -75,9 +75,9 @@ int	update_input(t_token token, char *input)
 	i = 0;
 	if (token.expand == true)
 	{
-		while (ft_isspace(input[i]))
+		while (input[i] && ft_isspace(input[i]))
 			i++;
-		i += next_whitespace(input, 0) + token.whitespaces;
+		i += next_whitespace(input, i);
 		token.expand = false;
 	}
 	else
