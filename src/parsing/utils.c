@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 14:54:25 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 16:29:36 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #include "../../libft/libft.h"
 #include "../../incl/tokenizer.h"
 
-void	init_token(t_token *token)
+void	init_token(t_token *token, t_env_list *env_lst)
 {
+	token->env_lst = env_lst;
 	token->type = ARGUMENT_TOKEN;
 	token->brackets = false;
 	token->new_cmd = true;

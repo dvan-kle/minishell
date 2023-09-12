@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 14:56:40 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 16:43:22 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,32 @@ int	get_env_len(t_env_list *env_lst)
 	return (count);
 }
 
-void	assign_var(t_token *token, char *input, int i, t_env_list *env_lst)
+char	*assign_var(t_token *token, char *input, int i)
 {
 	t_env_list	*curr;
 	char		*key;
+	char		*result;
 
-	curr = env_lst;
+	curr = token->env_lst;
 	key = ft_substr(input, i, next_whitespace(input, i) + i);
+	result = ft_strdup("");
 	while (curr)
 	{
 		if (!ft_strncmp(curr->key, key, next_whitespace(input, i)))
 		{
 			free(key);
-			token->value = ft_strdup(curr->value);
+			result = ft_strdup(curr->value);
 			token->expand = true;
-			return ;
+			return (result);
 		}
 		curr = curr->next;
 	}
 	free(key);
-	token->value = ft_strdup("");
 	token->expand = true;
+	return (result);
 }
 
-t_token	handle_brackets(int i, char *input, t_token token, t_env_list *env_lst)
+t_token	handle_brackets(int i, char *input, t_token token)
 {
 	char	bracket;
 	int		j;
@@ -72,7 +74,7 @@ t_token	handle_brackets(int i, char *input, t_token token, t_env_list *env_lst)
 		j = assign_minus(&token, input, i);
 	else if (input[i] == '$')
 	{
-		assign_var(&token, input, i + 1, env_lst);
+		token.value = assign_var(&token, input, i + 1);
 		return (token);
 	}
 	else
