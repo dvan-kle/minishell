@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:46:22 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:32:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,79 @@
 #include <unistd.h>
 #include "../../libft/libft.h"
 #include "../../incl/exec.h"
+#include "../../incl/main.h"
 
-static char	**get_folders(void)
+bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 {
-	char	*path;
-	char	**folders;
-	int		i;
+	int	cmd_len;
 
-	i = 0;
-	path = getenv("PATH");
-	folders = ft_split(path, ':');
-	return (folders);
+	cmd_len = ft_strlen(cmd_table->args[0]);
+	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len + 1))
+	{
+		printf("exit\n");
+		exit(EXIT_SUCCESS);
+	}
+	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
+		return (env(cmd_table->env_list), true);
+	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
+		return (export(env_list, cmd_table->args[1]), true);
+	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
+		return (unset(env_list, cmd_table->args[1]), true);
+	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
+		return (cd(cmd_table->args[1]), true);
+	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
+		return (printf("%s\n", getcwd(NULL, 0)), true);
+	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
+		return (printf("\033[2J\033[1;1H"), true);
+	return (false);
 }
 
-int	execute(char **args)
+static char	*check_access(char **folders, char *cmd)
 {
 	char	*check_access;
 	char	*command_fold;
 	int		i;
-	char	**folders;
 
 	i = 0;
-	folders = get_folders();
-	command_fold = ft_strjoin("/", args[0]);
-	// printf("%s\n", command_fold);
+	command_fold = ft_strjoin("/", cmd);
+	if (!folders)
+		return (cmd);
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
-		// printf("%s\n", check_access);
-		if (access(check_access, X_OK) == 0)
-		{
-			// printf("found\n");
-			execve(check_access, args, NULL);
-			return (0);
-		}
+		if (access(check_access, X_OK | F_OK) == 0)
+			return (check_access);
 		i++;
 	}
-	// printf("not found\n");
-	return (-1);
+	return (cmd);
+}
+
+static char	*get_path(t_env_list *env_list, char *cmd)
+{
+	char	*path;
+	char	**folders;
+
+	path = NULL;
+	while (env_list != NULL)
+	{
+		if (ft_strncmp(env_list->key, "PATH", 5) == 0)
+			path = env_list->value;
+		env_list = env_list->next;
+	}
+	folders = ft_split(path, ':');
+	path = check_access(folders, cmd);
+	free(folders);
+	return (path);
+}
+
+int	execute(t_cmd_table *cmd_table, t_env_list *env_list)
+{
+	char	*path;
+
+	path = get_path(env_list, cmd_table->args[0]);
+	if (access(path, X_OK | F_OK) != 0)
+		perror("minishell");
+	execve(path, cmd_table->args, NULL);
+	free(path);
+	return (0);
 }

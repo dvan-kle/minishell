@@ -6,12 +6,13 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:40:01 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/12 15:44:39 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
 #include "../../incl/pipes.h"
+#include "../../incl/redirect.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,82 +20,73 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void	close_pipe(int pipe_fd[2])
+static void	close_pipe(int pipe_fd[2])
 {
 	close(pipe_fd[READ_END]);
 	close(pipe_fd[WRITE_END]);
 }
 
-void	test_execute_single_cmd(t_cmd_table *cmd_table)
+void	execute_single_cmd(t_cmd_table *cmd_table)
 {
 	int		status;
 	pid_t	pid;
 
-	pid = fork();
-	if (pid == -1)
+	if (check_builtin(cmd_table, cmd_table->env_list) == false)
 	{
-		perror("Fork failed");
-		exit(1);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("Fork failed");
+			exit(1);
+		}
+		if (pid == 0)
+		{
+			redirect_single(cmd_table);
+			execute(cmd_table, cmd_table->env_list);
+		}
+		waitpid(pid, &status, 0);
 	}
-	if (pid == 0)
-		execute(cmd_table->args);
-	waitpid(pid, &status, 0);
 }
 
-void	test_execute_single_pipe(t_cmd_table *cmd_table)
+void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *env_list)
 {
-	int		status;
-	pid_t	child_pid;
-	pid_t	child_pid2;
-	int		fd[2];
+	int			fd[2];
+	pid_t		pid;
+	int			read;
+	int			i;
+	int			status;
 
-	pipe(fd);
-	child_pid = fork();
-	if (child_pid == -1)
-		exit(1);
-	if (child_pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		execute(cmd_table->args);
-	}
-	waitpid(child_pid, &status, 0);
-	child_pid2 = fork();
-	if (child_pid2 == 0)
-	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		execute(cmd_table->next->args);
-	}
-	close_pipe(fd);
-	waitpid(child_pid2, &status, 0);
-}
-
-void	execute_pipeline(t_cmd_table *cmd_table, int pipe_count)
-{
-	int		fd[2];
-	pid_t	pid;
-	int		read;
-	int		i;
-
-	read = 0;
+	read = STDIN_FILENO;
 	i = 0;
-	while (i < pipe_count)
+	while (i < cmd_count)
 	{
 		pipe(fd);
 		pid = fork();
 		if (pid == 0)
 		{
-			dup2(read, 0);
-			if (i + 1 != pipe_count)
-				dup2(fd[1], 1);
-			close(fd[0]);
-			execute(cmd_table->args);
+			redirect(cmd_table, fd, read, i, cmd_count);
+			if (check_builtin(cmd_table, env_list) == false)
+				execute(cmd_table, env_list);
 		}
-		wait(NULL);
-		close(fd[1]);
-		read = fd[0];
+		waitpid(pid, &status, 0);
+		read = dup(fd[READ_END]);
 		cmd_table = cmd_table->next;
+		close_pipe(fd);
 		i++;
 	}
+}
+
+void	execute_main(t_cmd_table *cmd_table)
+{
+	int	stdin;
+	int	stdout;
+
+	stdin = dup(STDIN_FILENO);
+	stdout = dup(STDOUT_FILENO);
+	if (cmd_table->cmd_count == 1)
+		execute_single_cmd(cmd_table);
+	else
+		execute_pipeline(cmd_table, cmd_table->cmd_count, cmd_table->env_list);
+	dup2(stdin, STDIN_FILENO);
+	dup2(stdout, STDOUT_FILENO);
 }

@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipes.h                                            :+:    :+:            */
+/*   redirect.h                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/08/19 16:26:24 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/08 15:13:58 by dvan-kle      ########   odam.nl         */
+/*   Created: 2023/09/01 13:03:49 by dvan-kle      #+#    #+#                 */
+/*   Updated: 2023/09/12 16:13:41 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPES_H
-# define PIPES_H
+#ifndef REDIRECT_H
+# define REDIRECT_H
 
-# define WRITE_END 1
-# define READ_END 0
+# include <stdbool.h>
 
-void	execute_pipeline(t_cmd_table *cmd_table, int pipe_count, t_env_list *env_list);
-bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list);
-void	execute_single_cmd(t_cmd_table *cmd_table);
-void	execute_main(t_cmd_table *cmd_table);
+void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index, int pipe_count);
+void	redirect_in(t_redirect *redirects, int read);
+void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd);
+void	redirect_single(t_cmd_table *cmdtable);
+void	redirect_single_in(t_redirect *redirects);
+void	redirect_single_out(t_redirect *redirects);
 
 #endif

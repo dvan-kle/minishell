@@ -56,15 +56,15 @@ OBJECT = $(SOURCE:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECT)
-	ar -cr $(NAME) $(OBJECT)
+	@ar -cr $(NAME) $(OBJECT)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJECT)
+	@rm -f $(OBJECT)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

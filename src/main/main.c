@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:45:31 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/08 13:58:33 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,6 @@ char	*get_line(void)
 		return (NULL);
 	add_history(line);
 	return (line);
-}
-
-bool	check_builtin(t_cmd_table *cmd_table)
-{
-	if (!ft_strncmp(cmd_table->args[0], "exit", 4))
-		exit(1);
-	if (!ft_strncmp(cmd_table->args[0], "env", 3))
-	{
-		env(cmd_table->env_list);
-		return (true);
-	}
-	if (!ft_strncmp(cmd_table->args[0], "export", 6))
-	{
-		export(cmd_table->env_list, cmd_table->args[1]);
-		return (true);
-	}
-	if (!ft_strncmp(cmd_table->args[0], "unset", 5))
-	{
-		unset(cmd_table->env_list, cmd_table->args[1]);
-		return (true);
-	}
-	if (!ft_strncmp(cmd_table->args[0], "cd", 2))
-	{
-		cd(cmd_table->args[1]);
-		return (true);
-	}
-	if (!ft_strncmp(cmd_table->args[0], "pwd", 3))
-	{
-		printf("%s", getcwd(NULL, 0));
-		return (true);
-	}
-	return (false);
 }
 
 void	ft_leaks(void)
@@ -81,11 +49,9 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		token_list = lexer(input);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
-		check_builtin(cmd_table);
-		//free_token_list(token_list);
-		//free_cmd_table(cmd_table);
-		if (cmd_table->cmd_count > 0)
-			execute_pipeline(cmd_table, cmd_table->cmd_count);
+		execute_main(cmd_table);
+		// free_token_list(token_list);
+		// free_cmd_table(cmd_table);
 	}
 	free_env_list(cmd_table->env_list);
 }
