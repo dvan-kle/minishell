@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:32:12 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/01 18:31:33 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/13 14:25:52 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "parser.h"
 # include "tokenizer.h"
 # include "exec.h"
+# include "pipes.h"
+# include "redirect.h"
 
 void		env(t_env_list *env_list);
 void		export(t_env_list *env_list, char *input);

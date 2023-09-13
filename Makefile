@@ -6,9 +6,12 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/09/12 14:07:51 by tde-brui      ########   odam.nl          #
+#    Updated: 2023/09/13 14:24:38 by dvan-kle      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
+
+
+.SILENT: all clean fclean re
 
 NAME = minishell
 
@@ -26,32 +29,30 @@ SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_
 OBJ_DIR = obj/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
-all: $(NAME)
-
-.SILENT:
-
 $(NAME): $(OBJ) $(LIBFT)
 	@echo "\033[32mCompile minishell\033[0m"
-	$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
 	@echo "\033[32mBuild complete\033[0m"
-
+	
 $(OBJ_DIR)%.o: %.c
 	@echo "\033[32mCompiling Objects\033[0m"
-	mkdir -p $(dir $@)
-	$(CC) $(CC_FLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(LIBFT):
 	@echo "\033[32mBuilding Libft\033[0m"
-	$(MAKE) all -C libft
+	@$(MAKE) all -C libft
+
+all: $(NAME)
 
 clean:
 	@echo "\033[32mClean\033[0m"
-	rm -rf $(OBJ_DIR)
-	$(MAKE) clean -C libft
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) clean -C libft
 
 fclean: clean
 	@echo "\033[32mRun fclean\033[0m"
-	rm -f $(NAME)
-	$(MAKE) fclean -C libft
+	@rm -f $(NAME)
+	@$(MAKE) fclean -C libft
 
 re: fclean all
