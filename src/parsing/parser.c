@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 15:50:36 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/13 14:26:11 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,5 @@ t_cmd_table	*make_cmd_table(t_token	*token_list, t_env_list *env_list)
 	}
 	cmd_table->env_list = env_list;
 	cmd_table->cmd_count = cmd_count + 1;
-	// print_cmd_table(cmd_table);
-	// print_redirects(cmd_table->redirects);
 	return (cmd_table);
 }

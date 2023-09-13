@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/09/08 15:27:30 by dvan-kle      ########   odam.nl          #
+#    Updated: 2023/09/13 14:24:38 by dvan-kle      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,13 @@ LIBFT = libft/libft.a
 LIBS = -lreadline
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra
-SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c \
-        src/exec/folders.c src/exec/exec.c src/exec/pipe.c src/exec/redirect.c \
+CC_FLAGS = -Wall -Wextra -fsanitize=address -g
+SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c src/builtins/exit.c \
+        src/exec/folders.c src/exec/exec.c src/exec/pipe.c \
         src/main/main.c \
-        src/parsing/parser.c src/parsing/token_list_fncs.c src/parsing/tokenizer.c src/parsing/utils.c src/parsing/assign_token.c src/parsing/redirect.c src/parsing/cmd_table.c src/parsing/utils_malloc.c \
-		
+        src/parsing/parser.c src/parsing/token_list_fncs.c src/parsing/tokenizer.c src/parsing/utils.c src/parsing/assign_token.c src/parsing/redirect.c src/parsing/cmd_table.c src/parsing/handle_token.c src/parsing/malloc.c \
+		src/signals/signals.c \
+
 OBJ_DIR = obj/
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

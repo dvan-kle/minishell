@@ -6,19 +6,48 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:18:11 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 16:29:36 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/parser.h"
 #include "../../libft/libft.h"
+#include "../../incl/tokenizer.h"
 
-bool	ft_isredirect(t_tokentype type)
+void	init_token(t_token *token, t_env_list *env_lst)
 {
-	if (type == INPUT_REDIRECT_TOKEN || type == OUTPUT_REDIRECT_TOKEN
-		|| type == OUTPUT_REDIRECT_APPEND_TOKEN || type == READ_INPUT_TOKEN)
-		return (true);
-	return (false);
+	token->env_lst = env_lst;
+	token->type = ARGUMENT_TOKEN;
+	token->brackets = false;
+	token->new_cmd = true;
+	token->next = NULL;
+	token->value = NULL;
+	token->expand = false;
+}
+
+int	malloc_count(char *str, int i, char c)
+{
+	int	count;
+
+	count = 0;
+	while (str[i] && !ft_isspace(str[i])
+		&& str[i] != c && !ft_isredirect(str[i]))
+	{
+		count++;
+		i++;
+	}
+	return (count);
+}
+
+int	redir_count(t_token *lst);
+
+int	allocate_cmd_table(t_cmd_table *cmd_table, t_token *lst)
+{
+	cmd_table->args = ft_malloc(sizeof(char *) * (arg_token_count(lst) + 1));
+	cmd_table->redirects = ft_malloc(sizeof(t_redirect)
+			*(redir_count(lst) + 1));
+	cmd_table = cmd_table->next;
+	return (0);
 }
 
 int	arg_token_count(t_token *to_be_added)
@@ -37,11 +66,24 @@ int	arg_token_count(t_token *to_be_added)
 	return (count);
 }
 
-void	init_token(t_token *token)
+int	update_input(t_token token, char *input)
 {
-	token->type = ARGUMENT_TOKEN;
-	token->brackets = false;
-	token->new_cmd = true;
-	token->next = NULL;
-	token->value = NULL;
+	int	i;
+
+	i = 0;
+	if (token.expand == true)
+	{
+		while (input[i] && ft_isspace(input[i]))
+			i++;
+		i += next_whitespace(input, i);
+		token.expand = false;
+	}
+	else
+		i += ft_strlen(token.value) + token.whitespaces;
+	if (token.brackets == true)
+	{
+		i += 2;
+		token.brackets = false;
+	}
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 10:51:16 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 14:50:19 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_token	*new_token(t_token old_token)
 {
 	t_token	*n_token;
 
-	n_token = malloc(sizeof(t_token));
-	if (!n_token)
-		exit(1);
+	n_token = ft_malloc(sizeof(t_token));
 	n_token->value = old_token.value;
 	n_token->type = old_token.type;
 	n_token->brackets = NULL;

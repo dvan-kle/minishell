@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 14:36:33 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 19:07:53 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/12 15:01:06 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ t_cmd_table	*new_cmd(t_token *lst)
 	int			i;
 	int			j;
 
-	new_cmd = malloc(sizeof(t_cmd_table));
-	if (!new_cmd)
-		exit(1);
+	new_cmd = ft_malloc(sizeof(t_cmd_table));
 	if (allocate_cmd_table(new_cmd, lst) == 1)
 		exit(1);
 	i = 0;
@@ -87,24 +85,26 @@ void	print_cmd_table(t_cmd_table *cmd_table)
 void	free_cmd_table(t_cmd_table *cmd_table)
 {
 	int			i;
+	t_cmd_table	*tmp;
 
-	while (cmd_table != NULL)
+	tmp = cmd_table;
+	while (tmp != NULL)
 	{
 		i = 0;
-		while (cmd_table->args[i])
+		while (tmp->args[i])
 		{
-			free(cmd_table->args[i]);
+			free(tmp->args[i]);
 			i++;
 		}
 		i = 0;
-		while (cmd_table->redirects[i].file)
+		while (tmp->redirects[i].file)
 		{
-			free(cmd_table->redirects[i].file);
+			free(tmp->redirects[i].file);
 			i++;
 		}
-		free(cmd_table->args);
-		free(cmd_table->redirects);
-		free(cmd_table);
-		cmd_table = cmd_table->next;
+		free(tmp->args);
+		free(tmp->redirects);
+		free(tmp);
+		tmp = tmp->next;
 	}
 }

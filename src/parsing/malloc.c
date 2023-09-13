@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
+/*   malloc.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/11 13:29:43 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 16:42:59 by tde-brui      ########   odam.nl         */
+/*   Created: 2023/09/12 14:07:07 by tde-brui      #+#    #+#                 */
+/*   Updated: 2023/09/12 14:07:24 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strdup(const char *str)
+void	*ft_malloc(size_t size)
 {
-	char	*ptr;
-	int		i;
+	void	*ptr;
 
-	i = 0;
-	while (str[i])
-		i++;
-	ptr = malloc(i + 1);
+	ptr = malloc(size);
 	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		ptr[i] = str[i];
-		i++;
-	}
-	ptr[i] = '\0';
+		exit(1);
 	return (ptr);
 }
