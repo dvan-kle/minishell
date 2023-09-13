@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 16:29:36 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/13 15:51:48 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	malloc_count(char *str, int i, char c)
 	int	count;
 
 	count = 0;
-	while (str[i] && !ft_isspace(str[i])
-		&& str[i] != c && !ft_isredirect(str[i]))
+	while (str[i] && str[i] != c && !ft_isredirect(str[i]))
 	{
 		count++;
 		i++;

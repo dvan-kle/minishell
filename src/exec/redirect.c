@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/12 16:20:59 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/13 14:33:40 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 	close(fd[READ_END]);
 	if (redirects->type == OUTPUT_REDIRECT_TOKEN)
 		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (redirects->type == OUTPUT_REDIRECT_APPEND_TOKEN)
+	else if (redirects->type == APPEND_TOKEN)
 		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (outfile == 0 && !last_cmd)
 	{
@@ -100,7 +100,7 @@ void	redirect_single_out(t_redirect *redirects)
 	{
 		if (redirects[i].type == OUTPUT_REDIRECT_TOKEN)
 			outfile = open(redirects[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (redirects[i].type == OUTPUT_REDIRECT_APPEND_TOKEN)
+		else if (redirects[i].type == APPEND_TOKEN)
 			outfile = open(redirects[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (outfile > 0)
 			dup2(outfile, STDOUT_FILENO);

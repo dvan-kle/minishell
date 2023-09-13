@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/13 14:25:41 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/13 16:26:25 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,20 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_list;
 	char		*input;
 
-	argc = 0;
-	argv = NULL;
+	(void)argc;
+	(void)argv;
 	cmd_table = malloc(sizeof(t_cmd_table));
 	cmd_table->env_list = make_env_list(envp);
 	while (1)
 	{
+		init_signals();
 		input = get_line();
-		//init_signals();
 		if (!input)
 			continue ;
 		token_list = lexer(input, cmd_table->env_list);
 		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
-		free_token_list(token_list);
-		//free_cmd_table(cmd_table);
 		execute_main(cmd_table);
-		// free_token_list(token_list);
+		//free_token_list(token_list);
 		// free_cmd_table(cmd_table);
 	}
 	free_env_list(cmd_table->env_list);
