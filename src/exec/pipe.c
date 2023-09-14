@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/13 15:18:31 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/14 14:08:42 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 		}
 		if (pid == 0)
 		{
+			ignore_signals();
 			redirect_single(cmd_table);
 			execute(cmd_table, cmd_table->env_list);
 		}
@@ -64,6 +65,7 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
 		pid = fork();
 		if (pid == 0)
 		{
+			ignore_signals();
 			redirect(cmd_table, fd, read, i, cmd_count);
 			if (check_builtin(cmd_table, envl) == false)
 				execute(cmd_table, envl);

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/13 16:28:42 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/14 13:27:33 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include <errno.h>
-
-void	redirect_error(char *filename)
-{
-	if (errno == ENOENT)
-		printf("minishell: no such file or directory: %s\n", filename);
-	else if (errno == EACCES)
-		printf("minishell: permission denied: %s\n", filename);
-	exit(EXIT_FAILURE);
-}
 
 void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index, int pipe_count)
 {
