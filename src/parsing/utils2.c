@@ -6,22 +6,46 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/13 14:53:20 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/13 15:44:49 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/14 15:12:43 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 
-bool	find_key(t_token *token, char *key, char *input)
+int	next_whitespace(char *input, int i)
 {
-	t_env_list	*curr;
+	int	count;
 
-	curr = token->env_lst;
-	while (curr)
+	count = 0;
+	while (input[i] && !ft_isspace(input[i]))
 	{
-		if (!ft_strncmp(curr->key, key, next_whitespace(input, 0)))
-			return (true);
-		curr = curr->next;
+		i++;
+		count++;
 	}
-	return (false);
+	return (count);
+}
+
+int	next_whitespace_and_bracket(char *input, int i)
+{
+	int	count;
+
+	count = 0;
+	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"')
+	{
+		i++;
+		count++;
+	}
+	return (count);
+}
+
+t_token	check_new_cmd(t_token *token)
+{
+	if (token->new_cmd == true)
+	{
+		token->type = CMD_TOKEN;
+		token->new_cmd = false;
+	}
+	else
+		token->type = ARGUMENT_TOKEN;
+	return (*token);
 }

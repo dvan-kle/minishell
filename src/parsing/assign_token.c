@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/13 17:21:37 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/14 15:12:14 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	assign_token(t_token *token, char *type, int i)
 		assign_redirect(token, type, i, APPEND_TOKEN);
 }
 
-int	assign_minus(t_token *token, char *type, int i)
+void	assign_minus(t_token *token, char *type, int i)
 {
 	int		input_len;
 	int		j;
@@ -61,82 +61,53 @@ int	assign_minus(t_token *token, char *type, int i)
 		i++;
 		j++;
 	}
-	return (j);
+	token->value[j] = '\0';
 }
 
-char	*minishell_strjoin(char const *str1, char const *str2)
+char	*ft_charjoin(char *str, char c)
 {
-	char	*ptr;
+	char	*ret;
 	int		i;
-	int		j;
-	int		k;
 
+	ret = ft_malloc(sizeof(char) * ft_strlen(str) + 2);
 	i = 0;
-	j = 0;
-	k = ft_strlen(str1) + ft_strlen(str2) + 1;
-	if (!str1)
-		return ((char *)str1);
-	ptr = malloc((sizeof(char) * k));
-	if (!ptr)
-		return (NULL);
-	while (str1[i])
+	if (!str)
 	{
-		ptr[i] = str1[i];
+		ret[0] = c;
+		ret[1] = '\0';
+		return (ret);
+	}
+	while (str[i])
+	{
+		ret[i] = str[i];
 		i++;
 	}
-	while (str2[j])
-	{
-		ptr[i + j] = str2[j];
-		j++;
-	}
-	ptr[i + j] = '\0';
-	return (ptr);
+	ret[i] = c;
+	ret[i + 1] = '\0';
+	free(str);
+	return (ret);
 }
 
-int	assign_bracket(t_token *token, char *type, int i, char bracket)
+void	assign_bracket(t_token *token, char *type, int i, char bracket)
 {
 	int		input_len;
-	int		j;
 	char	*key;
-	char	*join;
 
 	input_len = ft_strlen(type);
-	j = 0;
+	token->value = ft_strdup("");
 	while (i < input_len && type[i] != bracket)
 	{
 		if (type[i] == '$' && bracket == '\"')
 		{
 			key = assign_var(token, type, i + 1);
-			if (ft_strncmp(key, "", 1))
-			{
-				join = minishell_strjoin(token->value, key);
-				printf("join: %s\n", join);
-				free(token->value);
-				token->value = join;
-			}
-			free(key);
+			token->value = ft_strjoin(token->value, key);
 			i += next_whitespace(type, i);
-			j = ft_strlen(token->value);
 		}
 		else
 		{
-			token->value[j] = type[i];
+			token->value = ft_charjoin(token->value, type[i]);
 			i++;
-			j++;
 		}
 	}
 	token->brackets = true;
-	return (j);
-}
-
-t_token	check_new_cmd(t_token *token)
-{
-	if (token->new_cmd == true)
-	{
-		token->type = CMD_TOKEN;
-		token->new_cmd = false;
-	}
-	else
-		token->type = ARGUMENT_TOKEN;
-	return (*token);
 }

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/13 15:51:48 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/14 15:09:40 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,14 @@ int	update_input(t_token token, char *input)
 	{
 		while (input[i] && ft_isspace(input[i]))
 			i++;
-		i += next_whitespace(input, i);
+		if (input[i] == '\"' || input[i] == '\'')
+		{
+			while (input[i + 1] && input[i + 1] != '\"'
+				&& input[i + 1] != '\'')
+				i++;
+		}
+		else
+			i += next_whitespace(input, i);
 		token.expand = false;
 	}
 	else
