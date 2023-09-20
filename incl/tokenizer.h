@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/14 14:19:57 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/20 14:41:55 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void	*ft_malloc(size_t size);
 char	*assign_var(t_token *token, char *input, int i);
 bool	find_key(t_token *token, char *key, char *input);
 int		next_whitespace_and_bracket(char *input, int i);
+int		next_whitespace_brackets(char *input, int i);
 
 #endif

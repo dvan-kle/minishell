@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/12 14:32:31 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/20 17:00:45 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len + 1))
 	{
 		printf("exit\n");
-		exit(EXIT_SUCCESS);
+		ft_exit(EXIT_SUCCESS);
 	}
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		return (env(cmd_table->env_list), true);

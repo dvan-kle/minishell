@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/09/13 15:44:03 by tde-brui      ########   odam.nl          #
+#    Updated: 2023/09/20 15:40:09 by tde-brui      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT = libft/libft.a
 LIBS = -lreadline
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -fsanitize=address -g
+CC_FLAGS = -Wall -Wextra
 SRC =    src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c src/builtins/exit.c \
         src/exec/folders.c src/exec/exec.c src/exec/pipe.c src/exec/redirect.c \
         src/main/main.c \

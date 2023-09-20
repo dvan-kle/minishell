@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/14 15:12:14 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/20 14:32:27 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,20 @@ char	*ft_charjoin(char *str, char c)
 	return (ret);
 }
 
+int	next_whitespace_brackets(char *input, int i)
+{
+	int	count;
+
+	count = 0;
+	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"' && input[i]
+		!= '\'')
+	{
+		i++;
+		count++;
+	}
+	return (count);
+}
+
 void	assign_bracket(t_token *token, char *type, int i, char bracket)
 {
 	int		input_len;
@@ -101,7 +115,7 @@ void	assign_bracket(t_token *token, char *type, int i, char bracket)
 		{
 			key = assign_var(token, type, i + 1);
 			token->value = ft_strjoin(token->value, key);
-			i += next_whitespace(type, i);
+			i += next_whitespace_brackets(type, i);
 		}
 		else
 		{
