@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   folders.c                                          :+:    :+:            */
+/*   exec.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/14 14:04:27 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/20 17:10:18 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,29 @@ bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 {
 	int	cmd_len;
 
-	cmd_len = ft_strlen(cmd_table->args[0]);
-	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len + 1))
-		return (ft_exit(cmd_table), true);
+	cmd_len = ft_strlen(cmd_table->args[0]) + 1;
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		return (env(cmd_table->env_list), true);
 	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
 		return (export(env_list, cmd_table->args[1]), true);
 	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
 		return (unset(env_list, cmd_table->args[1]), true);
+	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
+		return (printf("\033[2J\033[1;1H"), true);
+	return (false);
+}
+
+bool	check_builtin2(t_cmd_table *cmd_table)
+{
+	int	cmd_len;
+
+	cmd_len = ft_strlen(cmd_table->args[0]) + 1;
+	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
+		return (ft_exit(cmd_table), true);
 	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
 		return (cd(cmd_table->args[1]), true);
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 		return (printf("%s\n", getcwd(NULL, 0)), true);
-	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
-		return (printf("\033[2J\033[1;1H"), true);
 	return (false);
 }
 
