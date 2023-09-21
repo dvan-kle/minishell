@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/20 18:23:39 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/21 17:47:41 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	}
 	if (pid == 0)
 	{
-		// ignore_signals();
+		ignore_signals();
 		redirect_single(cmd_table);
-		if (check_builtin(cmd_table, cmd_table->env_list) == false)
-			execute(cmd_table, cmd_table->env_list);
+		if (check_builtin(cmd_table, cmd_table->env_list) == true)
+			execute_builtin(cmd_table, cmd_table->env_list);
+		execute(cmd_table, cmd_table->env_list);
 	}
 	waitpid(pid, &status, 0);
 }
@@ -56,25 +57,23 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
 	int			read;
 	int			i;
 	int			status;
-	int			saved;
 
 	read = STDIN_FILENO;
 	i = 0;
 	while (i < cmd_count)
 	{
-		saved = read;
 		pipe(fd);
 		pid = fork();
 		if (pid == 0)
 		{
-			// ignore_signals();
+			ignore_signals();
 			redirect(cmd_table, fd, read, i, cmd_count);
-			if (check_builtin(cmd_table, envl) == false)
-				execute(cmd_table, envl);
+			if (check_builtin(cmd_table, envl) == true)
+				execute_builtin(cmd_table, envl);
+			execute(cmd_table, envl);
 		}
 		waitpid(pid, &status, 0);
 		read = dup(fd[READ_END]);
-		// close(saved);
 		cmd_table = cmd_table->next;
 		close_pipe(fd);
 		i++;

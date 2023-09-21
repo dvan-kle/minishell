@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 15:03:27 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/21 15:27:46 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd_table->env_list = make_env_list(envp);
 	while (1)
 	{
-		init_signals();
+		// init_signals();
 		input = get_line();
 		if (!input)
 			continue ;

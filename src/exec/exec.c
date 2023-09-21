@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/20 17:10:18 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/21 17:44:15 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "../../incl/exec.h"
 #include "../../incl/main.h"
 
-bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
+bool	execute_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 {
 	int	cmd_len;
 
@@ -30,6 +30,22 @@ bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 		return (unset(env_list, cmd_table->args[1]), true);
 	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
 		return (printf("\033[2J\033[1;1H"), true);
+	return (false);
+}
+
+bool	check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
+{
+	int	cmd_len;
+
+	cmd_len = ft_strlen(cmd_table->args[0]) + 1;
+	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
+		return (true);
+	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
+		return (true);
+	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
+		return (true);
+	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
+		return (true);
 	return (false);
 }
 
