@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 14:41:55 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/22 23:11:01 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_token	handle_brackets(int i, char *input, t_token token);
 t_token	handle_rest(int i, char *input, t_token token);
 bool	ft_isredir(char c);
 int		next_whitespace(char *input, int i);
-int		update_input(t_token token, char *input);
+int		update_input(t_token *token, char *input);
 void	*ft_malloc(size_t size);
 char	*assign_var(t_token *token, char *input, int i);
 bool	find_key(t_token *token, char *key, char *input);

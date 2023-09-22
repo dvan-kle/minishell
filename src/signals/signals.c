@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/19 16:53:44 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/22 22:59:53 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sigint_handler(int sigint)
 	(void)sigint;
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
 }
 

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 14:41:26 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/22 23:10:27 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int	arg_token_count(t_token *to_be_added)
 	return (count);
 }
 
-int	update_input(t_token token, char *input)
+int	update_input(t_token *token, char *input)
 {
 	int		i;
 	char	bracket;
 
 	i = 0;
-	if (token.expand == true)
+	if (token->expand == true)
 	{
 		while (input[i] && ft_isspace(input[i]))
 			i++;
@@ -84,17 +84,17 @@ int	update_input(t_token token, char *input)
 		else
 		{
 			i += next_whitespace_brackets(input, i);
-			token.expand = false;
+			token->expand = false;
 			return (i);
 		}
-		token.expand = false;
+		token->expand = false;
 	}
 	else
-		i += ft_strlen(token.value) + token.whitespaces;
-	if (token.brackets == true)
+		i += ft_strlen(token->value) + token->whitespaces;
+	if (token->brackets == true)
 	{
 		i += 2;
-		token.brackets = false;
+		token->brackets = false;
 	}
 	return (i);
 }

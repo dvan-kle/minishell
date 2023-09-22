@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 14:45:12 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/22 23:22:38 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_token	*lexer(char *input, t_env_list *env_list)
 		token_list = list_add_back(token_list, token);
 		if (token.type == END_OF_CMD_TOKEN)
 			break ;
-		input += update_input(token, input);
+		input += update_input(&token, input);
 	}
 	return (token_list);
 }
