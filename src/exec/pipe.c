@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/21 17:47:41 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/21 18:09:42 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,17 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
 
 void	execute_main(t_cmd_table *cmd_table)
 {
-	int	stdin;
-	int	stdout;
+	int	stdinp;
+	int	stdoutp;
 
-	stdin = dup(STDIN_FILENO);
-	stdout = dup(STDOUT_FILENO);
+	stdinp = dup(STDIN_FILENO);
+	stdoutp = dup(STDOUT_FILENO);
 	if (cmd_table->cmd_count == 1)
 		execute_single_cmd(cmd_table);
 	else
 		execute_pipeline(cmd_table, cmd_table->cmd_count, cmd_table->env_list);
-	dup2(stdin, STDIN_FILENO);
-	dup2(stdout, STDOUT_FILENO);
-	close(stdin);
-	close(stdout);
+	dup2(stdinp, STDIN_FILENO);
+	dup2(stdoutp, STDOUT_FILENO);
+	close(stdinp);
+	close(stdoutp);
 }
