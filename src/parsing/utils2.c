@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/13 14:53:20 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/14 15:12:43 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 02:47:56 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	next_whitespace_and_bracket(char *input, int i)
 	int	count;
 
 	count = 0;
-	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"')
+	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"'
+		&& input[i] != '\'')
 	{
 		i++;
 		count++;

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 17:16:22 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 02:49:50 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*assign_var(t_token *token, char *input, int i)
 	char		*result;
 
 	curr = token->env_lst;
-	key = ft_substr(input, i, next_whitespace_and_bracket(input, i) + i);
+	key = ft_substr(input, i, next_whitespace_and_bracket(input, i));
 	// if (!ft_strncmp(key, "?", ft_strlen(key) + 1))
 	// {
 	// 	free(key);
