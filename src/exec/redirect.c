@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/14 13:27:33 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/23 16:43:06 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 	if (outfile == 0 && !last_cmd)
 	{
 		dup2(fd[WRITE_END], STDOUT_FILENO);
+		close(fd[WRITE_END]);
 		return ;
 	}
 	if (outfile > 0)
