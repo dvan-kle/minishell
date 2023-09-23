@@ -6,21 +6,20 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/14 15:06:45 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:33:21 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../incl/env.h"
 #include "../../libft/libft.h"
+#include "../../incl/tokenizer.h"
 
 t_env_list	*new_env(char *env)
 {
 	t_env_list	*nenv;
 
-	nenv = malloc(sizeof(t_env_list));
-	if (!nenv)
-		return (NULL);
+	nenv = ft_malloc(sizeof(t_env_list));
 	nenv->key = ft_substr(env, 0, ft_strchr(env, '=') - env);
 	nenv->value = ft_substr(env, ft_strchr(env, '=') - env + 1, ft_strlen(env));
 	nenv->next = NULL;

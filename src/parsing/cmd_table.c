@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 14:36:33 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 15:25:23 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/23 18:05:58 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,11 @@ void	free_cmd_table(t_cmd_table *cmd_table)
 		}
 		free(tmp->args);
 		free(tmp->redirects);
+		if (tmp->next == NULL)
+		{
+			free(tmp);
+			return ;
+		}
 		free(tmp);
 		tmp = tmp->next;
 	}
