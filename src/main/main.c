@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/13 14:25:41 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/23 16:50:13 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,32 @@ char	*get_line(void)
 
 void	ft_leaks(void)
 {
-	system("leaks a.out");
+	system("leaks minishell");
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd_table	*cmd_table;
 	t_token		*token_list;
+	t_env_list	*env_lst;
 	char		*input;
 
-	argc = 0;
-	argv = NULL;
-	cmd_table = malloc(sizeof(t_cmd_table));
-	cmd_table->env_list = make_env_list(envp);
+	(void)argc;
+	(void)argv;
+	env_lst = make_env_list(envp);
+	atexit(ft_leaks);
 	while (1)
 	{
+		init_signals();
 		input = get_line();
-		//init_signals();
 		if (!input)
 			continue ;
-		token_list = lexer(input, cmd_table->env_list);
-		cmd_table = make_cmd_table(token_list, cmd_table->env_list);
+		token_list = lexer(input, env_lst);
+		cmd_table = make_cmd_table(token_list, env_lst);
 		free_token_list(token_list);
-		//free_cmd_table(cmd_table);
-		execute_main(cmd_table);
-		// free_token_list(token_list);
-		// free_cmd_table(cmd_table);
+		if (cmd_table->error == 0)
+			execute_main(cmd_table);
+		free_cmd_table(cmd_table);
 	}
 	free_env_list(cmd_table->env_list);
 }
