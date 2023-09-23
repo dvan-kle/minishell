@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 16:08:28 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/23 16:31:20 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*assign_var(t_token *token, char *input, int i)
 	// 	token->expand = true;
 	// 	return (result);
 	// }
-	result = ft_strdup("");
 	while (curr)
 	{
 		if (!ft_strncmp(curr->key, key, ft_strlen(curr->key) + 1))
@@ -54,6 +53,7 @@ char	*assign_var(t_token *token, char *input, int i)
 		curr = curr->next;
 	}
 	free(key);
+	result = ft_strdup("");
 	token->expand = true;
 	return (result);
 }

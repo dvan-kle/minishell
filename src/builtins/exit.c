@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 11:58:39 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/22 23:17:31 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/23 17:06:01 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_exit(t_cmd_table *cmd_table)
 		if (cmd_table->args[2])
 		{
 			printf("minishell: exit: too many arguments\n");
-			exit(1);
+			return ;
 		}
 		if (long_atoi(cmd_table->args[1]) != -1)
 			exit(long_atoi(cmd_table->args[1]) % 256);

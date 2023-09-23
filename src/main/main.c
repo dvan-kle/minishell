@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 15:51:10 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/23 16:50:13 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	//cmd_table = ft_malloc(sizeof(t_cmd_table));
-	// cmd_table->env_list = make_env_list(envp);
 	env_lst = make_env_list(envp);
 	atexit(ft_leaks);
 	while (1)
