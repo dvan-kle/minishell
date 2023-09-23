@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 17:07:59 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/23 17:13:47 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_line(void)
 
 void	ft_leaks(void)
 {
-	system("leaks a.out");
+	system("leaks minishell");
 }
 
 int	main(int argc, char **argv, char **envp)

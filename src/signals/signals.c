@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/14 19:09:13 by danielvankl   ########   odam.nl         */
+/*   Updated: 2023/09/23 17:14:10 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	sigquit_handler(int sigquit)
 void	sigint_handler(int sigint)
 {
 	(void)sigint;
-	write(2, "\n", 1);
-	// rl_replace_line("", 0);
+	printf("\n");
 	rl_on_new_line();
+	//rl_replace_line("", 0);
 	rl_redisplay();
 }
 
