@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/22 22:59:53 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/23 17:14:10 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 #include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 void	sigquit_handler(int sigquit)
 {
 	(void)sigquit;
 	printf("Quit (core dumped)\n");
+	exit(1);
 }
 
 void	sigint_handler(int sigint)
@@ -35,4 +38,9 @@ void	init_signals(void)
 {
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
+}
+
+void	ignore_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
 }

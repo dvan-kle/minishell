@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/14 15:07:13 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:12:01 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	env(t_env_list *env_list)
 	lst_head = env_list;
 	while (lst_head)
 	{
-		printf("%s=%s\n", lst_head->key, lst_head->value);
+		dprintf(STDOUT_FILENO, "%s=%s\n", lst_head->key, lst_head->value);
 		lst_head = lst_head->next;
 	}
 }

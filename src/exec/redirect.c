@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/13 14:33:40 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:13:39 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	redirect_in(t_redirect *redirects, int read)
 	if (redirects->type == INPUT_REDIRECT_TOKEN)
 	{
 		infile = open(redirects->file, O_RDONLY);
+		if (infile == -1)
+			redirect_error(redirects->file);
 	}
 	if (infile > 0)
 		dup2(infile, STDIN_FILENO);
@@ -56,12 +58,21 @@ void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 	outfile = 0;
 	close(fd[READ_END]);
 	if (redirects->type == OUTPUT_REDIRECT_TOKEN)
+	{
 		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (outfile == -1)
+			redirect_error(redirects->file);
+	}
 	else if (redirects->type == APPEND_TOKEN)
+	{
 		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (outfile == -1)
+			redirect_error(redirects->file);
+	}
 	if (outfile == 0 && !last_cmd)
 	{
 		dup2(fd[WRITE_END], STDOUT_FILENO);
+		close(fd[WRITE_END]);
 		return ;
 	}
 	if (outfile > 0)
@@ -84,6 +95,8 @@ void	redirect_single_in(t_redirect *redirects)
 	if (redirects->type == INPUT_REDIRECT_TOKEN)
 	{
 		infile = open(redirects->file, O_RDONLY);
+		if (infile == -1)
+			redirect_error(redirects->file);
 	}
 	if (infile > 0)
 		dup2(infile, STDIN_FILENO);
@@ -99,9 +112,19 @@ void	redirect_single_out(t_redirect *redirects)
 	while (redirects[i].type != END_OF_CMD_TOKEN)
 	{
 		if (redirects[i].type == OUTPUT_REDIRECT_TOKEN)
-			outfile = open(redirects[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		{
+			outfile = open(redirects[i].file, O_WRONLY | O_CREAT
+					| O_TRUNC, 0644);
+			if (outfile == -1)
+				redirect_error(redirects[i].file);
+		}
 		else if (redirects[i].type == APPEND_TOKEN)
-			outfile = open(redirects[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		{
+			outfile = open(redirects[i].file, O_WRONLY | O_CREAT
+					| O_APPEND, 0644);
+			if (outfile == -1)
+				redirect_error(redirects[i].file);
+		}
 		if (outfile > 0)
 			dup2(outfile, STDOUT_FILENO);
 		i++;
