@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 13:22:39 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/14 14:55:11 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:35:35 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,17 @@ void	execute_error(char *cmd)
 	else
 		printf("minishell: error");
 	exit(EXIT_FAILURE);
+}
+
+void	ft_free(char **ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr[i])
+	{
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
 }

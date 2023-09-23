@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 14:06:07 by tde-brui      #+#    #+#                 */
-/*   Updated: 2022/10/21 17:54:44 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:26:47 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len > ft_strlen(str))
 		len = ft_strlen(str);
-	ptr = malloc(((sizeof(char)) * len) + 1);
-	if (!ptr)
-		return (NULL);
+	ptr = ft_malloc(((sizeof(char)) * len) + 1);
 	while (str[start + i] != '\0' && i < len && start <= ft_strlen(str))
 	{
 		ptr[j] = str[start + i];
