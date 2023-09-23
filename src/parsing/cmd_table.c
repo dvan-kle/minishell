@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 14:36:33 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 15:01:06 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 15:25:23 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_cmd_table	*new_cmd(t_token *lst)
 		if (ft_isredirect(lst->type) && lst->next->type != END_OF_CMD_TOKEN)
 		{
 			new_cmd->redirects[j].type = lst->type;
-			new_cmd->redirects[j].file = lst->next->value;
+			new_cmd->redirects[j].file = ft_strdup(lst->next->value);
 			j++;
 			lst = lst->next;
 		}
@@ -97,7 +97,7 @@ void	free_cmd_table(t_cmd_table *cmd_table)
 			i++;
 		}
 		i = 0;
-		while (tmp->redirects[i].file)
+		while (tmp->redirects[i].type != END_OF_CMD_TOKEN)
 		{
 			free(tmp->redirects[i].file);
 			i++;

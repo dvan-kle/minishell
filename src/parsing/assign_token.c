@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 14:32:27 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 15:41:37 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ char	*ft_charjoin(char *str, char c)
 		ret[i] = str[i];
 		i++;
 	}
+	free(str);
 	ret[i] = c;
 	ret[i + 1] = '\0';
-	free(str);
 	return (ret);
 }
 
@@ -102,6 +102,37 @@ int	next_whitespace_brackets(char *input, int i)
 	return (count);
 }
 
+char	*minishell_strjoin(char const *str1, char const *str2)
+{
+	char	*ptr;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = ft_strlen(str1) + ft_strlen(str2) + 1;
+	if (!str1)
+		return ((char *)str1);
+	ptr = malloc((sizeof(char) * k));
+	if (!ptr)
+		return (NULL);
+	while (str1[i])
+	{
+		ptr[i] = str1[i];
+		i++;
+	}
+	while (str2[j])
+	{
+		ptr[i + j] = str2[j];
+		j++;
+	}
+	free((char *)str1);
+	free((char *)str2);
+	ptr[i + j] = '\0';
+	return (ptr);
+}
+
 void	assign_bracket(t_token *token, char *type, int i, char bracket)
 {
 	int		input_len;
@@ -114,7 +145,7 @@ void	assign_bracket(t_token *token, char *type, int i, char bracket)
 		if (type[i] == '$' && bracket == '\"')
 		{
 			key = assign_var(token, type, i + 1);
-			token->value = ft_strjoin(token->value, key);
+			token->value = minishell_strjoin(token->value, key);
 			i += next_whitespace_brackets(type, i);
 		}
 		else
