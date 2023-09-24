@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 17:27:31 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/24 16:05:46 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		if (cmd_table->error == 0)
 			execute_main(cmd_table);
 		free_cmd_table(cmd_table);
+		//break ;
 	}
-	free_env_list(cmd_table->env_list);
+	free_env_list(env_lst);
 }

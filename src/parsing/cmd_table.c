@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 14:36:33 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 18:05:58 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/24 15:26:38 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_cmd_table	*new_cmd(t_token *lst)
 	j = 0;
 	while (lst->type != END_OF_CMD_TOKEN && lst->type != PIPE_TOKEN)
 	{
-		if (ft_isredirect(lst->type) && lst->next->type != END_OF_CMD_TOKEN)
+		if (ft_isredirect(lst->type))
 		{
 			new_cmd->redirects[j].type = lst->type;
 			new_cmd->redirects[j].file = ft_strdup(lst->next->value);
@@ -39,6 +39,8 @@ t_cmd_table	*new_cmd(t_token *lst)
 				exit(1);
 			i++;
 		}
+		if (lst->type == END_OF_CMD_TOKEN)
+			break ;
 		lst = lst->next;
 	}
 	new_cmd->redirects[j].type = END_OF_CMD_TOKEN;
@@ -86,6 +88,7 @@ void	free_cmd_table(t_cmd_table *cmd_table)
 {
 	int			i;
 	t_cmd_table	*tmp;
+	t_cmd_table *next;
 
 	tmp = cmd_table;
 	while (tmp != NULL)
@@ -109,7 +112,8 @@ void	free_cmd_table(t_cmd_table *cmd_table)
 			free(tmp);
 			return ;
 		}
+		next = tmp->next;
 		free(tmp);
-		tmp = tmp->next;
+		tmp = next;
 	}
 }

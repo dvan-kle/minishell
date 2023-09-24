@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 13:31:44 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/08/22 18:33:06 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/24 16:03:55 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
+	//free(pwd);
 }
 
 // int main(void)

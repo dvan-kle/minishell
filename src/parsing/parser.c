@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 15:50:26 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/24 14:33:45 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	parse_error_check(t_token *t_list)
 		if (ft_isredirect(tmp->type) && (tmp->next->type == PIPE_TOKEN
 				|| ft_isredirect(tmp->next->type)))
 		{
-			printf("minishell: syntax error near unexpected token`%s'\n", tmp->next->value);
+			printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->value);
 			return (true);
 		}
 		if (ft_isredirect(tmp->type) && tmp->next->type == END_OF_CMD_TOKEN)
