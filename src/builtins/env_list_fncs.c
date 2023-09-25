@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/24 15:57:26 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/25 20:51:37 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,23 @@ t_env_list	*new_env(char *env)
 void	env_add_back(char *env, t_env_list **env_list)
 {
 	t_env_list	*lst_head;
+	t_env_list	*tmp;
 
 	lst_head = *env_list;
+	tmp = new_env(env);
 	while (lst_head->next)
+	{
+		if (!ft_strncmp(lst_head->key, tmp->key, ft_strlen(lst_head->key) + 1))
+		{
+			free(lst_head->value);
+			lst_head->value = tmp->value;
+			free(tmp->key);
+			free(tmp);
+			return ;
+		}
 		lst_head = lst_head->next;
-	lst_head->next = new_env(env);
+	}
+	lst_head->next = tmp;
 }
 
 void	free_env_list(t_env_list *env_list)
