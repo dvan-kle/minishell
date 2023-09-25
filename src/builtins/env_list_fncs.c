@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/25 20:51:37 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/25 21:16:14 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	env_add_back(char *env, t_env_list **env_list)
 
 	lst_head = *env_list;
 	tmp = new_env(env);
-	while (lst_head->next)
+	while (lst_head)
 	{
-		if (!ft_strncmp(lst_head->key, tmp->key, ft_strlen(lst_head->key) + 1))
+		if (!ft_strncmp(lst_head->key, tmp->key, ft_strlen(tmp->key) + 1))
 		{
 			free(lst_head->value);
 			lst_head->value = tmp->value;
@@ -44,6 +44,14 @@ void	env_add_back(char *env, t_env_list **env_list)
 			return ;
 		}
 		lst_head = lst_head->next;
+	}
+	if (!lst_head)
+	{
+		lst_head = *env_list;
+		while (lst_head->next)
+			lst_head = lst_head->next;
+		lst_head->next = tmp;
+		return ;
 	}
 	lst_head->next = tmp;
 }
