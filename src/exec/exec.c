@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/23 18:08:50 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/25 20:36:56 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@ bool	execute_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
 	cmd_len = ft_strlen(cmd_table->args[0]) + 1;
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		return (env(cmd_table->env_list), true);
-	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
-		return (export(env_list, cmd_table->args[1]), true);
-	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
-		return (unset(env_list, cmd_table->args[1]), true);
-	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
-		return (printf("\033[2J\033[1;1H"), true);
 	return (false);
 }
 
@@ -59,7 +53,13 @@ bool	check_builtin2(t_cmd_table *cmd_table)
 	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
 		return (cd(cmd_table->args[1]), true);
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
-		return (printf("%s\n", getcwd(NULL, 0)), true);
+		return (pwd(), true);
+	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
+		return (export(cmd_table->env_list, cmd_table->args[1]), true);
+	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
+		return (unset(cmd_table->env_list, cmd_table->args[1]), true);
+	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
+		return (printf("\033[2J\033[1;1H"), true);
 	return (false);
 }
 
@@ -110,8 +110,8 @@ int	execute(t_cmd_table *cmd_table, t_env_list *env_list)
 	path = get_path(env_list, cmd_table->args[0]);
 	if (execve(path, cmd_table->args, NULL) == -1)
 	{
-		free(path);
 		execute_error(cmd_table->args[0]);
+		free(path);
 		return (EXIT_FAILURE);
 	}
 	free(path);
