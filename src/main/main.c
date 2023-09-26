@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 17:13:47 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/26 14:38:05 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,34 @@ char	*get_line(void)
 	return (line);
 }
 
+bool	parse_error_check(t_token *t_list)
+{
+	t_token	*tmp;
+
+	tmp = t_list;
+	while (tmp->type != END_OF_CMD_TOKEN)
+	{
+		if (ft_isredirect(tmp->type) && (tmp->next->type == PIPE_TOKEN
+				|| ft_isredirect(tmp->next->type)))
+		{
+			printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->value);
+			return (true);
+		}
+		if (ft_isredirect(tmp->type) && tmp->next->type == END_OF_CMD_TOKEN)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+			return (true);
+		}
+		if (tmp->type == PIPE_TOKEN && tmp->next->type == END_OF_CMD_TOKEN)
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+			return (true);
+		}
+		tmp = tmp->next;
+	}
+	return (false);
+}
+
 void	ft_leaks(void)
 {
 	system("leaks minishell");
@@ -39,23 +67,28 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_list;
 	t_env_list	*env_lst;
 	char		*input;
+	int			exit_status;
 
 	(void)argc;
 	(void)argv;
 	env_lst = make_env_list(envp);
-	atexit(ft_leaks);
+	exit_status = 0;
 	while (1)
 	{
 		init_signals();
 		input = get_line();
 		if (!input)
 			continue ;
-		token_list = lexer(input, env_lst);
+		token_list = lexer(input, env_lst, exit_status);
+		if (parse_error_check(token_list))
+		{
+			free_token_list(token_list);
+			continue ;
+		}
 		cmd_table = make_cmd_table(token_list, env_lst);
 		free_token_list(token_list);
-		if (cmd_table->error == 0)
-			execute_main(cmd_table);
+		execute_main(cmd_table);
 		free_cmd_table(cmd_table);
 	}
-	free_env_list(cmd_table->env_list);
+	free_env_list(env_lst);
 }

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 14:56:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/20 15:27:24 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/26 14:24:24 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_cmd_table	t_cmd_table;
 typedef struct s_cmd_table{
 	char			**args;
 	unsigned int	cmd_count;
-	bool			error;
 	t_env_list		*env_list;
 	t_redirect		*redirects;
 	t_cmd_table		*next;
