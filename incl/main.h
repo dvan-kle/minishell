@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:32:12 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/14 13:29:19 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/09/26 11:26:10 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void		init_signals(void);
 void		ft_exit(t_cmd_table *cmd_table);
 void		execute_error(char *cmd);
 void		redirect_error(char *filename);
+void	    echo(t_cmd_table	*cmd_table);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 17:12:01 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/26 11:08:33 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,25 @@ void	env(t_env_list *env_list)
 	lst_head = env_list;
 	while (lst_head)
 	{
-		dprintf(STDOUT_FILENO, "%s=%s\n", lst_head->key, lst_head->value);
+		printf("%s=%s\n", lst_head->key, lst_head->value);
 		lst_head = lst_head->next;
 	}
 }
 
 void	export(t_env_list *env_list, char *input)
 {
+	t_env_list	*curr;
+
+	curr = env_list;
+	if (!input)
+	{
+		while (curr)
+		{
+			printf("declare -x %s=\"%s\"\n", curr->key, curr->value);
+			curr = curr->next;
+		}
+		return ;
+	}
 	env_add_back(input, &env_list);
 }
 
@@ -55,12 +67,3 @@ void	unset(t_env_list *env_list, char *input)
 		lst_head = lst_head->next;
 	}
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_env_list	*env_list;
-
-// 	env_list = make_env_list(envp);
-
-// 	env(env_list);
-// }

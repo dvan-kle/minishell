@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 15:41:37 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 14:32:40 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,7 @@ char	*minishell_strjoin(char const *str1, char const *str2)
 	k = ft_strlen(str1) + ft_strlen(str2) + 1;
 	if (!str1)
 		return ((char *)str1);
-	ptr = malloc((sizeof(char) * k));
-	if (!ptr)
-		return (NULL);
+	ptr = ft_malloc((sizeof(char) * k));
 	while (str1[i])
 	{
 		ptr[i] = str1[i];
@@ -144,7 +142,7 @@ void	assign_bracket(t_token *token, char *type, int i, char bracket)
 	{
 		if (type[i] == '$' && bracket == '\"')
 		{
-			key = assign_var(token, type, i + 1);
+			key = assign_var(token, type, i + 1, 0);
 			token->value = minishell_strjoin(token->value, key);
 			i += next_whitespace_brackets(type, i);
 		}

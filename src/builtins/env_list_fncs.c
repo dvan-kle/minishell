@@ -6,21 +6,20 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/25 20:46:05 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/26 15:16:01 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../incl/env.h"
 #include "../../libft/libft.h"
+#include "../../incl/tokenizer.h"
 
 t_env_list	*new_env(char *env)
 {
 	t_env_list	*nenv;
 
-	nenv = malloc(sizeof(t_env_list));
-	if (!nenv)
-		return (NULL);
+	nenv = ft_malloc(sizeof(t_env_list));
 	nenv->key = ft_substr(env, 0, ft_strchr(env, '=') - env);
 	nenv->value = ft_substr(env, ft_strchr(env, '=') - env + 1, ft_strlen(env));
 	nenv->next = NULL;
@@ -30,24 +29,45 @@ t_env_list	*new_env(char *env)
 void	env_add_back(char *env, t_env_list **env_list)
 {
 	t_env_list	*lst_head;
+	t_env_list	*prev;
+	t_env_list	*tmp;
 
 	lst_head = *env_list;
-	while (lst_head->next)
+	tmp = new_env(env);
+	if (!lst_head)
+	{
+		*env_list = tmp;
+		return ;
+	}
+	while (lst_head)
+	{
+		if (!ft_strncmp(lst_head->key, tmp->key, ft_strlen(tmp->key) + 1))
+		{
+			free(lst_head->value);
+			lst_head->value = tmp->value;
+			free(tmp->key);
+			free(tmp);
+			return ;
+		}
+		prev = lst_head;
 		lst_head = lst_head->next;
-	lst_head->next = new_env(env);
+	}
+	prev->next = tmp;
 }
 
 void	free_env_list(t_env_list *env_list)
 {
 	t_env_list	*curr;
+	t_env_list	*temp;
 
 	curr = env_list;
 	while (curr)
 	{
+		temp = curr->next;
 		free(curr->key);
 		free(curr->value);
 		free(curr);
-		curr = curr->next;
+		curr = temp;
 	}
 }
 

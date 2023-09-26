@@ -6,14 +6,14 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 17:05:43 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 14:38:42 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
 #include "../../incl/env.h"
 
-t_token	tokenize(t_token token, char *input)
+t_token	tokenize(t_token token, char *input, int exit_status)
 {
 	size_t	i;
 
@@ -34,13 +34,13 @@ t_token	tokenize(t_token token, char *input)
 	}
 	if (input[i] == '"' || input[i] == '\'' || input[i] == '-'
 		|| input[i] == '$')
-		token = handle_brackets(i, input, token);
+		token = handle_brackets(i, input, token, exit_status);
 	else
 		token = handle_rest(i, input, token);
 	return (token);
 }
 
-t_token	*lexer(char *input, t_env_list *env_list)
+t_token	*lexer(char *input, t_env_list *env_list, int exit_status)
 {
 	t_token			*token_list;
 	t_token			token;
@@ -49,7 +49,7 @@ t_token	*lexer(char *input, t_env_list *env_list)
 	init_token(&token, env_list);
 	while (token.type != END_OF_CMD_TOKEN)
 	{
-		token = tokenize(token, input);
+		token = tokenize(token, input, exit_status);
 		token_list = list_add_back(token_list, token);
 		if (token.type == END_OF_CMD_TOKEN)
 			break ;

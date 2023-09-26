@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 11:01:16 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/30 18:24:46 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/24 15:11:20 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	redir_count(t_token *lst)
 	curr = lst;
 	while (curr->type != END_OF_CMD_TOKEN && curr->type != PIPE_TOKEN)
 	{
-		if (ft_isredirect(curr->type) && curr->next->type == ARGUMENT_TOKEN)
+		if (ft_isredirect(curr->type))
 			count++;
 		curr = curr->next;
 	}
