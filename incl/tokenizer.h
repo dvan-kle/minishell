@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 15:41:45 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 14:38:00 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct token{
 	t_token		*next;
 }t_token;
 
-t_token	*lexer(char *input, t_env_list *env_list);
+t_token	*lexer(char *input, t_env_list *env_list, int exit_status);
 t_token	*list_add_back(t_token *curr_list, t_token token_to_be_added);
 t_token	*new_token(t_token token_to_be_added);
 void	print_list(t_token *token_list);
@@ -55,13 +55,13 @@ void	assign_minus(t_token *token, char *type, int i);
 void	assign_bracket(t_token *token, char *type, int i, char bracket);
 void	assign_pipe(t_token *token);
 t_token	check_new_cmd(t_token *token);
-t_token	handle_brackets(int i, char *input, t_token token);
+t_token	handle_brackets(int i, char *input, t_token token, int exit_status);
 t_token	handle_rest(int i, char *input, t_token token);
 bool	ft_isredir(char c);
 int		next_whitespace(char *input, int i);
 int		update_input(t_token *token, char *input);
 void	*ft_malloc(size_t size);
-char	*assign_var(t_token *token, char *input, int i);
+char	*assign_var(t_token *token, char *input, int i, int exit_status);
 bool	find_key(t_token *token, char *key, char *input);
 int		next_whitespace_and_bracket(char *input, int i);
 int		next_whitespace_brackets(char *input, int i);

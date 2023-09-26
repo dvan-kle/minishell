@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 11:36:10 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 14:38:05 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,19 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_list;
 	t_env_list	*env_lst;
 	char		*input;
+	int			exit_status;
 
 	(void)argc;
 	(void)argv;
 	env_lst = make_env_list(envp);
+	exit_status = 0;
 	while (1)
 	{
 		init_signals();
 		input = get_line();
 		if (!input)
 			continue ;
-		token_list = lexer(input, env_lst);
+		token_list = lexer(input, env_lst, exit_status);
 		if (parse_error_check(token_list))
 		{
 			free_token_list(token_list);
