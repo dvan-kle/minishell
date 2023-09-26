@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/25 20:36:02 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 11:08:33 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,3 @@ void	unset(t_env_list *env_list, char *input)
 		lst_head = lst_head->next;
 	}
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_env_list	*env_list;
-
-// 	env_list = make_env_list(envp);
-
-// 	env(env_list);
-// }
