@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/26 11:36:24 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 15:16:26 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,6 @@
 #include "../../incl/exec.h"
 #include "../../incl/main.h"
 
-bool    execute_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
-{
-    int    cmd_len;
-
-    cmd_len = ft_strlen(cmd_table->args[0]) + 1;
-    if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
-        return (env(cmd_table->env_list), true);
-    return (false);
-}
-
-bool    check_builtin(t_cmd_table *cmd_table, t_env_list *env_list)
-{
-    int    cmd_len;
-
-    cmd_len = ft_strlen(cmd_table->args[0]) + 1;
-    if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
-        return (true);
-    if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
-        return (true);
-    if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
-        return (true);
-    if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
-        return (true);
-    return (false);
-}
-
-bool    check_builtin2(t_cmd_table *cmd_table)
-{
-    int    cmd_len;
-
-    cmd_len = ft_strlen(cmd_table->args[0]) + 1;
-    if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
-        return (ft_exit(cmd_table), true);
-	if (!ft_strncmp(cmd_table->args[0], "echo", cmd_len))
-		return (echo(cmd_table), true);
-    if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
-        return (cd(cmd_table->args[1]), true);
-    if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
-        return (pwd(), true);
-    if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
-        return (export(cmd_table->env_list, cmd_table->args[1]), true);
-    if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
-        return (unset(cmd_table->env_list, cmd_table->args[1]), true);
-    if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
-        return (printf("\033[2J\033[1;1H"), true);
-    return (false);
-}
-
 static char	*check_access(char **folders, char *cmd)
 {
 	char	*check_access;
@@ -72,15 +24,16 @@ static char	*check_access(char **folders, char *cmd)
 	int		i;
 
 	i = 0;
-	command_fold = ft_strjoin("/", cmd);
 	if (!folders)
 		return (cmd);
+	command_fold = ft_strjoin("/", cmd);
 	while (folders[i])
 	{
 		check_access = ft_strjoin(folders[i], command_fold);
 		if (access(check_access, X_OK | F_OK) == 0)
 			return (free(command_fold), check_access);
 		i++;
+		free(check_access);
 	}
 	free(command_fold);
 	return (cmd);
@@ -100,7 +53,7 @@ static char	*get_path(t_env_list *env_list, char *cmd)
 	}
 	folders = ft_split(path, ':');
 	path = check_access(folders, cmd);
-	free(folders);
+	ft_free(folders);
 	return (path);
 }
 
@@ -110,7 +63,11 @@ int	execute(t_cmd_table *cmd_table, t_env_list *env_list)
 
 	path = get_path(env_list, cmd_table->args[0]);
 	if (execve(path, cmd_table->args, NULL) == -1)
-		return (execute_error(cmd_table->args[0]), EXIT_FAILURE);
+	{
+		execute_error(cmd_table->args[0]);
+		free(path);
+		return (EXIT_FAILURE);
+	}
 	free(path);
 	return (EXIT_SUCCESS);
 }

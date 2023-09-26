@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 13:29:43 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 16:42:59 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:25:27 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ char	*ft_strdup(const char *str)
 	i = 0;
 	while (str[i])
 		i++;
-	ptr = malloc(i + 1);
-	if (!ptr)
-		return (NULL);
+	ptr = ft_malloc(i + 1);
 	i = 0;
 	while (str[i])
 	{

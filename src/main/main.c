@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 14:38:05 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/26 15:17:15 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_list;
 	t_env_list	*env_lst;
 	char		*input;
-	int			exit_status;
+	int 		exit_status;
 
 	(void)argc;
 	(void)argv;
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		cmd_table = make_cmd_table(token_list, env_lst);
 		free_token_list(token_list);
-		execute_main(cmd_table);
+		exit_status = execute_main(cmd_table);
 		free_cmd_table(cmd_table);
 	}
 	free_env_list(env_lst);

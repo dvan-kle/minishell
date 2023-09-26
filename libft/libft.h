@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:43:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/02 13:03:39 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/23 17:26:15 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "../incl/tokenizer.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
