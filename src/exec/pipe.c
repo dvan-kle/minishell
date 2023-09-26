@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/23 16:52:33 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/26 15:10:31 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ static void	close_pipe(int pipe_fd[2])
 	close(pipe_fd[WRITE_END]);
 }
 
-void	execute_single_cmd(t_cmd_table *cmd_table)
+int	execute_single_cmd(t_cmd_table *cmd_table)
 {
 	int		status;
 	pid_t	pid;
+	int		exit_status;
 
-	if (check_builtin2(cmd_table) == true)
-		return ;
+	if (check_builtin(cmd_table) == true)
+	{
+		redirect_single(cmd_table);
+		execute_builtin(cmd_table);
+		exit_status = EXIT_SUCCESS;
+		return (exit_status); 
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -43,20 +49,22 @@ void	execute_single_cmd(t_cmd_table *cmd_table)
 	{
 		ignore_signals();
 		redirect_single(cmd_table);
-		if (check_builtin(cmd_table, cmd_table->env_list) == true)
-			execute_builtin(cmd_table, cmd_table->env_list);
 		execute(cmd_table, cmd_table->env_list);
 	}
 	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_status = WEXITSTATUS(status);
+	return (exit_status);
 }
 
-void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
+int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
 {
 	int			fd[2];
 	pid_t		pid;
 	int			read;
 	int			i;
 	int			status;
+	int			exit_status;
 
 	read = STDIN_FILENO;
 	i = 0;
@@ -68,11 +76,12 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
 		{
 			ignore_signals();
 			redirect(cmd_table, fd, read, i, cmd_count);
-			if (check_builtin(cmd_table, envl) == true)
-				execute_builtin(cmd_table, envl);
+			if (check_builtin(cmd_table) == true)
+				execute_builtin(cmd_table);
 			execute(cmd_table, envl);
 		}
 		waitpid(pid, &status, 0);
+		exit_status = WEXITSTATUS(status);
 		close(read);
 		read = dup(fd[READ_END]);
 		cmd_table = cmd_table->next;
@@ -80,22 +89,25 @@ void	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl)
 		i++;
 	}
 	close(read);
-}
+	return (exit_status);
+}	
 
-void	execute_main(t_cmd_table *cmd_table)
+int	execute_main(t_cmd_table *cmd_table)
 {
 	int	stdin;
 	int	stdout;
+	int exit_status;
 
+	
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	if (cmd_table->cmd_count == 1)
-		execute_single_cmd(cmd_table);
+		exit_status = execute_single_cmd(cmd_table);
 	else
-		execute_pipeline(cmd_table, cmd_table->cmd_count, cmd_table->env_list);
+		exit_status = execute_pipeline(cmd_table, cmd_table->cmd_count, cmd_table->env_list);
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdin);
 	close(stdout);
-	
+	return (exit_status);
 }

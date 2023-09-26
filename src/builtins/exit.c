@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 11:58:39 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/23 17:12:09 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/26 14:01:24 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_len(char *str)
 
 void	ft_exit(t_cmd_table *cmd_table)
 {
-	printf("exit\n");
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (cmd_table->args[1] != NULL)
 	{
 		error_check(cmd_table->args[1]);
