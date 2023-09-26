@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/26 15:10:31 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/26 15:21:54 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	execute_single_cmd(t_cmd_table *cmd_table)
 		execute(cmd_table, cmd_table->env_list);
 	}
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		exit_status = WEXITSTATUS(status);
+	exit_status = WEXITSTATUS(status);
 	return (exit_status);
 }
 
