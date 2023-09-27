@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 14:32:40 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/27 14:08:34 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,49 +86,6 @@ char	*ft_charjoin(char *str, char c)
 	ret[i] = c;
 	ret[i + 1] = '\0';
 	return (ret);
-}
-
-int	next_whitespace_brackets(char *input, int i)
-{
-	int	count;
-
-	count = 0;
-	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"' && input[i]
-		!= '\'')
-	{
-		i++;
-		count++;
-	}
-	return (count);
-}
-
-char	*minishell_strjoin(char const *str1, char const *str2)
-{
-	char	*ptr;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	k = ft_strlen(str1) + ft_strlen(str2) + 1;
-	if (!str1)
-		return ((char *)str1);
-	ptr = ft_malloc((sizeof(char) * k));
-	while (str1[i])
-	{
-		ptr[i] = str1[i];
-		i++;
-	}
-	while (str2[j])
-	{
-		ptr[i + j] = str2[j];
-		j++;
-	}
-	free((char *)str1);
-	free((char *)str2);
-	ptr[i + j] = '\0';
-	return (ptr);
 }
 
 void	assign_bracket(t_token *token, char *type, int i, char bracket)

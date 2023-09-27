@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 15:25:45 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/27 14:07:55 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,18 @@ bool	parse_error_check(t_token *t_list)
 		if (ft_isredirect(tmp->type) && (tmp->next->type == PIPE_TOKEN
 				|| ft_isredirect(tmp->next->type)))
 		{
-			printf("minishell: syntax error near unexpected token `%s'\n", tmp->next->value);
+			printf("minishell: syntax error near unexpected token `%s'\n",
+				tmp->next->value);
 			return (true);
 		}
 		if (ft_isredirect(tmp->type) && tmp->next->type == END_OF_CMD_TOKEN)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+			printf("minishell: syntax error near unexpected token `newline'\n");
 			return (true);
 		}
 		if (tmp->type == PIPE_TOKEN && tmp->next->type == END_OF_CMD_TOKEN)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+			printf("minishell: syntax error near unexpected token `|'\n");
 			return (true);
 		}
 		tmp = tmp->next;
@@ -67,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token		*token_list;
 	t_env_list	*env_lst;
 	char		*input;
-	int 		exit_status;
+	int			exit_status;
 
 	(void)argc;
 	(void)argv;

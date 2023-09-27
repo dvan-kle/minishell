@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 14:56:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 15:15:03 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/27 15:37:16 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@ void		print_cmd_table(t_cmd_table *cmd_table);
 int			arg_token_count(t_token *to_be_added);
 int			allocate_cmd_table(t_cmd_table *cmd_table, t_token *lst);
 bool		ft_isredirect(t_tokentype type);
+void		free_args(t_cmd_table *cmd_table);
+void		free_redirects(t_cmd_table *cmd_table);
 
 #endif

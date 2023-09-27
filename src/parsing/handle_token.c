@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 15:17:55 by daniel        ########   odam.nl         */
+/*   Updated: 2023/09/27 14:28:57 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,11 @@ int	get_env_len(t_env_list *env_lst)
 	return (count);
 }
 
-char	*assign_var(t_token *token, char *input, int i, int exit_status)
+char	*check_for_key(char *key, t_env_list *curr, t_token *token)
 {
-	t_env_list	*curr;
-	char		*key;
-	char		*result;
+	char	*result;
 
-	curr = token->env_lst;
-	key = ft_substr(input, i, next_whitespace_and_bracket(input, i));
-	if (!ft_strncmp(key, "?", ft_strlen(key) + 1))
-	{
-		free(key);
-		result = ft_itoa(exit_status);
-		token->expand = true;
-		return (result);
-	}
+	result = NULL;
 	while (curr)
 	{
 		if (!ft_strncmp(curr->key, key, ft_strlen(curr->key) + 1))
@@ -52,6 +42,27 @@ char	*assign_var(t_token *token, char *input, int i, int exit_status)
 		}
 		curr = curr->next;
 	}
+	return (NULL);
+}
+
+char	*assign_var(t_token *token, char *input, int i, int exit_status)
+{
+	t_env_list	*curr;
+	char		*key;
+	char		*result;
+
+	curr = token->env_lst;
+	key = ft_substr(input, i, next_whitespace_brackets(input, i));
+	if (!ft_strncmp(key, "?", ft_strlen(key) + 1))
+	{
+		free(key);
+		result = ft_itoa(exit_status);
+		token->expand = true;
+		return (result);
+	}
+	result = check_for_key(key, curr, token);
+	if (result)
+		return (result);
 	free(key);
 	result = ft_strdup("");
 	token->expand = true;
