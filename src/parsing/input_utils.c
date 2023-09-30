@@ -6,11 +6,32 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/27 13:56:04 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 14:04:25 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/30 18:15:49 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/tokenizer.h"
+
+int	count_brackets(char *input)
+{
+	int	i;
+	int count;
+
+	i = 0;
+	count = 0;
+	while (ft_isspace(input[i]))
+		i++;
+	while (input[i] == '\"' || input[i] == '\'')
+	{
+		i++;
+		while (input[i] && input[i] != '\"' && input[i] != '\'')
+			i++;
+		if (input[i] && (input[i] == '\"' || input[i] == '\''))
+			i++;
+		count++;
+	}
+	return (count);
+}
 
 int	update_input(t_token *token, char *input)
 {
@@ -22,17 +43,20 @@ int	update_input(t_token *token, char *input)
 	{
 		while (input[i] && ft_isspace(input[i]))
 			i++;
-		if (input[i] == '\"' || input[i] == '\'')
+		while (input[i] == '\"' || input[i] == '\'' || input[i] == '$')
 		{
-			bracket = input[i];
-			while (input[i + 1] && input[i + 1] != bracket)
+			if (input[i] != '$')
+			{
+				bracket = input[i];
 				i++;
-		}
-		else
-		{
-			i += next_whitespace_brackets(input, i);
-			token->expand = false;
-			return (i);
+				while (input[i] && input[i] != bracket)
+					i++;
+				if (input[i] && input[i] == bracket)
+					i++;
+			}
+			else
+				i += next_whitespace_brackets(input, i + 1) + 1;
+			
 		}
 		token->expand = false;
 	}
@@ -40,7 +64,7 @@ int	update_input(t_token *token, char *input)
 		i += ft_strlen(token->value) + token->whitespaces;
 	if (token->brackets == true)
 	{
-		i += 2;
+		i += count_brackets(input) * 2;
 		token->brackets = false;
 	}
 	return (i);
@@ -65,7 +89,7 @@ int	next_whitespace_brackets(char *input, int i)
 
 	count = 0;
 	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"' && input[i]
-		!= '\'')
+		!= '\'' && input[i] != '$')
 	{
 		i++;
 		count++;

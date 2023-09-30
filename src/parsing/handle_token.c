@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 14:28:57 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/30 18:13:09 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,18 @@ int	get_env_len(t_env_list *env_lst)
 	return (count);
 }
 
-char	*check_for_key(char *key, t_env_list *curr, t_token *token)
+char	*check_for_key(char *key, t_env_list *curr, t_token *token, int exit_status)
 {
 	char	*result;
 
 	result = NULL;
+	if (!ft_strncmp(key, "?", ft_strlen(key) + 1))
+	{
+		free(key);
+		result = ft_itoa(exit_status);
+		token->expand = true;
+		return (result);
+	}
 	while (curr)
 	{
 		if (!ft_strncmp(curr->key, key, ft_strlen(curr->key) + 1))
@@ -53,36 +60,30 @@ char	*assign_var(t_token *token, char *input, int i, int exit_status)
 
 	curr = token->env_lst;
 	key = ft_substr(input, i, next_whitespace_brackets(input, i));
-	if (!ft_strncmp(key, "?", ft_strlen(key) + 1))
-	{
-		free(key);
-		result = ft_itoa(exit_status);
-		token->expand = true;
-		return (result);
-	}
-	result = check_for_key(key, curr, token);
+	result = check_for_key(key, curr, token, exit_status);
 	if (result)
 		return (result);
 	free(key);
 	result = ft_strdup("");
-	token->expand = true;
 	return (result);
 }
 
 t_token	handle_brackets(int i, char *input, t_token token, int exit_status)
 {
-	char	bracket;
-
+	token.value = ft_strdup("");
 	if (input[i] == '-')
 		assign_minus(&token, input, i);
 	else if (input[i] == '$')
-		token.value = assign_var(&token, input, i + 1, exit_status);
-	else
 	{
-		bracket = input[i];
-		i++;
-		assign_bracket(&token, input, i, bracket);
+		while (input[i] && input[i] == '$')
+		{
+			token.value = ft_strjoin(token.value, assign_var(&token, input, i + 1, exit_status));
+			i += next_whitespace_brackets(input, i + 1) + 1;
+			token.expand = true;
+		}
 	}
+	else
+		assign_bracket(&token, input, i);
 	token.type = ARGUMENT_TOKEN;
 	return (token);
 }

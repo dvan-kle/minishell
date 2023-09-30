@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 15:37:41 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/30 13:46:52 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_token(t_token *token, t_env_list *env_lst);
 int		malloc_count(char *str, int i, char c);
 void	assign_token(t_token *token, char *type, int i);
 void	assign_minus(t_token *token, char *type, int i);
-void	assign_bracket(t_token *token, char *type, int i, char bracket);
+void	assign_bracket(t_token *token, char *type, int i);
 void	assign_pipe(t_token *token);
 t_token	check_new_cmd(t_token *token);
 t_token	handle_brackets(int i, char *input, t_token token, int exit_status);

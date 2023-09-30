@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 14:08:34 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/09/30 17:28:59 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,35 @@ char	*ft_charjoin(char *str, char c)
 	return (ret);
 }
 
-void	assign_bracket(t_token *token, char *type, int i, char bracket)
+void	assign_bracket(t_token *token, char *type, int i)
 {
 	int		input_len;
 	char	*key;
+	char	bracket;
 
 	input_len = ft_strlen(type);
 	token->value = ft_strdup("");
-	while (i < input_len && type[i] != bracket)
+	while (type[i] == '\"' || type[i] == '\'' || type[i] == '$')
 	{
-		if (type[i] == '$' && bracket == '\"')
+		bracket = type[i];
+		i++;
+		while (i < input_len && type[i] != bracket)
 		{
-			key = assign_var(token, type, i + 1, 0);
-			token->value = minishell_strjoin(token->value, key);
-			i += next_whitespace_brackets(type, i);
+			if (type[i] == '$' && bracket == '\"')
+			{
+				key = assign_var(token, type, i + 1, 0);
+				token->value = minishell_strjoin(token->value, key);
+				i += next_whitespace_brackets(type, i + 1) + 1;
+			}
+			else
+			{
+				token->value = ft_charjoin(token->value, type[i]);
+				i++;
+			}
 		}
-		else
-		{
-			token->value = ft_charjoin(token->value, type[i]);
-			i++;
-		}
+		if (type[i] == '\0')
+			break ;
+		i++;
 	}
 	token->brackets = true;
 }
