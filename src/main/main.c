@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/30 18:17:08 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/30 21:43:25 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ bool	parse_error_check(t_token *t_list)
 				tmp->next->value);
 			return (true);
 		}
-		if (ft_isredirect(tmp->type) && tmp->next->type == END_OF_CMD_TOKEN)
+		if (ft_isredirect(tmp->type) && (tmp->next->type == END_OF_CMD_TOKEN))
 		{
 			printf("minishell: syntax error near unexpected token `newline'\n");
 			return (true);
 		}
-		if (tmp->type == PIPE_TOKEN && tmp->next->type == END_OF_CMD_TOKEN)
+		if (tmp->type == PIPE_TOKEN && (tmp->next->type == END_OF_CMD_TOKEN
+				|| !ft_strncmp(tmp->next->value, "$", 2)))
 		{
 			printf("minishell: syntax error near unexpected token `|'\n");
 			return (true);
@@ -74,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	env_lst = make_env_list(envp);
 	exit_status = 0;
+	atexit(ft_leaks);
 	while (1)
 	{
 		init_signals();
@@ -91,6 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		free_token_list(token_list);
 		exit_status = execute_main(cmd_table);
 		free_cmd_table(cmd_table);
+		break ;
 	}
 	free_env_list(env_lst);
 }

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/30 18:13:09 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/30 21:42:34 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,61 @@ char	*assign_var(t_token *token, char *input, int i, int exit_status)
 	if (result)
 		return (result);
 	free(key);
-	result = ft_strdup("");
 	return (result);
+}
+
+char	*ft_strjoin2(char const *str1, char const *str2)
+{
+	char	*ptr;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = ft_strlen(str1) + ft_strlen(str2) + 1;
+	if (!str1)
+		str1 = ft_strdup("");
+	if (!str2)
+		str2 = ft_strdup("");
+	ptr = ft_malloc((sizeof(char) * k));
+	while (str1[i])
+	{
+		ptr[i] = str1[i];
+		i++;
+	}
+	while (str2[j])
+	{
+		ptr[i + j] = str2[j];
+		j++;
+	}
+	ptr[i + j] = '\0';
+	free((char *)str1);
+	free((char *)str2);
+	return (ptr);
 }
 
 t_token	handle_brackets(int i, char *input, t_token token, int exit_status)
 {
-	token.value = ft_strdup("");
+	token.value = NULL;
 	if (input[i] == '-')
 		assign_minus(&token, input, i);
 	else if (input[i] == '$')
 	{
 		while (input[i] && input[i] == '$')
 		{
-			token.value = ft_strjoin(token.value, assign_var(&token, input, i + 1, exit_status));
-			i += next_whitespace_brackets(input, i + 1) + 1;
-			token.expand = true;
+			if (!input[i + 1] || ft_isspace(input[i + 1]) || input[i + 1] == '|'
+				|| input[i + 1] == '$')
+			{
+				token.value = ft_strjoin2(token.value, "$");
+				i++;
+			}
+			else
+			{
+				token.value = ft_strjoin2(token.value, assign_var(&token, input, i + 1, exit_status));
+				i += next_whitespace_brackets(input, i + 1) + 1;
+				token.expand = true;
+			}
 		}
 	}
 	else
