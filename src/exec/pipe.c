@@ -6,13 +6,12 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/01 21:12:37 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/01 22:31:32 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
-#include "../../incl/pipes.h"
-#include "../../incl/redirect.h"
+#include "../../incl/exec.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
