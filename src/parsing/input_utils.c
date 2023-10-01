@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/27 13:56:04 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/01 21:23:11 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/01 22:39:55 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,23 @@ int	count_brackets(char *input)
 
 int	update_input(t_token *token, char *input)
 {
-	int		i;
-	char	bracket;
+	int	i;
+	char bracket;
 
 	i = 0;
+	while (ft_isspace(input[i]))
+		i++;
 	if (token->expand == true)
 	{
-		while (input[i] && ft_isspace(input[i]))
-			i++;
-		while (input[i] == '\"' || input[i] == '\'' || input[i] == '$')
+		while (input[i] && (input[i] == '\"' || input[i] == '\''
+			|| input[i] == '$'))
 		{
-			if (input[i] != '$')
+			if (input[i] == '$')
+			{
+				i++;
+				i += next_whitespace_brackets(input, i);
+			}
+			else
 			{
 				bracket = input[i];
 				i++;
@@ -54,19 +60,10 @@ int	update_input(t_token *token, char *input)
 				if (input[i] && input[i] == bracket)
 					i++;
 			}
-			else
-				i += next_whitespace_brackets(input, i + 1) + 1;
-			
 		}
-		token->expand = false;
 	}
 	else
-		i += ft_strlen(token->value) + token->whitespaces;
-	if (token->brackets == true)
-	{
-		i += count_brackets(input) * 2;
-		token->brackets = false;
-	}
+		i += ft_strlen(token->value);
 	return (i);
 }
 
