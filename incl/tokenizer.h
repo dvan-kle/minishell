@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/30 13:46:52 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/01 20:51:43 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ bool	find_key(t_token *token, char *key, char *input);
 int		next_whitespace_and_bracket(char *input, int i);
 int		next_whitespace_brackets(char *input, int i);
 char	*minishell_strjoin(char const *str1, char const *str2);
+char	*ft_strjoin2(char const *str1, char const *str2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/30 21:42:34 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/01 20:48:05 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ char	*ft_strjoin2(char const *str1, char const *str2)
 	}
 	ptr[i + j] = '\0';
 	free((char *)str1);
-	free((char *)str2);
+	if (ft_strncmp(str2, "$", 2) && str2[0])
+		free((char *)str2);
 	return (ptr);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/13 14:53:20 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 14:13:55 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/01 20:37:13 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*minishell_strjoin(char const *str1, char const *str2)
 	k = ft_strlen(str1) + ft_strlen(str2) + 1;
 	if (!str1)
 		return ((char *)str1);
+	if (!str2)
+		str2 = ft_strdup("");
 	ptr = ft_malloc((sizeof(char) * k));
 	while (str1[i])
 	{

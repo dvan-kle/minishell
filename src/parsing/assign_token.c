@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/30 17:28:59 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/01 20:58:43 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,17 @@ void	assign_bracket(t_token *token, char *type, int i)
 		{
 			if (type[i] == '$' && bracket == '\"')
 			{
+				if (!type[i + 1] || ft_isspace(type[i + 1]) || type[i + 1] == '|'
+				|| type[i + 1] == '$' || type[i + 1] == '\"' || ft_isredir(type[i + 1]))
+				{
+					token->value = ft_strjoin2(token->value, "$");
+					i++;
+					continue ;
+				}
 				key = assign_var(token, type, i + 1, 0);
 				token->value = minishell_strjoin(token->value, key);
 				i += next_whitespace_brackets(type, i + 1) + 1;
+				token->expand = true;
 			}
 			else
 			{
