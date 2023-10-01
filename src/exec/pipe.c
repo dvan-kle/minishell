@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/26 15:21:54 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/01 21:12:37 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,6 @@ int	execute_main(t_cmd_table *cmd_table)
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdin);
-	close(stdout);
+	close(stdout); 
 	return (exit_status);
 }
