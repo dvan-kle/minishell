@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/01 20:29:08 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/02 15:23:16 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,58 @@ char	*get_line(void)
 	if (line)
 		free(line);
 	line = readline("minishell$ ");
+	if (!line)
+	{
+		write(STDERR_FILENO, "exit\n", 5);
+		exit(0);
+	}
 	if (line[0] == '\0')
 		return (NULL);
 	add_history(line);
 	return (line);
 }
 
-bool	parse_error_check(t_token *t_list)
+bool	bracket_error(char *input)
+{
+	int		i;
+	int		count;
+	char	bracket;
+
+	i = 0;
+	count = 0;
+	while (input[i])
+	{
+		if (input[i] == '\"' || input[i] == '\'')
+		{
+			count++;
+			bracket = input[i];
+			i++;
+			while (input[i] && input[i] != bracket)
+				i++;
+			if (input[i] && input[i] == bracket)
+			{
+				i++;
+				count++;
+			}
+		}
+		else
+			i++;
+	}
+	if (count % 2 != 0)
+	{
+		printf("minishell: unclosed brackets\n");
+		return (true);
+	}
+	return (false);
+}
+
+bool	parse_error_check(t_token *t_list, char *input)
 {
 	t_token	*tmp;
 
 	tmp = t_list;
+	if (bracket_error(input))
+		return (true);
 	while (tmp->type != END_OF_CMD_TOKEN)
 	{
 		if (ft_isredirect(tmp->type) && (tmp->next->type == PIPE_TOKEN
@@ -83,7 +124,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!input)
 			continue ;
 		token_list = lexer(input, env_lst, exit_status);
-		if (parse_error_check(token_list))
+		if (parse_error_check(token_list, input))
 		{
 			exit_status = 258;
 			free_token_list(token_list);
