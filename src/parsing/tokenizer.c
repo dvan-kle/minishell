@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/01 22:44:26 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/02 12:56:46 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_token	*lexer(char *input, t_env_list *env_list, int exit_status)
 	init_token(&token, env_list);
 	while (token.type != END_OF_CMD_TOKEN)
 	{
-		printf("tokenize: %s\n", input);
 		token = tokenize(token, input, exit_status);
 		token_list = list_add_back(token_list, token);
 		if (token.type == END_OF_CMD_TOKEN)

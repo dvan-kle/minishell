@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/01 20:58:43 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/02 13:17:21 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ char	*ft_charjoin(char *str, char c)
 	return (ret);
 }
 
+bool	is_meta(char c)
+{
+	if (c == '$' || c == '\"' || c == '\'' || c == '|')
+		return (true);
+	return (false);
+}
+
 void	assign_bracket(t_token *token, char *type, int i)
 {
 	int		input_len;
@@ -104,8 +111,8 @@ void	assign_bracket(t_token *token, char *type, int i)
 		{
 			if (type[i] == '$' && bracket == '\"')
 			{
-				if (!type[i + 1] || ft_isspace(type[i + 1]) || type[i + 1] == '|'
-				|| type[i + 1] == '$' || type[i + 1] == '\"' || ft_isredir(type[i + 1]))
+				if (!type[i + 1] || ft_isspace(type[i + 1])
+					|| is_meta(type[i + 1]) || ft_isredir(type[i + 1]))
 				{
 					token->value = ft_strjoin2(token->value, "$");
 					i++;
