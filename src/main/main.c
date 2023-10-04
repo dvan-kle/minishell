@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 15:17:15 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/01 21:05:25 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lexer(input, env_lst, exit_status);
 		if (parse_error_check(token_list))
 		{
+			exit_status = 258;
 			free_token_list(token_list);
 			continue ;
 		}
