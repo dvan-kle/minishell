@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/02 15:23:16 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/04 15:23:03 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ char	*get_line(void)
 		return (NULL);
 	add_history(line);
 	return (line);
+}
+
+bool	only_spaces(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (!ft_isspace(input[i]))
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 bool	bracket_error(char *input)
@@ -72,7 +86,7 @@ bool	parse_error_check(t_token *t_list, char *input)
 	t_token	*tmp;
 
 	tmp = t_list;
-	if (bracket_error(input))
+	if (bracket_error(input) || only_spaces(input))
 		return (true);
 	while (tmp->type != END_OF_CMD_TOKEN)
 	{
@@ -119,7 +133,7 @@ int	main(int argc, char **argv, char **envp)
 	//atexit(ft_leaks);
 	while (1)
 	{
-		init_signals();
+		//init_signals();
 		input = get_line();
 		if (!input)
 			continue ;
