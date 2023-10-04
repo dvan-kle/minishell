@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/24 15:16:41 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/09/27 13:57:46 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,21 @@ int	malloc_count(char *str, int i, char c)
 	return (count);
 }
 
-int	redir_count(t_token *lst);
+int	redir_count(t_token *lst)
+{
+	int		count;
+	t_token	*curr;
+
+	count = 0;
+	curr = lst;
+	while (curr->type != END_OF_CMD_TOKEN && curr->type != PIPE_TOKEN)
+	{
+		if (ft_isredirect(curr->type))
+			count++;
+		curr = curr->next;
+	}
+	return (count);
+}
 
 int	allocate_cmd_table(t_cmd_table *cmd_table, t_token *lst)
 {
@@ -63,38 +77,4 @@ int	arg_token_count(t_token *to_be_added)
 		curr = curr->next;
 	}
 	return (count);
-}
-
-int	update_input(t_token *token, char *input)
-{
-	int		i;
-	char	bracket;
-
-	i = 0;
-	if (token->expand == true)
-	{
-		while (input[i] && ft_isspace(input[i]))
-			i++;
-		if (input[i] == '\"' || input[i] == '\'')
-		{
-			bracket = input[i];
-			while (input[i + 1] && input[i + 1] != bracket)
-				i++;
-		}
-		else
-		{
-			i += next_whitespace_brackets(input, i);
-			token->expand = false;
-			return (i);
-		}
-		token->expand = false;
-	}
-	else
-		i += ft_strlen(token->value) + token->whitespaces;
-	if (token->brackets == true)
-	{
-		i += 2;
-		token->brackets = false;
-	}
-	return (i);
 }

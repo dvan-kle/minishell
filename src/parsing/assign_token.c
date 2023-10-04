@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 14:32:40 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/02 13:17:21 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,69 +88,50 @@ char	*ft_charjoin(char *str, char c)
 	return (ret);
 }
 
-int	next_whitespace_brackets(char *input, int i)
+bool	is_meta(char c)
 {
-	int	count;
-
-	count = 0;
-	while (input[i] && !ft_isspace(input[i]) && input[i] != '\"' && input[i]
-		!= '\'')
-	{
-		i++;
-		count++;
-	}
-	return (count);
+	if (c == '$' || c == '\"' || c == '\'' || c == '|')
+		return (true);
+	return (false);
 }
 
-char	*minishell_strjoin(char const *str1, char const *str2)
-{
-	char	*ptr;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	k = ft_strlen(str1) + ft_strlen(str2) + 1;
-	if (!str1)
-		return ((char *)str1);
-	ptr = ft_malloc((sizeof(char) * k));
-	while (str1[i])
-	{
-		ptr[i] = str1[i];
-		i++;
-	}
-	while (str2[j])
-	{
-		ptr[i + j] = str2[j];
-		j++;
-	}
-	free((char *)str1);
-	free((char *)str2);
-	ptr[i + j] = '\0';
-	return (ptr);
-}
-
-void	assign_bracket(t_token *token, char *type, int i, char bracket)
+void	assign_bracket(t_token *token, char *type, int i)
 {
 	int		input_len;
 	char	*key;
+	char	bracket;
 
 	input_len = ft_strlen(type);
 	token->value = ft_strdup("");
-	while (i < input_len && type[i] != bracket)
+	while (type[i] == '\"' || type[i] == '\'' || type[i] == '$')
 	{
-		if (type[i] == '$' && bracket == '\"')
+		bracket = type[i];
+		i++;
+		while (i < input_len && type[i] != bracket)
 		{
-			key = assign_var(token, type, i + 1, 0);
-			token->value = minishell_strjoin(token->value, key);
-			i += next_whitespace_brackets(type, i);
+			if (type[i] == '$' && bracket == '\"')
+			{
+				if (!type[i + 1] || ft_isspace(type[i + 1])
+					|| is_meta(type[i + 1]) || ft_isredir(type[i + 1]))
+				{
+					token->value = ft_strjoin2(token->value, "$");
+					i++;
+					continue ;
+				}
+				key = assign_var(token, type, i + 1, 0);
+				token->value = minishell_strjoin(token->value, key);
+				i += next_whitespace_brackets(type, i + 1) + 1;
+				token->expand = true;
+			}
+			else
+			{
+				token->value = ft_charjoin(token->value, type[i]);
+				i++;
+			}
 		}
-		else
-		{
-			token->value = ft_charjoin(token->value, type[i]);
-			i++;
-		}
+		if (type[i] == '\0')
+			break ;
+		i++;
 	}
 	token->brackets = true;
 }
