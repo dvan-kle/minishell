@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/04 15:23:03 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/04 15:56:24 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	main(int argc, char **argv, char **envp)
 	//atexit(ft_leaks);
 	while (1)
 	{
-		//init_signals();
+		init_signals();
 		input = get_line();
 		if (!input)
 			continue ;
