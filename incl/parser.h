@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 14:56:53 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/02 14:28:25 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/04 15:48:06 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_cmd_table{
 	unsigned int	cmd_count;
 	t_env_list		*env_list;
 	t_redirect		*redirects;
+    pid_t           *pid_array;
 	t_cmd_table		*next;
 }t_cmd_table;
 

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/23 13:42:56 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/01 22:32:45 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/04 15:58:17 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int			execute(t_cmd_table *cmd_table, t_env_list *env_list);
 
 // pipe.c
 int			execute_single_cmd(t_cmd_table *cmd_table);
-int			execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl);
+int			execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pid_t *pid_array);
 int			execute_main(t_cmd_table *cmd_table);
+pid_t       *create_pid_array(int cmd_count);
+int         wait_all_pids(pid_t *pid_array, int cmd_count);
 
 // redirect_multi.c
 void		redirect(t_cmd_table *cmd_table, int fd[2], int read, int index, int pipe_count);
