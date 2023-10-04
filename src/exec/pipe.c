@@ -6,13 +6,12 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/02 13:38:07 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/01 22:31:32 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
-#include "../../incl/pipes.h"
-#include "../../incl/redirect.h"
+#include "../../incl/exec.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -107,6 +106,6 @@ int	execute_main(t_cmd_table *cmd_table)
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
 	close(stdin);
-	close(stdout);
+	close(stdout); 
 	return (exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 11:58:39 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 14:01:24 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/01 22:37:10 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
-long long	long_atoi(char *input)
+static long long	long_atoi(char *input)
 {
 	unsigned long long	result;
 	unsigned long long	max;
@@ -41,14 +41,14 @@ long long	long_atoi(char *input)
 	return (result * sign);
 }
 
-void	numeric_error_exit(char *str)
+static void	numeric_error_exit(char *str)
 {
 	printf("minishell: exit: %s: numeric argument required\n",
 		str);
 	exit(255);
 }
 
-void	error_check(char *str)
+static void	error_check(char *str)
 {
 	int			i;
 
@@ -63,7 +63,7 @@ void	error_check(char *str)
 	}
 }
 
-void	check_len(char *str)
+static void	check_len(char *str)
 {
 	if (str[0] == '+' || str[0] == '-')
 	{
@@ -76,6 +76,8 @@ void	check_len(char *str)
 
 void	ft_exit(t_cmd_table *cmd_table)
 {
+	close(3);
+	close(4);
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (cmd_table->args[1] != NULL)
 	{
