@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:14:04 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 16:14:42 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/06 17:59:51 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	echo(t_cmd_table *cmd_table);
 
 //builtins2.c
 void	env(t_env_list *env_list);
-void	export(t_env_list *env_list, char *input);
+void	export(t_env_list *env_list, char **input);
 void	unset(t_env_list *env_list, char *input);
 
 //exit.c

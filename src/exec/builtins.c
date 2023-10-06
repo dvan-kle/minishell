@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:53:54 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 16:54:22 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/06 18:00:15 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	execute_builtin(t_cmd_table *cmd_table)
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 		pwd();
 	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
-		export(cmd_table->env_list, cmd_table->args[1]);
+		export(cmd_table->env_list, cmd_table->args);
 	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
 		unset(cmd_table->env_list, cmd_table->args[1]);
 	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))

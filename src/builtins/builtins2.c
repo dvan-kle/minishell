@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/26 11:08:33 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/06 18:00:25 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void	env(t_env_list *env_list)
 	}
 }
 
-void	export(t_env_list *env_list, char *input)
+void	export(t_env_list *env_list, char **input)
 {
 	t_env_list	*curr;
+	int			i;
 
+	i = 1;
 	curr = env_list;
 	if (!input)
 	{
@@ -40,7 +42,11 @@ void	export(t_env_list *env_list, char *input)
 		}
 		return ;
 	}
-	env_add_back(input, &env_list);
+	while (input[i])
+	{
+		env_add_back(input[i], &env_list);
+		i++;
+	}
 }
 
 void	unset(t_env_list *env_list, char *input)
