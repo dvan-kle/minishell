@@ -35,7 +35,7 @@ void    execute_builtin(t_cmd_table *cmd_table)
 	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
 		ft_exit(cmd_table);
 	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
-		cd(cmd_table->args[1]);
+		cd(cmd_table->args[1], cmd_table);
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 		pwd();
 	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))

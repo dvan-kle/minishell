@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/26 13:31:44 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/09/27 14:05:24 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/06 16:07:33 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../incl/main.h"
-
-int	cd(const char *path)
-{
-	if (chdir(path) == -1)
-	{
-		perror("cd");
-		return (-1);
-	}
-	return (0);
-}
 
 void	pwd(void)
 {
