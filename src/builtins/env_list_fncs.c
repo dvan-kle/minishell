@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/07 23:20:51 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/07 23:49:44 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,39 @@ t_env_list	*make_env_list(char	**envp)
 		i++;
 	}
 	return (new_env_list);
+}
+
+char **env_list_to_char(t_env_list *env_list)
+{
+    t_env_list	*curr;
+    char		**envp;
+    int			i;
+
+    i = 0;
+    curr = env_list;
+    envp = ft_malloc(sizeof(char *) * (ft_env_size(env_list) + 1));
+    while (curr)
+    {
+        envp[i] = ft_strjoin(curr->key, "=");
+        envp[i] = ft_strjoin(envp[i], curr->value);
+        curr = curr->next;
+        i++;
+    }
+    envp[i] = NULL;
+    return (envp);
+}
+
+int ft_env_size(t_env_list *env_list)
+{
+    t_env_list	*curr;
+    int			i;
+
+    i = 0;
+    curr = env_list;
+    while (curr)
+    {
+        curr = curr->next;
+        i++;
+    }
+    return (i);
 }

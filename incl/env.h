@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 13:48:40 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/08/21 16:46:03 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/07 23:49:54 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@ typedef struct s_env_list
 
 t_env_list	*make_env_list(char	**envp);
 void		env_add_back(char *env, t_env_list **env_list);
+int ft_env_size(t_env_list *env_list);
+char **env_list_to_char(t_env_list *env_list);
+
 
 #endif
