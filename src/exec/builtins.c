@@ -24,6 +24,8 @@ bool	check_builtin(t_cmd_table *cmd_table)
 		return (true);
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 		return (true);
+	if (!ft_strncmp(cmd_table->args[0], "echo", cmd_len))
+		return (true);
 	return (false);
 }
 
@@ -46,6 +48,8 @@ void    execute_builtin(t_cmd_table *cmd_table)
 		printf("\033[2J\033[1;1H");
     if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		env(cmd_table->env_list);
+	if (!ft_strncmp(cmd_table->args[0], "echo", cmd_len))
+		echo(cmd_table);
 	if (cmd_table->cmd_count > 1)
         exit(EXIT_SUCCESS);
 }
