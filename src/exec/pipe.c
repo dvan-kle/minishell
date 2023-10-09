@@ -43,7 +43,7 @@ int	execute_single_cmd(t_cmd_table *cmd_table)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
-		ignore_signals();
+		default_signals();
 		redirect_single(cmd_table);
 		execute(cmd_table, cmd_table->env_list);
 	}
@@ -92,6 +92,7 @@ int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pi
 			exit(EXIT_FAILURE);
 		if (pid_array[i] == 0)
 		{
+			default_signals();
 			redirect(cmd_table, fd, read, i, cmd_count);
 			if (check_builtin(cmd_table) == true)
 				execute_builtin(cmd_table);
