@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:53:54 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 18:00:15 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/09 19:01:27 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ bool	check_builtin(t_cmd_table *cmd_table)
 		return (true);
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 		return (true);
+    if (!ft_strncmp(cmd_table->args[0], "echo", cmd_len))
+		return (true);
 	return (false);
 }
 
@@ -58,6 +60,8 @@ void	execute_builtin(t_cmd_table *cmd_table)
 		printf("\033[2J\033[1;1H");
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		env(cmd_table->env_list);
+    if (!ft_strncmp(cmd_table->args[0], "echo", cmd_len))
+		echo(cmd_table);
 	if (cmd_table->cmd_count > 1)
 		exit(EXIT_SUCCESS);
 }

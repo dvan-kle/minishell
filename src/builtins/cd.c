@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:07:50 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 16:14:49 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/09 19:13:32 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,29 @@ void	replace_old_pwd(t_env_list *env_list, char *old_pwd)
 	}
 }
 
-int	cd(const char *path, t_cmd_table *cmd_table)
+int	cd(const char *dir, t_cmd_table *cmd_table)
 {
-	if (chdir(path) == -1)
+	t_env_list	*env_list;
+	char		*path;
+
+	env_list = cmd_table->env_list;
+	path = NULL;
+    if (!dir)
 	{
-		perror("cd");
-		return (-1);
+		while (env_list != NULL)
+		{
+		if (ft_strncmp(env_list->key, "HOME", 5) == 0)
+			path = ft_strdup(env_list->value);
+		env_list = env_list->next;
+		}
+		if (!path)
+			return (printf("minishell: cd: HOME not set\n"), EXIT_FAILURE);
 	}
+	else
+		path = ft_strdup(dir);
+	if (chdir(path) == -1)
+		return (EXIT_FAILURE);
 	set_new_pwd(cmd_table->env_list);
+	free(path);
 	return (0);
 }

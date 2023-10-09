@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/07 23:49:44 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 19:39:11 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../../incl/env.h"
 #include "../../libft/libft.h"
 #include "../../incl/tokenizer.h"
+#include "../../incl/main.h"
 #include <wait.h>
 
 t_env_list	*new_env(char *env)
@@ -22,6 +23,12 @@ t_env_list	*new_env(char *env)
 
 	nenv = ft_malloc(sizeof(t_env_list));
 	nenv->key = ft_substr(env, 0, ft_strchr(env, '=') - env);
+	if (export_input_check(nenv->key, env) == EXIT_FAILURE)
+	{
+		free(nenv->key);
+		free(nenv);
+		return (NULL);
+	}
 	nenv->value = ft_substr(env, ft_strchr(env, '=') - env + 1, ft_strlen(env));
 	nenv->next = NULL;
 	return (nenv);
@@ -35,6 +42,8 @@ void	env_add_back(char *env, t_env_list **env_list)
 
 	lst_head = *env_list;
 	tmp = new_env(env);
+	if (!tmp)
+		return ;
 	if (!lst_head)
 	{
 		*env_list = tmp;
@@ -97,7 +106,7 @@ t_env_list	*make_env_list(char	**envp)
 	return (new_env_list);
 }
 
-char **env_list_to_char(t_env_list *env_list)
+char	**env_list_to_char(t_env_list *env_list)
 {
     t_env_list	*curr;
     char		**envp;
