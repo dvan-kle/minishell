@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   builtins.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/10/06 16:53:54 by dvan-kle      #+#    #+#                 */
+/*   Updated: 2023/10/09 19:01:27 by daniel        ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -18,7 +30,7 @@ bool	check_builtin(t_cmd_table *cmd_table)
 		return (true);
 	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
 		return (true);
-    if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
+	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
 		return (true);
 	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
 		return (true);
@@ -29,7 +41,7 @@ bool	check_builtin(t_cmd_table *cmd_table)
 	return (false);
 }
 
-void    execute_builtin(t_cmd_table *cmd_table)
+void	execute_builtin(t_cmd_table *cmd_table)
 {
 	int	cmd_len;
 
@@ -37,19 +49,19 @@ void    execute_builtin(t_cmd_table *cmd_table)
 	if (!ft_strncmp(cmd_table->args[0], "exit", cmd_len))
 		ft_exit(cmd_table);
 	if (!ft_strncmp(cmd_table->args[0], "cd", cmd_len))
-		cd(cmd_table->args[1]);
+		cd(cmd_table->args[1], cmd_table);
 	if (!ft_strncmp(cmd_table->args[0], "pwd", cmd_len))
 		pwd();
 	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
-		export(cmd_table->env_list, cmd_table->args[1]);
+		export(cmd_table->env_list, cmd_table->args);
 	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
 		unset(cmd_table->env_list, cmd_table->args[1]);
 	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
 		printf("\033[2J\033[1;1H");
-    if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
+	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		env(cmd_table->env_list);
 	if (!ft_strncmp(cmd_table->args[0], "echo", cmd_len))
 		echo(cmd_table);
 	if (cmd_table->cmd_count > 1)
-        exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 }

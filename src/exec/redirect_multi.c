@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/01 22:32:09 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/06 16:55:22 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index, int pipe_count)
+void	redirect(t_cmd_table *cmd_table, int fd[2], int read,
+			int index, int pipe_count)
 {
 	bool	last_cmd;
 
@@ -76,5 +77,4 @@ void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 	if (outfile > 0)
 		dup2(outfile, STDOUT_FILENO);
 	close(fd[WRITE_END]);
-	return ;
 }
