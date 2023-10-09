@@ -6,13 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 17:43:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 13:57:46 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:32 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/parser.h"
-#include "../../libft/libft.h"
-#include "../../incl/tokenizer.h"
+#include "../../incl/main.h"
 
 void	init_token(t_token *token, t_env_list *env_lst)
 {

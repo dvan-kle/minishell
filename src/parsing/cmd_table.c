@@ -6,11 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 14:36:33 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/04 16:09:58 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:03 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/parser.h"
+#include "../../incl/main.h"
 
 void	fill_cmd(t_token *token, t_cmd_table *new_cmd)
 {

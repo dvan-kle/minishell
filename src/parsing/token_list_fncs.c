@@ -6,11 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/17 16:28:30 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/12 14:50:19 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:25 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/tokenizer.h"
+#include "../../incl/main.h"
 
 t_token	*new_token(t_token old_token)
 {

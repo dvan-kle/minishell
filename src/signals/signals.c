@@ -6,17 +6,11 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/04 16:20:18 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:42 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/signal.h>
-#include <stdio.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include "../../incl/main.h"
 
 void	default_signals(void)
 {

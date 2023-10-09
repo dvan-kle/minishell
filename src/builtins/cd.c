@@ -6,14 +6,10 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:07:50 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 19:13:32 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 21:30:32 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../../incl/main.h"
 
 void	set_new_pwd(t_env_list *env_list)

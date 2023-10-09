@@ -6,11 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/02 13:17:21 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:31:58 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/tokenizer.h"
+#include "../../incl/main.h"
 
 void	assign_redirect(t_token *token, char *type, int i,
 t_tokentype first)

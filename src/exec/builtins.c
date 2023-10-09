@@ -6,15 +6,10 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:53:54 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 19:01:27 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 21:31:04 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "../../libft/libft.h"
-#include "../../incl/exec.h"
 #include "../../incl/main.h"
 
 bool	check_builtin(t_cmd_table *cmd_table)

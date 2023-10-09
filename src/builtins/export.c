@@ -6,16 +6,11 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 19:26:33 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/09 19:49:21 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 21:28:00 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "../../incl/env.h"
-#include "../../libft/libft.h"
 #include "../../incl/main.h"
-#include "../../incl/builtins.h"
-
 
 void	export(t_env_list *env_list, char **input)
 {

@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:32:12 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/04 15:53:25 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/09 21:30:43 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 # define MAIN_H
 
 # include <stdio.h>
+# include <limits.h>
+# include <errno.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/signal.h>
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 # include "env.h"
 # include "parser.h"

@@ -6,12 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/02 15:16:32 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:18 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/parser.h"
-#include "../../incl/tokenizer.h"
+#include "../../incl/main.h"
 
 t_cmd_table	*make_cmd_table(t_token	*token_list, t_env_list *env_list)
 {

@@ -6,12 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:33:45 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/02 12:56:46 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:28 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/tokenizer.h"
-#include "../../incl/env.h"
+#include "../../incl/main.h"
 
 t_token	tokenize(t_token token, char *input, int exit_status)
 {

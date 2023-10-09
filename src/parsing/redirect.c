@@ -6,14 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/30 11:01:16 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/09/27 13:57:41 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:32:21 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
-#include "stdio.h"
-#include "../../incl/tokenizer.h"
-#include "../../incl/parser.h"
+#include "../../incl/main.h"
 
 void	print_redirects(t_redirect *redir_arr)
 {

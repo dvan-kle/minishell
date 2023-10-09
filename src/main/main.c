@@ -6,14 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/04 15:56:24 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/09 21:31:50 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <signal.h>
 
 char	*get_line(void)
 {

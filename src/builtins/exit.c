@@ -6,13 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 11:58:39 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/01 22:37:10 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 21:30:56 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/parser.h"
-#include <stdlib.h>
-#include <limits.h>
+#include "../../incl/main.h"
 
 static long long	long_atoi(char *input)
 {
