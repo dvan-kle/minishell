@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/04 15:56:24 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/10 14:46:41 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		cmd_table = make_cmd_table(token_list, env_lst);
+		print_redirects(cmd_table->redirects);
 		free_token_list(token_list);
 		exit_status = execute_main(cmd_table);
 		free_cmd_table(cmd_table);

@@ -6,27 +6,27 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 21:15:22 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/10 14:18:04 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/10 14:53:55 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
 #include <readline/readline.h>
 
-bool	check_heredoc(t_cmd_table *cmd_table)
+int	check_heredoc(t_cmd_table *cmd_table)
 {
 	t_redirect	*redirect;
+	int			count;
 
+	count = 0;
 	redirect = cmd_table->redirects;
 	while (redirect->type != END_OF_CMD_TOKEN)
 	{
 		if (redirect->type == READ_INPUT_TOKEN)
-		{
-			return (true);
-		}
+			count++;
 		redirect++;
 	}
-	return (false);
+	return (count);
 }
 
 void	exec_heredoc(char *delim, int fd[2])
