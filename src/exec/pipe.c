@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:29:09 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/10 13:49:22 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	close_pipe(int pipe_fd[2])
+void	close_pipe(int pipe_fd[2])
 {
 	close(pipe_fd[READ_END]);
 	close(pipe_fd[WRITE_END]);

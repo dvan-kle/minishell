@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:55:30 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 16:55:35 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/10 13:50:07 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 
 void	redirect_single(t_cmd_table *cmdtable)
 {
+	int	fd_hd;
+
+	fd_hd = heredoc(cmdtable);
+	if (fd_hd > 0)
+		dup2(fd_hd, STDIN_FILENO);
 	redirect_single_in(cmdtable->redirects);
 	redirect_single_out(cmdtable->redirects);
 }

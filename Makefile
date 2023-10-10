@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/10/09 19:27:00 by daniel        ########   odam.nl          #
+#    Updated: 2023/10/10 13:44:16 by dvan-kle      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CC_FLAGS = -Wall -Wextra -g -fsanitize=address
 SRC =   src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c src/builtins/exit.c src/builtins/cd.c src/builtins/export.c \
         src/exec/exec.c src/exec/exec_utils.c src/exec/pipe.c src/exec/redirect_multi.c src/exec/redirect_single.c src/exec/errors.c src/exec/builtins.c \
         src/main/main.c \
-		src/heredoc/heredoc.c \
+		src/heredoc/heredoc.c src/heredoc/heredoc_utils.c \
         src/parsing/parser.c src/parsing/token_list_fncs.c src/parsing/tokenizer.c src/parsing/utils.c src/parsing/assign_token.c src/parsing/redirect.c src/parsing/cmd_table.c src/parsing/handle_token.c src/parsing/malloc.c src/parsing/utils2.c src/parsing/input_utils.c\
 		src/signals/signals.c \
 

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:14:04 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 19:37:04 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/10 12:13:37 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define BUILTINS_H
 
 # include "main.h"
+# include "parser.h"
+# include "tokenizer.h"
 
 //builtins.c
 void	set_new_pwd(t_env_list *env_list);
