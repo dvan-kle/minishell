@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   builtins.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
+/*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/26 13:31:44 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 16:07:33 by dvan-kle      ########   odam.nl         */                                                                           */
+/*   Created: 2023/10/09 19:56:09 by daniel        #+#    #+#                 */
+/*   Updated: 2023/10/09 21:27:52 by daniel        ########   odam.nl         */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 #include "../../incl/main.h"
 
 void	pwd(void)

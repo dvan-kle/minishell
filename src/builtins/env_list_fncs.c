@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 19:39:11 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 19:56:42 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "../../libft/libft.h"
 #include "../../incl/tokenizer.h"
 #include "../../incl/main.h"
-#include <wait.h>
 
 t_env_list	*new_env(char *env)
 {
