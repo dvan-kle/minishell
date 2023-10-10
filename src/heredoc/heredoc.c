@@ -6,7 +6,7 @@
 /*   By: tijmendebruine <tijmendebruine@student.      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 19:57:11 by tijmendebru   #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:43 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/10 14:01:34 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	heredoc(char *eof, t_cmd_table *cmd_table, int pipe[2])
             break ;
         write(pipe[WRITE_END], line, ft_strlen(line));
         write(pipe[WRITE_END], "\n", 1);
-        
+        free(line);
     }
+    free(line);
 }
