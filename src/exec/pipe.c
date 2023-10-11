@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/11 15:34:33 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/11 16:17:14 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,16 @@ int	execute_main(t_cmd_table *cmd_table)
 	return (exit_status);
 }
 
-int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pid_t *pid_array)
+void	redirect_or_builtin(t_cmd_table *cmd_table, int fd[2], int read, int i)
+{
+	default_signals();
+	redirect(cmd_table, fd, read, i);
+	if (check_builtin(cmd_table) == true)
+		execute_builtin(cmd_table);
+}
+
+int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl,
+			pid_t *pid_array)
 {
 	int			fd[2];
 	int			read;
@@ -79,17 +88,11 @@ int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pi
 	i = 0;
 	while (i < cmd_count)
 	{
-		dprintf(2, "cmd_count: %d\n", cmd_table->cmd_count);
 		pipe(fd);
-		pid_array[i] = fork();
-		if (pid_array[i] == -1)
-			exit(EXIT_FAILURE);
+		pid_array[i] = ft_fork();
 		if (pid_array[i] == 0)
 		{
-			default_signals();
-			redirect(cmd_table, fd, read, i, cmd_count);
-			if (check_builtin(cmd_table) == true)
-				execute_builtin(cmd_table);
+			redirect_or_builtin(cmd_table, fd, read, i);
 			execute(cmd_table, envl);
 		}
 		close(read);

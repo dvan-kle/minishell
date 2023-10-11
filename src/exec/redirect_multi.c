@@ -6,14 +6,13 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:34 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 16:11:45 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
 
-void	redirect(t_cmd_table *cmd_table, int fd[2], int read,
-			int index, int pipe_count)
+void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index)
 {
 	bool	last_cmd;
 	int		fd_hd;
@@ -22,7 +21,7 @@ void	redirect(t_cmd_table *cmd_table, int fd[2], int read,
 	fd_hd = heredoc(cmd_table);
 	if (fd_hd > 0)
 		dup2(fd_hd, STDIN_FILENO);
-	if (index == pipe_count - 1)
+	if (index == (int)cmd_table->cmd_count - 1)
 		last_cmd = true;
 	else
 		last_cmd = false;
