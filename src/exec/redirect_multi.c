@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/11 16:11:45 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/12 00:10:28 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index)
 	int		fd_hd;
 
 	close(fd[READ_END]);
-	fd_hd = heredoc(cmd_table);
+	fd_hd = 0;
+	if (index == 0)
+		fd_hd = heredoc(cmd_table);
 	if (fd_hd > 0)
 		dup2(fd_hd, STDIN_FILENO);
 	if (index == (int)cmd_table->cmd_count - 1)
