@@ -6,13 +6,11 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/10 11:59:35 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:30:27 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/env.h"
-#include "../../libft/libft.h"
-#include <stdio.h>
+#include "../../incl/main.h"
 
 void	env(t_env_list *env_list)
 {

@@ -6,18 +6,11 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/10 13:52:28 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:31:34 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdbool.h>
 
 void	redirect(t_cmd_table *cmd_table, int fd[2], int read,
 			int index, int pipe_count)

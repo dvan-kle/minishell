@@ -6,15 +6,10 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/10 11:57:10 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/09 21:31:21 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include "../../libft/libft.h"
-#include "../../incl/exec.h"
 #include "../../incl/main.h"
 
 static char	*check_access(char **folders, char *cmd)

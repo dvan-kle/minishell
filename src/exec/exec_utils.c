@@ -6,18 +6,11 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:49:17 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/07 23:46:56 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/09 21:31:15 by tijmendebru   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
-#include "../../incl/exec.h"
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 pid_t	*create_pid_array(int cmd_count)
 {
