@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/11 16:17:14 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/11 18:14:00 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	execute_main(t_cmd_table *cmd_table)
 
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
+	ignore_signals();
 	if (cmd_table->cmd_count == 1)
 		exit_status = execute_single_cmd(cmd_table);
 	else

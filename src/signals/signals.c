@@ -6,24 +6,18 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/02 18:01:23 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:32:42 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 18:18:05 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
 
-void	default_signals(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
 void	sigint_handler(int sigint)
 {
 	(void)sigint;
 	write(STDERR_FILENO, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
-	//rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -37,4 +31,10 @@ void	ignore_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	default_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
