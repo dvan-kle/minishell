@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/25 15:45:31 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/02 14:19:26 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/11 17:35:29 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ int		next_whitespace_brackets(char *input, int i);
 char	*minishell_strjoin(char const *str1, char const *str2);
 char	*ft_strjoin2(char const *str1, char const *str2);
 bool	parse_error_check(t_token *t_list, char *input);
+bool	is_meta(char c);
+int		add_key_to_token(t_token *token, char *input, int i);
+bool	nothing_after_dollar(char *input, int i);
 
 #endif

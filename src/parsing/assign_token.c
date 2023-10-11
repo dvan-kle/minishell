@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:56:56 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:58 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 17:34:48 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,50 +88,31 @@ char	*ft_charjoin(char *str, char c)
 	return (ret);
 }
 
-bool	is_meta(char c)
-{
-	if (c == '$' || c == '\"' || c == '\'' || c == '|')
-		return (true);
-	return (false);
-}
-
 void	assign_bracket(t_token *token, char *type, int i)
 {
-	int		input_len;
-	char	*key;
 	char	bracket;
 
-	input_len = ft_strlen(type);
 	token->value = ft_strdup("");
 	while (type[i] == '\"' || type[i] == '\'' || type[i] == '$')
 	{
-		bracket = type[i];
-		i++;
-		while (i < input_len && type[i] != bracket)
+		bracket = type[i++];
+		while (i < (int)(ft_strlen(type)) && type[i] != bracket)
 		{
 			if (type[i] == '$' && bracket == '\"')
 			{
-				if (!type[i + 1] || ft_isspace(type[i + 1])
-					|| is_meta(type[i + 1]) || ft_isredir(type[i + 1]))
+				if (nothing_after_dollar(type, i))
 				{
 					token->value = ft_strjoin2(token->value, "$");
 					i++;
 					continue ;
 				}
-				key = assign_var(token, type, i + 1, 0);
-				token->value = minishell_strjoin(token->value, key);
-				i += next_whitespace_brackets(type, i + 1) + 1;
-				token->expand = true;
+				i = add_key_to_token(token, type, i);
 			}
 			else
-			{
-				token->value = ft_charjoin(token->value, type[i]);
-				i++;
-			}
+				token->value = ft_charjoin(token->value, type[i++]);
 		}
-		if (type[i] == '\0')
+		if (type[i++] == '\0')
 			break ;
-		i++;
 	}
 	token->brackets = true;
 }

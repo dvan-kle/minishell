@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:50 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 17:50:17 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	env_lst = make_env_list(envp);
 	exit_status = 0;
-	//atexit(ft_leaks);
 	while (1)
 	{
 		init_signals();

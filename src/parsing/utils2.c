@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/13 14:53:20 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:32:36 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 15:46:11 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,14 @@ char	*minishell_strjoin(char const *str1, char const *str2)
 	char	*ptr;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	j = 0;
-	k = ft_strlen(str1) + ft_strlen(str2) + 1;
 	if (!str1)
 		return ((char *)str1);
 	if (!str2)
 		str2 = ft_strdup("");
-	ptr = ft_malloc((sizeof(char) * k));
+	ptr = ft_malloc((sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1)));
 	while (str1[i])
 	{
 		ptr[i] = str1[i];
@@ -79,4 +77,11 @@ void	free_redirects(t_cmd_table	*cmd_table)
 		i++;
 	}
 	free(cmd_table->redirects);
+}
+
+bool	is_meta(char c)
+{
+	if (c == '$' || c == '\"' || c == '\'' || c == '|')
+		return (true);
+	return (false);
 }
