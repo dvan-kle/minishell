@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:50 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 17:48:27 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,89 +30,16 @@ char	*get_line(void)
 	return (line);
 }
 
-bool	only_spaces(char *input)
+int	cmd_table_and_exec(t_token *token_list, t_env_list *env_list)
 {
-	int	i;
+	t_cmd_table	*cmd_table;
+	int			exit_status;
 
-	i = 0;
-	while (input[i])
-	{
-		if (!ft_isspace(input[i]))
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-bool	bracket_error(char *input)
-{
-	int		i;
-	int		count;
-	char	bracket;
-
-	i = 0;
-	count = 0;
-	while (input[i])
-	{
-		if (input[i] == '\"' || input[i] == '\'')
-		{
-			count++;
-			bracket = input[i];
-			i++;
-			while (input[i] && input[i] != bracket)
-				i++;
-			if (input[i] && input[i] == bracket)
-			{
-				i++;
-				count++;
-			}
-		}
-		else
-			i++;
-	}
-	if (count % 2 != 0)
-	{
-		printf("minishell: unclosed brackets\n");
-		return (true);
-	}
-	return (false);
-}
-
-bool	parse_error_check(t_token *t_list, char *input)
-{
-	t_token	*tmp;
-
-	tmp = t_list;
-	if (bracket_error(input) || only_spaces(input))
-		return (true);
-	while (tmp->type != END_OF_CMD_TOKEN)
-	{
-		if (ft_isredirect(tmp->type) && (tmp->next->type == PIPE_TOKEN
-				|| ft_isredirect(tmp->next->type)))
-		{
-			printf("minishell: syntax error near unexpected token `%s'\n",
-				tmp->next->value);
-			return (true);
-		}
-		if (ft_isredirect(tmp->type) && (tmp->next->type == END_OF_CMD_TOKEN))
-		{
-			printf("minishell: syntax error near unexpected token `newline'\n");
-			return (true);
-		}
-		if (tmp->type == PIPE_TOKEN && (tmp->next->type == END_OF_CMD_TOKEN
-				|| !ft_strncmp(tmp->next->value, "$", 2)))
-		{
-			printf("minishell: syntax error near unexpected token `|'\n");
-			return (true);
-		}
-		tmp = tmp->next;
-	}
-	return (false);
-}
-
-void	ft_leaks(void)
-{
-	system("leaks minishell");
+	cmd_table = make_cmd_table(token_list, env_list);
+	free_token_list(token_list);
+	exit_status = execute_main(cmd_table);
+	free_cmd_table(cmd_table);
+	return (exit_status);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -127,7 +54,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	env_lst = make_env_list(envp);
 	exit_status = 0;
-	//atexit(ft_leaks);
 	while (1)
 	{
 		init_signals();
@@ -137,15 +63,10 @@ int	main(int argc, char **argv, char **envp)
 		token_list = lexer(input, env_lst, exit_status);
 		if (parse_error_check(token_list, input))
 		{
-			exit_status = 258;
-			free_token_list(token_list);
+			exit_status = set_exit_and_free(token_list);
 			continue ;
 		}
-		cmd_table = make_cmd_table(token_list, env_lst);
-		print_redirects(cmd_table->redirects);
-		free_token_list(token_list);
-		exit_status = execute_main(cmd_table);
-		free_cmd_table(cmd_table);
+		exit_status = cmd_table_and_exec(token_list, env_lst);
 	}
 	free_env_list(env_lst);
 }

@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:49:17 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:15 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 16:14:54 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,14 @@ int	wait_all_pids(pid_t *pid_array, int cmd_count)
 	}
 	free(pid_array);
 	return (exit_status);
+}
+
+pid_t	ft_fork(void)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		exit(EXIT_FAILURE);
+	return (pid);
 }

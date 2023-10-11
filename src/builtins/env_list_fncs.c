@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:30:52 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 16:08:33 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ t_env_list	*new_env(char *env)
 	return (nenv);
 }
 
+char	*assign_and_free(t_env_list *lst_head, t_env_list *tmp)
+{
+	char	*value;
+
+	free(lst_head->value);
+	value = tmp->value;
+	free(tmp->key);
+	free(tmp);
+	return (value);
+}
+
 void	env_add_back(char *env, t_env_list **env_list)
 {
 	t_env_list	*lst_head;
@@ -48,10 +59,7 @@ void	env_add_back(char *env, t_env_list **env_list)
 	{
 		if (!ft_strncmp(lst_head->key, tmp->key, ft_strlen(tmp->key) + 1))
 		{
-			free(lst_head->value);
-			lst_head->value = tmp->value;
-			free(tmp->key);
-			free(tmp);
+			lst_head->value = assign_and_free(lst_head, tmp);
 			return ;
 		}
 		prev = lst_head;
@@ -83,57 +91,5 @@ int	env_count(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	return (i);
-}
-
-t_env_list	*make_env_list(char **envp)
-{
-	t_env_list	*new_env_list;
-	int			i;
-
-	i = 1;
-	new_env_list = new_env(envp[0]);
-	while (envp[i])
-	{
-		env_add_back(envp[i], &new_env_list);
-		i++;
-	}
-	return (new_env_list);
-}
-
-char	**env_list_to_char(t_env_list *env_list)
-{
-	t_env_list	*curr;
-	char		**envp;
-	char		*key;
-	int			i;
-
-	i = 0;
-	curr = env_list;
-	envp = ft_malloc(sizeof(char *) * (ft_env_size(env_list) + 1));
-	while (curr)
-	{
-		key = ft_strjoin(curr->key, "=");
-		envp[i] = ft_strjoin(key, curr->value);
-		curr = curr->next;
-		i++;
-		free(key);
-	}
-	envp[i] = NULL;
-	return (envp);
-}
-
-int	ft_env_size(t_env_list *env_list)
-{
-	t_env_list	*curr;
-	int			i;
-
-	i = 0;
-	curr = env_list;
-	while (curr)
-	{
-		curr = curr->next;
-		i++;
-	}
 	return (i);
 }
