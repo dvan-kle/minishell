@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:32:06 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 17:40:13 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,62 +25,19 @@ int	get_env_len(t_env_list *env_lst)
 	return (count);
 }
 
-char	*check_for_key(char *key, t_env_list *curr, t_token *token, int exit_status)
-{
-	char	*result;
-
-	result = NULL;
-	if (!ft_strncmp(key, "?", ft_strlen(key) + 1))
-	{
-		free(key);
-		result = ft_itoa(exit_status);
-		token->expand = true;
-		return (result);
-	}
-	while (curr)
-	{
-		if (!ft_strncmp(curr->key, key, ft_strlen(curr->key) + 1))
-		{
-			free(key);
-			result = ft_strdup(curr->value);
-			token->expand = true;
-			return (result);
-		}
-		curr = curr->next;
-	}
-	return (NULL);
-}
-
-char	*assign_var(t_token *token, char *input, int i, int exit_status)
-{
-	t_env_list	*curr;
-	char		*key;
-	char		*result;
-
-	curr = token->env_lst;
-	key = ft_substr(input, i, next_whitespace_brackets(input, i));
-	result = check_for_key(key, curr, token, exit_status);
-	if (result)
-		return (result);
-	free(key);
-	return (result);
-}
-
 char	*ft_strjoin2(char const *str1, char const *str2)
 {
 	char	*ptr;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	j = 0;
-	k = ft_strlen(str1) + ft_strlen(str2) + 1;
 	if (!str1)
 		str1 = ft_strdup("");
 	if (!str2)
 		str2 = ft_strdup("");
-	ptr = ft_malloc((sizeof(char) * k));
+	ptr = ft_malloc((sizeof(char) * (ft_strlen(str1) + ft_strlen(str2) + 1)));
 	while (str1[i])
 	{
 		ptr[i] = str1[i];
@@ -92,10 +49,9 @@ char	*ft_strjoin2(char const *str1, char const *str2)
 		j++;
 	}
 	ptr[i + j] = '\0';
-	free((char *)str1);
 	if (ft_strncmp(str2, "$", 2))
 		free((char *)str2);
-	return (ptr);
+	return (free((char *)str1), ptr);
 }
 
 t_token	handle_brackets(int i, char *input, t_token token, int exit_status)
@@ -112,13 +68,12 @@ t_token	handle_brackets(int i, char *input, t_token token, int exit_status)
 			{
 				token.value = ft_strjoin2(token.value, "$");
 				i++;
+				continue ;
 			}
-			else
-			{
-				token.value = ft_strjoin2(token.value, assign_var(&token, input, i + 1, exit_status));
-				i += next_whitespace_brackets(input, i + 1) + 1;
-				token.expand = true;
-			}
+			token.value = ft_strjoin2(token.value, assign_var(&token, input,
+						i + 1, exit_status));
+			i += next_whitespace_brackets(input, i + 1) + 1;
+			token.expand = true;
 		}
 	}
 	else
