@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 17:02:35 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/11 15:21:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
-static void	close_pipe(int pipe_fd[2])
+void	close_pipe(int pipe_fd[2])
 {
 	close(pipe_fd[READ_END]);
 	close(pipe_fd[WRITE_END]);
@@ -86,6 +85,7 @@ int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pi
 	i = 0;
 	while (i < cmd_count)
 	{
+		dprintf(2, "cmd_count: %d\n", cmd_table->cmd_count);
 		pipe(fd);
 		pid_array[i] = fork();
 		if (pid_array[i] == -1)

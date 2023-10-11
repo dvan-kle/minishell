@@ -3,17 +3,17 @@
 /*                                                        ::::::::            */
 /*   builtins.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
+/*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/07/26 13:31:44 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/06 16:07:33 by dvan-kle      ########   odam.nl         */                                                                           */
+/*   Created: 2023/10/09 19:56:09 by daniel        #+#    #+#                 */
+/*   Updated: 2023/10/10 11:59:24 by dvan-kle      ########   odam.nl         */
+/*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../../incl/main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 void	pwd(void)
 {
@@ -26,7 +26,7 @@ void	pwd(void)
 
 void	print_echo_args(t_cmd_table *cmd_table, int i, bool option)
 {
-	t_cmd_table *curr;
+	t_cmd_table	*curr;
 
 	curr = cmd_table;
 	while (curr->args[i])
@@ -41,7 +41,7 @@ void	print_echo_args(t_cmd_table *cmd_table, int i, bool option)
 		printf("\n");
 }
 
-void	echo(t_cmd_table	*cmd_table)
+void	echo(t_cmd_table *cmd_table)
 {
 	int			i;
 	int			j;

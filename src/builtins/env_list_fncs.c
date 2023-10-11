@@ -6,16 +6,15 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/21 16:41:49 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 19:39:11 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/10 13:59:46 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../../incl/env.h"
-#include "../../libft/libft.h"
-#include "../../incl/tokenizer.h"
 #include "../../incl/main.h"
-#include <wait.h>
+#include "../../incl/tokenizer.h"
+#include "../../libft/libft.h"
+#include <stdio.h>
 
 t_env_list	*new_env(char *env)
 {
@@ -81,7 +80,7 @@ void	free_env_list(t_env_list *env_list)
 	}
 }
 
-int	env_count(char	**envp)
+int	env_count(char **envp)
 {
 	int	i;
 
@@ -91,7 +90,7 @@ int	env_count(char	**envp)
 	return (i);
 }
 
-t_env_list	*make_env_list(char	**envp)
+t_env_list	*make_env_list(char **envp)
 {
 	t_env_list	*new_env_list;
 	int			i;
@@ -108,35 +107,37 @@ t_env_list	*make_env_list(char	**envp)
 
 char	**env_list_to_char(t_env_list *env_list)
 {
-    t_env_list	*curr;
-    char		**envp;
-    int			i;
+	t_env_list	*curr;
+	char		**envp;
+	char		*key;
+	int			i;
 
-    i = 0;
-    curr = env_list;
-    envp = ft_malloc(sizeof(char *) * (ft_env_size(env_list) + 1));
-    while (curr)
-    {
-        envp[i] = ft_strjoin(curr->key, "=");
-        envp[i] = ft_strjoin(envp[i], curr->value);
-        curr = curr->next;
-        i++;
-    }
-    envp[i] = NULL;
-    return (envp);
+	i = 0;
+	curr = env_list;
+	envp = ft_malloc(sizeof(char *) * (ft_env_size(env_list) + 1));
+	while (curr)
+	{
+		key = ft_strjoin(curr->key, "=");
+		envp[i] = ft_strjoin(key, curr->value);
+		curr = curr->next;
+		i++;
+		free(key);
+	}
+	envp[i] = NULL;
+	return (envp);
 }
 
-int ft_env_size(t_env_list *env_list)
+int	ft_env_size(t_env_list *env_list)
 {
-    t_env_list	*curr;
-    int			i;
+	t_env_list	*curr;
+	int			i;
 
-    i = 0;
-    curr = env_list;
-    while (curr)
-    {
-        curr = curr->next;
-        i++;
-    }
-    return (i);
+	i = 0;
+	curr = env_list;
+	while (curr)
+	{
+		curr = curr->next;
+		i++;
+	}
+	return (i);
 }

@@ -6,13 +6,13 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 19:26:25 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/10 11:59:35 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../../incl/env.h"
 #include "../../libft/libft.h"
+#include <stdio.h>
 
 void	env(t_env_list *env_list)
 {
@@ -50,4 +50,3 @@ void	unset(t_env_list *env_list, char *input)
 		lst_head = lst_head->next;
 	}
 }
-

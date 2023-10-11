@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/07 23:51:18 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/10 11:57:10 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,18 @@ static char	*get_path(t_env_list *env_list, char *cmd)
 int	execute(t_cmd_table *cmd_table, t_env_list *env_list)
 {
 	char	*path;
-    char    **envp;
+	char	**envp;
 
 	path = get_path(env_list, cmd_table->args[0]);
-    envp = env_list_to_char(env_list);
+	envp = env_list_to_char(env_list);
 	if (execve(path, cmd_table->args, envp) == -1)
 	{
 		execute_error(cmd_table->args[0]);
 		free(path);
-        free(envp);
+		free(envp);
 		return (EXIT_FAILURE);
 	}
 	free(path);
-    free(envp);
+	free(envp);
 	return (EXIT_SUCCESS);
 }
