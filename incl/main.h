@@ -6,8 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:32:12 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:30:43 by tijmendebru   ########   odam.nl         */
-/*   Updated: 2023/10/10 12:15:28 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/11 17:49:45 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +40,10 @@ void		free_env_list(t_env_list *env_list);
 void		init_signals(void);
 void		ignore_signals(void);
 void		default_signals(void);
+bool		only_spaces(char *input);
+bool		bracket_error(char *input);
+bool		parse_error_print(int x, char *input);
+bool		parse_error_check(t_token *t_list, char *input);
+int			set_exit_and_free(t_token *token_list);
 
 #endif
