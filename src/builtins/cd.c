@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:07:50 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/10 14:21:54 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/11 15:10:42 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*replace_pwd(t_env_list *env_list)
 	old_pwd = NULL;
 	while (env_list != NULL)
 	{
-		if (ft_strncmp(env_list->key, "PWD", 5) == 0)
+		if (ft_strncmp(env_list->key, "PWD", 4) == 0)
 		{
 			old_pwd = ft_strdup(env_list->value);
 			free(env_list->value);
@@ -50,7 +50,7 @@ void	replace_old_pwd(t_env_list *env_list, char *old_pwd)
 {
 	while (env_list != NULL)
 	{
-		if (ft_strncmp(env_list->key, "OLDPWD", 5) == 0)
+		if (ft_strncmp(env_list->key, "OLDPWD", 7) == 0)
 		{
 			free(env_list->value);
 			env_list->value = ft_strdup(old_pwd);

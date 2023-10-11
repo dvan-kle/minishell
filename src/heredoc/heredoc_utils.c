@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 21:15:22 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/10 14:53:55 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/11 15:02:14 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ int	check_heredoc(t_cmd_table *cmd_table)
 		redirect++;
 	}
 	return (count);
+}
+
+char	*get_last_delim(t_redirect *redirects)
+{
+	char	*delim;
+	int		i;
+
+	i = 0;
+	while (redirects[i].type != END_OF_CMD_TOKEN)
+	{
+		if (redirects[i].type == READ_INPUT_TOKEN)
+			delim = redirects[i].file;
+		i++;
+	}
+	return (delim);
 }
 
 void	exec_heredoc(char *delim, int fd[2])
@@ -56,7 +71,7 @@ int	heredoc(t_cmd_table *cmd_table)
 	check = check_heredoc(cmd_table);
 	if (!check)
 		return (0);
-	delim = cmd_table->redirects->file;
+	delim = get_last_delim(cmd_table->redirects);
 	pipe(fd);
 	exec_heredoc(delim, fd);
 	read = dup(fd[READ_END]);

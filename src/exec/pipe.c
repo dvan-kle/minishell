@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 13:00:29 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/10 13:49:22 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/11 15:21:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pi
 	i = 0;
 	while (i < cmd_count)
 	{
+		dprintf(2, "cmd_count: %d\n", cmd_table->cmd_count);
 		pipe(fd);
 		pid_array[i] = fork();
 		if (pid_array[i] == -1)
