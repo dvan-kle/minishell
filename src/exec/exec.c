@@ -55,18 +55,18 @@ static char	*get_path(t_env_list *env_list, char *cmd)
 int	execute(t_cmd_table *cmd_table, t_env_list *env_list)
 {
 	char	*path;
-    char    **envp;
+	char	**envp;
 
 	path = get_path(env_list, cmd_table->args[0]);
-    envp = env_list_to_char(env_list);
+	envp = env_list_to_char(env_list);
 	if (execve(path, cmd_table->args, envp) == -1)
 	{
 		execute_error(cmd_table->args[0]);
 		free(path);
-        free(envp);
+		free(envp);
 		return (EXIT_FAILURE);
 	}
 	free(path);
-    free(envp);
+	free(envp);
 	return (EXIT_SUCCESS);
 }

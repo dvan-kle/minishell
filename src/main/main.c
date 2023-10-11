@@ -142,6 +142,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		cmd_table = make_cmd_table(token_list, env_lst);
+		print_redirects(cmd_table->redirects);
 		free_token_list(token_list);
 		exit_status = execute_main(cmd_table);
 		free_cmd_table(cmd_table);

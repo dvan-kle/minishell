@@ -18,20 +18,22 @@
 
 typedef struct s_redirect	t_redirect;
 
-typedef struct s_redirect{
-	t_tokentype	type;
-	char		*file;
-}t_redirect;
+typedef struct s_redirect
+{
+	t_tokentype				type;
+	char					*file;
+}							t_redirect;
 
 typedef struct s_cmd_table	t_cmd_table;
 
-typedef struct s_cmd_table{
-	char			**args;
-	unsigned int	cmd_count;
-	t_env_list		*env_list;
-	t_redirect		*redirects;
-    pid_t           *pid_array;
-	t_cmd_table		*next;
+typedef struct s_cmd_table
+{
+	char					**args;
+	unsigned int			cmd_count;
+	t_env_list				*env_list;
+	t_redirect				*redirects;
+	pid_t					*pid_array;
+	t_cmd_table				*next;
 }t_cmd_table;
 
 t_redirect	*redirect_add_back(t_token *token_lst, t_cmd_table *cmd_table);

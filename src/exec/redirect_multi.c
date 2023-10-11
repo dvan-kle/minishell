@@ -16,8 +16,12 @@ void	redirect(t_cmd_table *cmd_table, int fd[2], int read,
 			int index, int pipe_count)
 {
 	bool	last_cmd;
+	int		fd_hd;
 
 	close(fd[READ_END]);
+	fd_hd = heredoc(cmd_table);
+	if (fd_hd > 0)
+		dup2(fd_hd, STDIN_FILENO);
 	if (index == pipe_count - 1)
 		last_cmd = true;
 	else

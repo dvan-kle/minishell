@@ -12,7 +12,7 @@
 
 #include "../../incl/main.h"
 
-static void	close_pipe(int pipe_fd[2])
+void	close_pipe(int pipe_fd[2])
 {
 	close(pipe_fd[READ_END]);
 	close(pipe_fd[WRITE_END]);
@@ -79,6 +79,7 @@ int	execute_pipeline(t_cmd_table *cmd_table, int cmd_count, t_env_list *envl, pi
 	i = 0;
 	while (i < cmd_count)
 	{
+		dprintf(2, "cmd_count: %d\n", cmd_table->cmd_count);
 		pipe(fd);
 		pid_array[i] = fork();
 		if (pid_array[i] == -1)

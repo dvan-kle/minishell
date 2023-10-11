@@ -48,4 +48,3 @@ void	unset(t_env_list *env_list, char *input)
 		lst_head = lst_head->next;
 	}
 }
-

@@ -76,7 +76,7 @@ void	free_env_list(t_env_list *env_list)
 	}
 }
 
-int	env_count(char	**envp)
+int	env_count(char **envp)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ int	env_count(char	**envp)
 	return (i);
 }
 
-t_env_list	*make_env_list(char	**envp)
+t_env_list	*make_env_list(char **envp)
 {
 	t_env_list	*new_env_list;
 	int			i;
@@ -103,35 +103,37 @@ t_env_list	*make_env_list(char	**envp)
 
 char	**env_list_to_char(t_env_list *env_list)
 {
-    t_env_list	*curr;
-    char		**envp;
-    int			i;
+	t_env_list	*curr;
+	char		**envp;
+	char		*key;
+	int			i;
 
-    i = 0;
-    curr = env_list;
-    envp = ft_malloc(sizeof(char *) * (ft_env_size(env_list) + 1));
-    while (curr)
-    {
-        envp[i] = ft_strjoin(curr->key, "=");
-        envp[i] = ft_strjoin(envp[i], curr->value);
-        curr = curr->next;
-        i++;
-    }
-    envp[i] = NULL;
-    return (envp);
+	i = 0;
+	curr = env_list;
+	envp = ft_malloc(sizeof(char *) * (ft_env_size(env_list) + 1));
+	while (curr)
+	{
+		key = ft_strjoin(curr->key, "=");
+		envp[i] = ft_strjoin(key, curr->value);
+		curr = curr->next;
+		i++;
+		free(key);
+	}
+	envp[i] = NULL;
+	return (envp);
 }
 
-int ft_env_size(t_env_list *env_list)
+int	ft_env_size(t_env_list *env_list)
 {
-    t_env_list	*curr;
-    int			i;
+	t_env_list	*curr;
+	int			i;
 
-    i = 0;
-    curr = env_list;
-    while (curr)
-    {
-        curr = curr->next;
-        i++;
-    }
-    return (i);
+	i = 0;
+	curr = env_list;
+	while (curr)
+	{
+		curr = curr->next;
+		i++;
+	}
+	return (i);
 }

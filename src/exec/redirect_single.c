@@ -14,6 +14,11 @@
 
 void	redirect_single(t_cmd_table *cmdtable)
 {
+	int	fd_hd;
+
+	fd_hd = heredoc(cmdtable);
+	if (fd_hd > 0)
+		dup2(fd_hd, STDIN_FILENO);
 	redirect_single_in(cmdtable->redirects);
 	redirect_single_out(cmdtable->redirects);
 }

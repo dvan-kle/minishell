@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   builtins.c                                         :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tijmendebruine <tijmendebruine@student.      +#+                     */
+/*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/09 19:56:09 by tijmendebru   #+#    #+#                 */
-/*   Updated: 2023/10/09 21:30:23 by tijmendebru   ########   odam.nl         */
+/*   Created: 2023/10/09 19:56:09 by daniel        #+#    #+#                 */
+/*   Updated: 2023/10/10 11:59:24 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	pwd(void)
 
 void	print_echo_args(t_cmd_table *cmd_table, int i, bool option)
 {
-	t_cmd_table *curr;
+	t_cmd_table	*curr;
 
 	curr = cmd_table;
 	while (curr->args[i])
@@ -38,7 +38,7 @@ void	print_echo_args(t_cmd_table *cmd_table, int i, bool option)
 		printf("\n");
 }
 
-void	echo(t_cmd_table	*cmd_table)
+void	echo(t_cmd_table *cmd_table)
 {
 	int			i;
 	int			j;
