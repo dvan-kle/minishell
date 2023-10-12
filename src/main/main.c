@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/11 17:55:08 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/12 16:00:42 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_line(void)
 	if (!line)
 	{
 		write(STDERR_FILENO, "exit\n", 5);
-		exit(0);
+		exit(130);
 	}
 	if (line[0] == '\0')
 		return (NULL);

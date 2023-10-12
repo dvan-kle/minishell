@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 12:52:38 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/12 00:10:28 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/12 17:28:41 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ void	redirect(t_cmd_table *cmd_table, int fd[2], int read, int index)
 	int		fd_hd;
 
 	close(fd[READ_END]);
-	fd_hd = 0;
-	if (index == 0)
-		fd_hd = heredoc(cmd_table);
+	fd_hd = heredoc(cmd_table);
 	if (fd_hd > 0)
 		dup2(fd_hd, STDIN_FILENO);
 	if (index == (int)cmd_table->cmd_count - 1)
@@ -42,7 +40,7 @@ void	redirect_in(t_redirect *redirects, int read)
 		if (infile == -1)
 			redirect_error(redirects->file);
 	}
-	if (infile > 0)
+	if (infile > 0 && infile_check(redirects))
 		dup2(infile, STDIN_FILENO);
 	else
 		dup2(read, STDIN_FILENO);
@@ -54,23 +52,28 @@ void	redirect_out(t_redirect *redirects, int fd[2], bool last_cmd)
 
 	outfile = 0;
 	close(fd[READ_END]);
-	if (redirects->type == OUTPUT_REDIRECT_TOKEN)
+	while (redirects->type != END_OF_CMD_TOKEN)
 	{
-		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (outfile == -1)
-			redirect_error(redirects->file);
-	}
-	else if (redirects->type == APPEND_TOKEN)
-	{
-		outfile = open(redirects->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (outfile == -1)
-			redirect_error(redirects->file);
-	}
-	if (outfile == 0 && !last_cmd)
-	{
-		dup2(fd[WRITE_END], STDOUT_FILENO);
-		close(fd[WRITE_END]);
-		return ;
+		if (redirects->type == OUTPUT_REDIRECT_TOKEN)
+		{
+			outfile = open(redirects->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if (outfile == -1)
+				redirect_error(redirects->file);
+		}
+		else if (redirects->type == APPEND_TOKEN)
+		{
+			outfile = open(redirects->file, O_WRONLY | O_CREAT
+					| O_APPEND, 0644);
+			if (outfile == -1)
+				redirect_error(redirects->file);
+		}
+		if (outfile == 0 && !last_cmd)
+		{
+			dup2(fd[WRITE_END], STDOUT_FILENO);
+			close(fd[WRITE_END]);
+			return ;
+		}
+		redirects++;
 	}
 	if (outfile > 0)
 		dup2(outfile, STDOUT_FILENO);

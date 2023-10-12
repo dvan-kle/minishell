@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 21:15:22 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/11 23:26:08 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/12 17:34:17 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,12 @@ int	check_heredoc(t_cmd_table *cmd_table)
 	int			count;
 
 	count = 0;
-	while(cmd_table)
+	redirect = cmd_table->redirects;
+	while (redirect->type != END_OF_CMD_TOKEN)
 	{
-		redirect = cmd_table->redirects;
-		while (redirect->type != END_OF_CMD_TOKEN)
-		{
-			if (redirect->type == READ_INPUT_TOKEN)
-				count++;
-			redirect++;
-		}
-		cmd_table = cmd_table->next;
+		if (redirect->type == READ_INPUT_TOKEN)
+			count++;
+		redirect++;
 	}
 	return (count);
 }
@@ -37,7 +33,7 @@ char	*get_last_delim(t_cmd_table *cmd_table)
 {
 	char		*delim;
 	t_redirect	*redirects;
-	int		i;
+	int			i;
 
 	i = 0;
 	while (cmd_table)
@@ -62,13 +58,35 @@ void	exec_heredoc(char *delim, int fd[2])
 	{
 		line = readline("> ");
 		if (!line)
-			break ;
+			exit(130);
 		if (!ft_strncmp(line, delim, ft_strlen(delim) + 1))
 			break ;
 		ft_putendl_fd(line, fd[WRITE_END]);
 		free(line);
 	}
 	free(line);
+}
+
+bool	infile_check(t_redirect *head)
+{
+	t_redirect	*redirects;
+	t_redirect	*tmp;
+	int			count;
+
+	tmp = head;
+	redirects = head;
+	count = 0;
+	while (tmp[count].type != END_OF_CMD_TOKEN)
+		count++;
+	while (count > 0)
+	{
+		if (redirects[count - 1].type == INPUT_REDIRECT_TOKEN)
+			return (true);
+		if (redirects[count - 1].type == READ_INPUT_TOKEN)
+			return (false);
+		count--;
+	}
+	return (true);
 }
 
 int	heredoc(t_cmd_table *cmd_table)
@@ -82,8 +100,11 @@ int	heredoc(t_cmd_table *cmd_table)
 	if (!check)
 		return (0);
 	delim = get_last_delim(cmd_table);
-	pipe(fd);
+	if (pipe(fd) == -1)
+		exit(EXIT_FAILURE);
 	exec_heredoc(delim, fd);
+	if (infile_check(cmd_table->redirects))
+		return (close_pipe(fd), 0);
 	read = dup(fd[READ_END]);
 	close_pipe(fd);
 	return (read);
