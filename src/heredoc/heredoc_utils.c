@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 21:15:22 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/11 15:02:14 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/12 16:39:10 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_last_delim(t_redirect *redirects)
 	return (delim);
 }
 
-void	exec_heredoc(char *delim, int fd[2])
+void	exec_heredoc(char *delim, int fd[2], t_env_list *env_lst)
 {
 	char	*line;
 
@@ -55,6 +55,7 @@ void	exec_heredoc(char *delim, int fd[2])
 			break ;
 		if (!ft_strncmp(line, delim, ft_strlen(delim) + 1))
 			break ;
+		line = expand_heredoc(line, env_lst);
 		ft_putendl_fd(line, fd[WRITE_END]);
 		free(line);
 	}
@@ -73,7 +74,7 @@ int	heredoc(t_cmd_table *cmd_table)
 		return (0);
 	delim = get_last_delim(cmd_table->redirects);
 	pipe(fd);
-	exec_heredoc(delim, fd);
+	exec_heredoc(delim, fd, cmd_table->env_list);
 	read = dup(fd[READ_END]);
 	close_pipe(fd);
 	return (read);

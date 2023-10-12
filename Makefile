@@ -6,7 +6,7 @@
 #    By: tijmendebruine <tijmendebruine@student.      +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/08/25 15:57:53 by tijmendebru   #+#    #+#                  #
-#    Updated: 2023/10/11 17:54:40 by tde-brui      ########   odam.nl          #
+#    Updated: 2023/10/12 17:38:49 by tde-brui      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ LIBFT = libft/libft.a
 LIBS = -lreadline
 
 CC = gcc
-CC_FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CC_FLAGS = -Wall -Wextra -Werror -g
 SRC =   src/builtins/builtins.c src/builtins/builtins2.c src/builtins/env_list_fncs.c src/builtins/env_list_utils.c src/builtins/exit.c src/builtins/cd.c src/builtins/export.c \
         src/exec/exec.c src/exec/exec_utils.c src/exec/pipe.c src/exec/redirect_multi.c src/exec/redirect_single.c src/exec/errors.c src/exec/builtins.c \
         src/main/main.c src/main/input_error.c \
-		src/heredoc/heredoc_utils.c \
+		src/heredoc/heredoc_utils.c src/heredoc/heredoc_expand.c \
         src/parsing/parser.c src/parsing/token_list_fncs.c src/parsing/tokenizer.c src/parsing/utils.c src/parsing/assign_token.c src/parsing/redirect.c src/parsing/cmd_table.c src/parsing/handle_token.c src/parsing/malloc.c src/parsing/utils2.c src/parsing/input_utils.c src/parsing/key.c\
 		src/signals/signals.c \
 
