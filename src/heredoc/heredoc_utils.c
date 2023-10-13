@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 21:15:22 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/13 01:24:39 by daniel        ########   odam.nl         */
+/*   Updated: 2023/10/13 12:06:28 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*get_last_delim(t_cmd_table *cmd_table, int i)
 	char		*delim;
 	t_redirect	*redirects;
 
+	delim = NULL;
 	redirects = cmd_table->redirects;
 	while (redirects[i].type != END_OF_CMD_TOKEN)
 	{
