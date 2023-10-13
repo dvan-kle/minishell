@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/18 15:05:38 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/11 15:32:34 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/12 16:13:45 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,12 @@ t_cmd_table	*make_cmd_table(t_token	*token_list, t_env_list *env_list)
 	cmd_count = count_commands(token_list);
 	while (curr_token->type != END_OF_CMD_TOKEN)
 	{
-		cmd_table = cmd_add_back(cmd_table, curr_token, cmd_count);
+		cmd_table = cmd_add_back(cmd_table, curr_token, cmd_count, env_list);
 		while (curr_token->type != 4 && curr_token->type != 7)
 			curr_token = curr_token->next;
 		if (curr_token->type == END_OF_CMD_TOKEN)
 			break ;
 		curr_token = curr_token->next;
 	}
-	cmd_table->env_list = env_list;
 	return (cmd_table);
 }

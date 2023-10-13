@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/31 14:00:29 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/11 17:40:13 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/12 15:17:52 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ t_token	handle_brackets(int i, char *input, t_token token, int exit_status)
 	return (token);
 }
 
+bool	ft_isbracket(char c)
+{
+	if (c == '\"' || c == '\'' || c == '$')
+		return (true);
+	return (false);
+}
+
 t_token	handle_rest(int i, char *input, t_token token)
 {
 	int		i_len;
@@ -96,12 +103,8 @@ t_token	handle_rest(int i, char *input, t_token token)
 	}
 	token.value = ft_malloc(sizeof(char) * malloc_count(input, i, '|') + 1);
 	while (i < i_len && !ft_isspace(input[i])
-		&& input[i] != '|' && !ft_isredir(input[i]))
-	{
-		token.value[j] = input[i];
-		i++;
-		j++;
-	}
+		&& input[i] != '|' && !ft_isredir(input[i]) && !ft_isbracket(input[i]))
+		token.value[j++] = input[i++];
 	token.value[j] = '\0';
 	check_new_cmd(&token);
 	return (token);
