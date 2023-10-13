@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 19:26:33 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/11 19:19:11 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/13 13:13:04 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	export(t_env_list *env_list, char **input)
 
 void	export_error(char *input)
 {
-	printf("minishell: export: `%s': not a valid identifier\n", input);
+	ft_putstr_fd("minishell: export: `", 2);
+	ft_putstr_fd(input, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
 }
 
 int	export_input_check(char *key, char *input)

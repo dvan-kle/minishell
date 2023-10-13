@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:07:50 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/12 17:35:07 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/13 13:09:44 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ void	replace_old_pwd(t_env_list *env_list, char *old_pwd)
 void	chdir_error(void)
 {
 	if (errno == EACCES)
-		printf("minishell: cd: permission denied\n");
+		ft_putstr_fd("minishell: cd: permission denied\n", 2);
 	else if (errno == ENOENT)
-		printf("minishell: cd: no such file or directory\n");
+		ft_putstr_fd("minishell: cd: no such file or directory\n", 2);
 	else if (errno == ENOTDIR)
-		printf("minishell: cd: not a directory\n");
+		ft_putstr_fd("minishell: cd: not a directory\n", 2);
 	else if (errno == ENAMETOOLONG)
-		printf("minishell: cd: filename too long\n");
+		ft_putstr_fd("minishell: cd: filename too long\n", 2);
 	else if (errno == ELOOP)
-		printf("minishell: cd: too many levels of symbolic links\n");
+		ft_putstr_fd("minishell: cd: too many levels of symbolic links\n", 2);
 }
 
 int	cd(const char *dir, t_cmd_table *cmd_table)
@@ -86,7 +86,8 @@ int	cd(const char *dir, t_cmd_table *cmd_table)
 			env_list = env_list->next;
 		}
 		if (!path)
-			return (printf("minishell: cd: HOME not set\n"), EXIT_FAILURE);
+			return (ft_putendl_fd("minishell: cd: HOME not set", 2),
+				EXIT_FAILURE);
 	}
 	else
 		path = ft_strdup(dir);

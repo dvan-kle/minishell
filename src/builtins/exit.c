@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 11:58:39 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/13 12:23:17 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/13 13:14:29 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ static long long	long_atoi(char *input)
 
 static void	numeric_error_exit(char *str)
 {
-	printf("minishell: exit: %s: numeric argument required\n",
-		str);
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd(": numeric argument required", 2);
 	exit(2);
 }
 
@@ -85,7 +86,7 @@ void	ft_exit(t_cmd_table *cmd_table)
 			numeric_error_exit(cmd_table->args[1]);
 		if (cmd_table->args[2])
 		{
-			printf("minishell: exit: too many arguments\n");
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
 			return ;
 		}
 		if (long_atoi(cmd_table->args[1]) != -1)
