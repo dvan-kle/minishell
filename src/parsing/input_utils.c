@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/27 13:56:04 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/12 14:58:35 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/13 12:08:05 by tde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	update_input(t_token *token, char *input)
 		while (input[i] && (input[i] == '\"' || input[i] == '\''
 				|| input[i] == '$'))
 		{
-			//printf("%s\n", input + i);
 			if (input[i] == '$')
 				i += next_whitespace_brackets(input, i + 1) + 1;
 			else
