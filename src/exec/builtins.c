@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:53:54 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:04 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/12 15:34:56 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ bool	check_builtin(t_cmd_table *cmd_table)
 {
 	int	cmd_len;
 
+	if (cmd_table->args[0] == NULL)
+		return (false);
 	cmd_len = ft_strlen(cmd_table->args[0]) + 1;
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))
 		return (true);

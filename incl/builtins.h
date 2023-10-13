@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:14:04 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/10 12:13:37 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/12 17:33:31 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		cd(const char *dir, t_cmd_table *cmd_table);
 void	set_new_pwd(t_env_list *env_list);
 char	*replace_pwd(t_env_list *env_list);
 void	replace_old_pwd(t_env_list *env_list, char *old_pwd);
+void	chdir_error(void);
 
 //export.c
 void	export(t_env_list *env_list, char **input);

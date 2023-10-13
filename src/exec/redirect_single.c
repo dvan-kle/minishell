@@ -6,21 +6,23 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:55:30 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:38 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/13 01:14:45 by daniel        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/main.h"
 
-void	redirect_single(t_cmd_table *cmdtable)
+void	redirect_single(t_cmd_table *cmd_table)
 {
 	int	fd_hd;
 
-	fd_hd = heredoc(cmdtable);
+	fd_hd = heredoc(cmd_table);
 	if (fd_hd > 0)
 		dup2(fd_hd, STDIN_FILENO);
-	redirect_single_in(cmdtable->redirects);
-	redirect_single_out(cmdtable->redirects);
+	redirect_single_in(cmd_table->redirects);
+	redirect_single_out(cmd_table->redirects);
+	if (!cmd_table->args[0])
+		exit(EXIT_SUCCESS);
 }
 
 void	redirect_single_in(t_redirect *redirects)
