@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/19 16:07:42 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:30:27 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/13 12:33:18 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env(t_env_list *env_list)
 	}
 }
 
-void	unset(t_env_list *env_list, char *input)
+void	unset_env(t_env_list *env_list, char *input)
 {
 	t_env_list	*lst_head;
 	t_env_list	*lst_prev;
@@ -46,5 +46,17 @@ void	unset(t_env_list *env_list, char *input)
 		}
 		lst_prev = lst_head;
 		lst_head = lst_head->next;
+	}
+}
+
+void	unset(t_env_list *env_list, char **input)
+{
+	int	i;
+
+	i = 1;
+	while (input[i])
+	{
+		unset_env(env_list, input[i]);
+		i++;
 	}
 }

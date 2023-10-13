@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:53:54 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/12 15:34:56 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/13 12:33:57 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	execute_builtin(t_cmd_table *cmd_table)
 	if (!ft_strncmp(cmd_table->args[0], "export", cmd_len))
 		export(cmd_table->env_list, cmd_table->args);
 	if (!ft_strncmp(cmd_table->args[0], "unset", cmd_len))
-		unset(cmd_table->env_list, cmd_table->args[1]);
+		unset(cmd_table->env_list, cmd_table->args);
 	if (!ft_strncmp(cmd_table->args[0], "clear", cmd_len))
 		printf("\033[2J\033[1;1H");
 	if (!ft_strncmp(cmd_table->args[0], "env", cmd_len))

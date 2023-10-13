@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/14 13:22:39 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:31:08 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/13 12:55:48 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 void	redirect_error(char *filename)
 {
 	if (errno == ENOENT)
-		printf("minishell: no such file or directory: %s\n", filename);
+	{
+		ft_putstr_fd("minishell: no such file or directory: ", 2);
+		ft_putendl_fd(filename, 2);
+	}
 	else if (errno == EACCES)
-		printf("minishell: permission denied: %s\n", filename);
+	{
+		ft_putstr_fd("minishell: permission denied: ", 2);
+		ft_putendl_fd(filename, 2);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -25,16 +31,18 @@ void	execute_error(char *cmd)
 {
 	if (errno == ENOENT)
 	{
-		printf("minishell: command not found: %s\n", cmd);
+		ft_putstr_fd("minishell: no such file or directory: ", 2);
+		ft_putendl_fd(cmd, 2);
 		exit(127);
 	}
 	else if (errno == EACCES)
 	{
-		printf("minishell: permission denied: %s\n", cmd);
+		ft_putstr_fd("minishell: permission denied: ", 2);
+		ft_putendl_fd(cmd, 2);
 		exit(126);
 	}
 	else
-		printf("minishell: error");
+		ft_putendl_fd("minishell: error", 2);
 	exit(EXIT_FAILURE);
 }
 
