@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/22 15:27:13 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/12 17:39:46 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/13 12:17:27 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		exit_status = cmd_table_and_exec(token_list, env_lst);
-		break ;
 	}
 	free_env_list(env_lst);
 }

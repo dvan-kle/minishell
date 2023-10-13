@@ -6,7 +6,7 @@
 /*   By: tde-brui <tde-brui@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/09/01 11:58:39 by tde-brui      #+#    #+#                 */
-/*   Updated: 2023/10/12 15:31:41 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/13 12:23:17 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	numeric_error_exit(char *str)
 {
 	printf("minishell: exit: %s: numeric argument required\n",
 		str);
-	exit(255);
+	exit(2);
 }
 
 static void	error_check(char *str)
