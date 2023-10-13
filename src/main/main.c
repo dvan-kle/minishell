@@ -22,7 +22,7 @@ char	*get_line(void)
 	if (!line)
 	{
 		write(STDERR_FILENO, "exit\n", 5);
-		exit(0);
+		exit(130);
 	}
 	if (line[0] == '\0')
 		return (NULL);

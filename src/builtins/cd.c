@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 16:07:50 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/09 21:30:32 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/12 17:35:07 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ void	replace_old_pwd(t_env_list *env_list, char *old_pwd)
 	}
 }
 
+void	chdir_error(void)
+{
+	if (errno == EACCES)
+		printf("minishell: cd: permission denied\n");
+	else if (errno == ENOENT)
+		printf("minishell: cd: no such file or directory\n");
+	else if (errno == ENOTDIR)
+		printf("minishell: cd: not a directory\n");
+	else if (errno == ENAMETOOLONG)
+		printf("minishell: cd: filename too long\n");
+	else if (errno == ELOOP)
+		printf("minishell: cd: too many levels of symbolic links\n");
+}
+
 int	cd(const char *dir, t_cmd_table *cmd_table)
 {
 	t_env_list	*env_list;
@@ -77,7 +91,7 @@ int	cd(const char *dir, t_cmd_table *cmd_table)
 	else
 		path = ft_strdup(dir);
 	if (chdir(path) == -1)
-		return (EXIT_FAILURE);
+		return (free(path), chdir_error(), EXIT_FAILURE);
 	set_new_pwd(cmd_table->env_list);
 	free(path);
 	return (0);

@@ -12,18 +12,12 @@
 
 #include "../../incl/main.h"
 
-void	default_signals(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
 void	sigint_handler(int sigint)
 {
 	(void)sigint;
 	write(STDERR_FILENO, "\n", 1);
-	rl_on_new_line();
 	rl_replace_line("", 0);
+	rl_on_new_line();
 	rl_redisplay();
 }
 
@@ -36,5 +30,11 @@ void	init_signals(void)
 void	ignore_signals(void)
 {
 	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	default_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 }

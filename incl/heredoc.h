@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/10 12:08:52 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/12 16:42:00 by tde-brui      ########   odam.nl         */
+/*   Updated: 2023/10/13 12:06:05 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 # include "main.h"
 
 int		check_heredoc(t_cmd_table *cmd_table);
-void	exec_heredoc(char *delim, int fd[2], t_env_list *env_lst);
+void	exec_heredoc(char *delim, int fd[2], int count, t_env_list *env_lst);
 int		heredoc(t_cmd_table *cmd_table);
-char	*ft_charjoin(char *str, char c);
+bool	infile_check(t_redirect *head);
+void	signal_heredoc(int sig);
+char	*get_last_delim(t_cmd_table *cmd_table, int i);
 char	*expand_heredoc(char *line, t_env_list *env_lst);
 char	*heredoc_var(char *line, int i, t_env_list *env_lst);
+char	*ft_charjoin(char *str, char c);
 
 #endif

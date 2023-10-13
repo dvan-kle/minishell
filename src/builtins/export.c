@@ -6,7 +6,7 @@
 /*   By: daniel <daniel@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/09 19:26:33 by daniel        #+#    #+#                 */
-/*   Updated: 2023/10/09 21:28:00 by tijmendebru   ########   odam.nl         */
+/*   Updated: 2023/10/11 19:19:11 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	export(t_env_list *env_list, char **input)
 
 	i = 1;
 	curr = env_list;
-	if (!input)
+	if (!input[1])
 	{
 		while (curr)
 		{
