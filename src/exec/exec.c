@@ -6,7 +6,7 @@
 /*   By: dvan-kle <dvan-kle@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/29 15:18:40 by dvan-kle      #+#    #+#                 */
-/*   Updated: 2023/10/13 12:44:49 by dvan-kle      ########   odam.nl         */
+/*   Updated: 2023/10/13 13:06:23 by dvan-kle      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static char	*check_access(char **folders, char *cmd)
 		free(check_access);
 	}
 	free(command_fold);
-	if (access(cmd, X_OK | F_OK) != 0)
-		return (execute_error(cmd), exit(EXIT_FAILURE), NULL);
 	return (cmd);
 }
 
