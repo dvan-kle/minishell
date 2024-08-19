@@ -14,7 +14,7 @@ Welcome to **Minishell**! This project is a basic replica of a Unix shell, speci
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/tde-brui/dvan-kle/minishell.git
+    git clone https://github.com/dvan-kle/minishell.git
     ```
 2. Compile the project using the provided Makefile:
     ```bash
